@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="EphorosVault.Business/EphorosVault.Business.csproj" Id="e86dca0a-c8ce-4e5a-8de8-006ea16bcb31" />
+  <Project Path="EphorosVault.Data/EphorosVault.Data.csproj" Id="84052292-cef5-4d54-b3cd-591caefa1c7d" />
+  <Project Path="EphorosVault.DesktopApp/EphorosVault.DesktopApp.csproj" Id="aa9d4441-a700-4fbf-823b-b67b39e8b7f8" />
+  <Project Path="EphorosVault.Integrations/EphorosVault.Integrations.csproj" Id="0bce36eb-ce68-49f8-9795-ad593c62696c" />
+  <Project Path="EphorosVault.Presentation.Desktop/EphorosVault.Presentation.Desktop.csproj" Id="021f22c8-0539-4559-ba51-4378d4402746" />
+</Solution>

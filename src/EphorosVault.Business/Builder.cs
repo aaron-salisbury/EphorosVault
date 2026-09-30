@@ -1,0 +1,33 @@
+using DotNetFrameworkToolkit.Modules.DataAccess.FileSystem;
+using DotNetFrameworkToolkit.Modules.DependencyInjection;
+using EphorosVault.Business.Modules.Sample.ApplicationServices;
+using EphorosVault.Business.Modules.Sample.DomainServices;
+using EphorosVault.Data;
+
+namespace EphorosVault.Business
+{
+    public static class Builder
+    {
+        /// <summary>
+        /// Adds business-tier services.
+        /// Dependent on <see cref="ILogger"/>.
+        /// </summary>
+        /// <returns>A reference to this instance after the operation has completed.</returns>
+        public static IServiceCollection BuildBusinessServices(IServiceCollection services)
+        {
+            // Necessary infrastructure.
+            services.AddScoped<IFileSystemAccess, FileSystemAccess>();
+            services.AddScoped<IEmbeddedDataAccess, EmbeddedDataAccess>();
+
+            // Internal business domain logic.
+            services.AddScoped<FlatUIColorProvider, FlatUIColorProvider>();
+            services.AddScoped<LineSorter, LineSorter>();
+            services.AddScoped<UUIDGenerator, UUIDGenerator>();
+
+            // Orchestrated public-facing (application) services.
+            services.AddScoped<ISampleToolsService, SampleToolsService>();
+
+            return services;
+        }
+    }
+}
