@@ -29,6 +29,8 @@ public sealed class VaultService
             throw new ArgumentException("A name is required.", nameof(entry));
         }
 
+        entry.Name = entry.Name.Trim();
+
         if (entry.Id == Guid.Empty)
         {
             entry.Id = Guid.NewGuid();
