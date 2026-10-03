@@ -85,11 +85,10 @@ namespace EphorosVault.Presentation.Desktop
 
             SplitContainer workspace = new() { Dock = DockStyle.Fill, SplitterDistance = 260, FixedPanel = FixedPanel.Panel1 };
             _entries.Dock = DockStyle.Fill;
-            _entries.View = View.Details;
+            _entries.View = View.List;
             _entries.FullRowSelect = true;
             _entries.HideSelection = false;
             _entries.MultiSelect = false;
-            _entries.Columns.Add("Credentials", 235);
             _entries.SelectedIndexChanged += EntrySelected;
             _entries.DoubleClick += EditEntry_Click;
             workspace.Panel1.Controls.Add(_entries);
