@@ -14,10 +14,12 @@ public sealed class VaultEntryForm : Form
     private readonly TextBox _url = new();
     private readonly TextBox _notes = new();
     private readonly VaultEntry _entry;
+    private readonly PasswordGenerator _passwordGenerator;
 
-    public VaultEntryForm(VaultEntry entry, IList<VaultFolder> folders)
+    public VaultEntryForm(VaultEntry entry, IList<VaultFolder> folders, PasswordGenerator passwordGenerator)
     {
         _entry = entry ?? throw new ArgumentNullException(nameof(entry));
+        _passwordGenerator = passwordGenerator ?? throw new ArgumentNullException(nameof(passwordGenerator));
         Text = entry.Id == Guid.Empty ? "New Entry - Ephoros Vault" : "Edit Entry - Ephoros Vault";
         FormBorderStyle = FormBorderStyle.FixedDialog;
         StartPosition = FormStartPosition.CenterParent;
@@ -29,6 +31,10 @@ public sealed class VaultEntryForm : Form
         AddField("Folder:", _folder, 50);
         AddField("User name:", _userName, 80);
         AddField("Password:", _password, 110);
+        Button generate = new() { Text = "Generate...", Left = 365, Top = 108, Width = 85 };
+        generate.Click += Generate_Click;
+        _password.Width = 240;
+        Controls.Add(generate);
         AddField("URL:", _url, 140);
         AddField("Notes:", _notes, 170);
         _notes.Multiline = true;
@@ -71,6 +77,13 @@ public sealed class VaultEntryForm : Form
             if (item.Id == folderId) { _folder.SelectedIndex = i; return; }
         }
         _folder.SelectedIndex = 0;
+    }
+
+    private void Generate_Click(object sender, EventArgs e)
+    {
+        _password.Text = _passwordGenerator.Generate(16);
+        _password.SelectAll();
+        _password.Focus();
     }
 
     private void Ok_Click(object sender, EventArgs e)
