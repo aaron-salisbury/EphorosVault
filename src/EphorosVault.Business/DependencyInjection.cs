@@ -1,4 +1,6 @@
 ﻿using DotNetFrameworkToolkit.Modules.DependencyInjection;
+using DotNetFrameworkToolkit.Modules.UserAccess;
+using EphorosVault.Business.Modules.Access;
 using EphorosVault.Business.Modules.Sample.ApplicationServices;
 using EphorosVault.Business.Modules.Sample.DomainServices;
 using EphorosVault.Business.Modules.Vault;
@@ -20,6 +22,8 @@ public static class DependencyInjection
         services.AddScoped<LineSorter, LineSorter>();
         services.AddScoped<UUIDGenerator, UUIDGenerator>();
 
+        services.AddSingleton<IUserAuthenticator, UserAuthenticator>();
+        services.AddScoped<AccessService, AccessService>();
         services.AddScoped<PasswordGenerator, PasswordGenerator>();
         services.AddScoped<VaultService, VaultService>();
 
