@@ -31,6 +31,29 @@ public class VaultServiceTests
         Assert.ThrowsException<ArgumentException>(() => service.Save(new VaultEntry()));
     }
 
+    [TestMethod]
+    public void PasswordGeneratorIncludesEveryRequiredCharacterType()
+    {
+        PasswordGenerator generator = new();
+        string password = generator.Generate(20, true, true, true, true);
+
+        Assert.AreEqual(20, password.Length);
+        Assert.IsTrue(ContainsAny(password, "ABCDEFGHJKLMNPQRSTUVWXYZ"));
+        Assert.IsTrue(ContainsAny(password, "abcdefghijkmnopqrstuvwxyz"));
+        Assert.IsTrue(ContainsAny(password, "23456789"));
+        Assert.IsTrue(ContainsAny(password, "!@#$%^&*()-_=+"));
+    }
+
+    private static bool ContainsAny(string value, string characters)
+    {
+        foreach (char character in value)
+        {
+            if (characters.IndexOf(character) >= 0) return true;
+        }
+
+        return false;
+    }
+
     private sealed class MemoryRepository : IVaultRepository
     {
         internal List<VaultEntry> Items { get; } = new();
