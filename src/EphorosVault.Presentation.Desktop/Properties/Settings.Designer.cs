@@ -58,5 +58,30 @@ namespace EphorosVault.Presentation.Desktop.Properties {
                 this["ApplicationLink"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public int PasswordLength { get { return ((int)(this["PasswordLength"])); } set { this["PasswordLength"] = value; } }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PasswordRequireUppercase { get { return ((bool)(this["PasswordRequireUppercase"])); } set { this["PasswordRequireUppercase"] = value; } }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PasswordRequireLowercase { get { return ((bool)(this["PasswordRequireLowercase"])); } set { this["PasswordRequireLowercase"] = value; } }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PasswordRequireNumbers { get { return ((bool)(this["PasswordRequireNumbers"])); } set { this["PasswordRequireNumbers"] = value; } }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PasswordRequireSpecialCharacters { get { return ((bool)(this["PasswordRequireSpecialCharacters"])); } set { this["PasswordRequireSpecialCharacters"] = value; } }
     }
 }
