@@ -1,4 +1,5 @@
 using DotNetFrameworkToolkit.Modules.DataAccess;
+using Microsoft.Practices.Unity.Utility;
 using System;
 using System.Data.SqlServerCe;
 using System.IO;
@@ -11,10 +12,7 @@ public sealed class VaultDatabase
 
     public VaultDatabase(string databasePath)
     {
-        if (databasePath == null)
-        {
-            throw new ArgumentNullException(nameof(databasePath));
-        }
+        Guard.ArgumentNotNull(databasePath, nameof(databasePath));
 
         _connectionString = SqlServerCeDatabase.BuildConnectionString(databasePath);
     }
@@ -65,5 +63,8 @@ public sealed class VaultDatabase
         }
     }
 
-    public SqlCeConnection OpenConnection() => SqlServerCeDatabase.OpenConnection(_connectionString);
+    public SqlCeConnection OpenConnection()
+    {
+        return SqlServerCeDatabase.OpenConnection(_connectionString);
+    }
 }

@@ -1,3 +1,4 @@
+using Microsoft.Practices.Unity.Utility;
 using System;
 using System.Collections.Generic;
 
@@ -12,13 +13,25 @@ public sealed class VaultFolderService
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    public IList<VaultFolder> GetFolders() => _repository.GetAll();
+    public IList<VaultFolder> GetFolders()
+    {
+        return _repository.GetAll();
+    }
 
     public void Save(VaultFolder folder)
     {
-        if (folder == null) throw new ArgumentNullException(nameof(folder));
-        if (folder.Name == null || folder.Name.Trim().Length == 0) throw new ArgumentException("A folder name is required.", nameof(folder));
-        if (folder.Id == Guid.Empty) folder.Id = Guid.NewGuid();
+        Guard.ArgumentNotNull(folder, nameof(folder));
+
+        if (folder.Name == null || folder.Name.Trim().Length == 0)
+        {
+            throw new ArgumentException("A folder name is required.", nameof(folder));
+        }
+
+        if (folder.Id == Guid.Empty)
+        {
+            folder.Id = Guid.NewGuid();
+        }
+
         _repository.Save(folder);
     }
 

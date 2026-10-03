@@ -65,14 +65,17 @@ public sealed class SqlCeVaultRepository : IVaultRepository
         command.ExecuteNonQuery();
     }
 
-    private VaultEntry Read(SqlCeDataReader reader) => new()
+    private VaultEntry Read(SqlCeDataReader reader)
     {
-        Id = reader.GetGuid(0),
-        FolderId = reader.IsDBNull(1) ? (Guid?)null : reader.GetGuid(1),
-        Name = reader.GetString(2),
-        UserName = _encryption.Decrypt(reader.GetString(3)),
-        Password = _encryption.Decrypt(reader.GetString(4)),
-        Url = _encryption.Decrypt(reader.GetString(5)),
-        Notes = _encryption.Decrypt(reader.GetString(6))
-    };
+        return new()
+        {
+            Id = reader.GetGuid(0),
+            FolderId = reader.IsDBNull(1) ? null : reader.GetGuid(1),
+            Name = reader.GetString(2),
+            UserName = _encryption.Decrypt(reader.GetString(3)),
+            Password = _encryption.Decrypt(reader.GetString(4)),
+            Url = _encryption.Decrypt(reader.GetString(5)),
+            Notes = _encryption.Decrypt(reader.GetString(6))
+        };
+    }
 }

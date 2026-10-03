@@ -1,28 +1,27 @@
 using System.Windows.Forms;
 
-namespace EphorosVault.Presentation.Desktop.Base.Helpers
+namespace EphorosVault.Presentation.Desktop.Base.Helpers;
+
+internal class StandardErrorProvider : ErrorProvider
 {
-    internal class StandardErrorProvider : ErrorProvider
+    private const int DEFAULT_ICON_PADDING = 5;
+
+    internal StandardErrorProvider()
     {
-        private const int DEFAULT_ICON_PADDING = 5;
+        BlinkStyle = ErrorBlinkStyle.NeverBlink;
+    }
 
-        internal StandardErrorProvider()
+    internal void UpdateError(Control control, string errorMessage)
+    {
+        if (!string.IsNullOrEmpty(errorMessage))
         {
-            BlinkStyle = ErrorBlinkStyle.NeverBlink;
+            SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
+            SetIconPadding(control, DEFAULT_ICON_PADDING);
+            SetError(control, errorMessage);
         }
-
-        internal void UpdateError(Control control, string errorMessage)
+        else
         {
-            if (!string.IsNullOrEmpty(errorMessage))
-            {
-                SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
-                SetIconPadding(control, DEFAULT_ICON_PADDING);
-                SetError(control, errorMessage);
-            }
-            else
-            {
-                SetError(control, string.Empty);
-            }
+            SetError(control, string.Empty);
         }
     }
 }

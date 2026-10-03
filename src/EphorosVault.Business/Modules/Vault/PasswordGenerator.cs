@@ -46,10 +46,25 @@ public sealed class PasswordGenerator
         {
             int index = 0;
             int randomIndex = 0;
-            if (requireUppercase) password[index++] = Pick(UppercaseCharacters, random[randomIndex++]);
-            if (requireLowercase) password[index++] = Pick(LowercaseCharacters, random[randomIndex++]);
-            if (requireNumbers) password[index++] = Pick(NumberCharacters, random[randomIndex++]);
-            if (requireSpecialCharacters) password[index++] = Pick(SpecialCharacters, random[randomIndex++]);
+            if (requireUppercase)
+            {
+                password[index++] = Pick(UppercaseCharacters, random[randomIndex++]);
+            }
+
+            if (requireLowercase)
+            {
+                password[index++] = Pick(LowercaseCharacters, random[randomIndex++]);
+            }
+
+            if (requireNumbers)
+            {
+                password[index++] = Pick(NumberCharacters, random[randomIndex++]);
+            }
+
+            if (requireSpecialCharacters)
+            {
+                password[index++] = Pick(SpecialCharacters, random[randomIndex++]);
+            }
 
             string pool = characters.ToString();
             while (index < password.Length)

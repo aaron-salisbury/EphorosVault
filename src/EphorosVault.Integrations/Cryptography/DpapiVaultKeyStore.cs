@@ -11,12 +11,7 @@ public sealed class DpapiVaultKeyStore : IVaultKeyStore
 
     public DpapiVaultKeyStore(string keyFilePath)
     {
-        if (keyFilePath == null)
-        {
-            throw new ArgumentNullException(nameof(keyFilePath));
-        }
-
-        _keyFilePath = keyFilePath;
+        _keyFilePath = keyFilePath ?? throw new ArgumentNullException(nameof(keyFilePath));
     }
 
     public bool Exists => File.Exists(_keyFilePath);

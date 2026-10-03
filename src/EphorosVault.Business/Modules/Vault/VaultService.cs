@@ -12,7 +12,10 @@ public sealed class VaultService
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    public IList<VaultEntry> GetEntries() => _repository.GetAll();
+    public IList<VaultEntry> GetEntries()
+    {
+        return _repository.GetAll();
+    }
 
     public void Save(VaultEntry entry)
     {
@@ -34,5 +37,8 @@ public sealed class VaultService
         _repository.Save(entry);
     }
 
-    public void Delete(Guid id) => _repository.Delete(id);
+    public void Delete(Guid id)
+    {
+        _repository.Delete(id);
+    }
 }
