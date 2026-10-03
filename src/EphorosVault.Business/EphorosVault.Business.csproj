@@ -72,6 +72,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyInjection.cs" />
+    <Compile Include="Modules\Access\AccessService.cs" />
+    <Compile Include="Modules\Access\IUserCredentialRepository.cs" />
     <Compile Include="Modules\Sample\ApplicationServices\ISampleToolsService.cs" />
     <Compile Include="Modules\Sample\ApplicationServices\SampleToolsService.cs" />
     <Compile Include="Modules\Sample\DomainServices\FlatUIColorProvider.cs" />
