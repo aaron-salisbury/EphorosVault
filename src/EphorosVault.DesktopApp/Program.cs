@@ -13,23 +13,22 @@ namespace EphorosVault.DesktopApp
         [STAThread]
         static void Main()
         {
-            IServiceCollection services = DependencyInjection.BuildServiceCollection();
-            IServiceProvider provider = services.BuildServiceProvider();
-            Ioc.Default.ConfigureServices(provider);
-
-            Application.ApplicationExit += Application_ApplicationExit;
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(Ioc.Default.GetRequiredService<ShellForm>());
-        }
-
-        private static void Application_ApplicationExit(object sender, EventArgs e)
-        {
-            if (Ioc.Default != null)
+            try
             {
-                Ioc.Default.Dispose();
+                IServiceCollection services = DependencyInjection.BuildServiceCollection();
+                IServiceProvider provider = services.BuildServiceProvider();
+                Ioc.Default.ConfigureServices(provider);
+
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(Ioc.Default.GetRequiredService<ShellForm>());
             }
+            finally
+            {
+                Ioc.Default?.Dispose();
+            }
+
+
         }
     }
 }
