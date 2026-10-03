@@ -76,6 +76,7 @@
     <Compile Include="Export\BitwardenCsvExporter.cs" />
     <Compile Include="Export\CsvWriter.cs" />
     <Compile Include="Export\KeePassCsvExporter.cs" />
+    <Compile Include="Persistence\SqlCeUserCredentialRepository.cs" />
     <Compile Include="Persistence\SqlCeVaultRepository.cs" />
     <Compile Include="Persistence\VaultDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
