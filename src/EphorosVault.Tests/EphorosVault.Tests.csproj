@@ -52,7 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CsvExporterTests.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="PasswordGeneratorTests.cs" />
+    <Compile Include="VaultFolderServiceTests.cs" />
+    <Compile Include="VaultKeyEncryptionTests.cs" />
     <Compile Include="VaultServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
