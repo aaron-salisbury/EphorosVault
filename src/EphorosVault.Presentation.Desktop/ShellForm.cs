@@ -218,9 +218,24 @@ namespace EphorosVault.Presentation.Desktop
 
         private void PasswordGeneratorMenuItem_Click(object sender, System.EventArgs e)
         {
-            string password = _passwordGenerator.Generate(16);
+            string password = GeneratePassword();
             Clipboard.SetText(password);
             MessageBox.Show(this, "A generated 16-character password has been copied to the clipboard.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private string GeneratePassword()
+        {
+            return _passwordGenerator.Generate(
+                Properties.Settings.Default.PasswordLength,
+                Properties.Settings.Default.PasswordRequireUppercase,
+                Properties.Settings.Default.PasswordRequireLowercase,
+                Properties.Settings.Default.PasswordRequireNumbers,
+                Properties.Settings.Default.PasswordRequireSpecialCharacters);
+        }
+
+        private void OptionsMenuItem_Click(object sender, System.EventArgs e)
+        {
+            using (OptionsForm form = new()) form.ShowDialog(this);
         }
 
         private void ExportKeePassMenuItem_Click(object sender, System.EventArgs e) => Export(_keePassExporter);
