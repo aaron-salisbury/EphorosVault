@@ -1,4 +1,5 @@
 using EphorosVault.Business.Modules.Vault;
+using EphorosVault.Presentation.Desktop.Base.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -16,6 +17,7 @@ public sealed class VaultEntryForm : Form
     private readonly VaultEntry _entry;
     private readonly PasswordGenerator _passwordGenerator;
     private readonly Button _showPassword = new();
+    private readonly StandardErrorProvider _errors = new();
     private readonly Button _saveButton = new();
     private readonly Label _saveStatus = new();
     private readonly bool _isNewEntry;
@@ -27,6 +29,7 @@ public sealed class VaultEntryForm : Form
         _isNewEntry = entry.Id == Guid.Empty;
         _initializing = true;
         _passwordGenerator = passwordGenerator ?? throw new ArgumentNullException(nameof(passwordGenerator));
+        _errors.ContainerControl = this;
         Text = entry.Id == Guid.Empty ? "New Entry - Ephoros Vault" : "Edit Entry - Ephoros Vault";
         FormBorderStyle = FormBorderStyle.FixedDialog;
         StartPosition = FormStartPosition.CenterParent;
@@ -144,10 +147,11 @@ public sealed class VaultEntryForm : Form
 
     private void SaveButton_Click(object sender, EventArgs e)
     {
+        _errors.Clear();
         if (_name.Text.Trim().Length == 0)
         {
-            MessageBox.Show(this, "A name is required.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            DialogResult = DialogResult.None;
+            _errors.UpdateError(_name, "A name is required.");
+            _name.Focus();
             return;
         }
 
