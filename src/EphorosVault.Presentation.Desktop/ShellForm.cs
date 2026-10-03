@@ -135,6 +135,10 @@ namespace EphorosVault.Presentation.Desktop
                 if (form.ShowDialog(this) == DialogResult.OK && form.FolderName.Length > 0) { _folderService.Save(new VaultFolder { Name = form.FolderName }); RefreshVault(); }
         }
 
+        private void LogMenuItem_Click(object sender, System.EventArgs e)
+        {
+        }
+
         private void AboutMenuItem_Click(object sender, System.EventArgs e) { using (AboutForm form = new()) form.ShowDialog(this); }
         private void ExitMenuItem_Click(object sender, System.EventArgs e) => Application.Exit();
 
