@@ -74,7 +74,7 @@ csharp_style_expression_bodied_local_functions = false:suggestion
 # Braces
 csharp_prefer_braces = true:warning
 dotnet_diagnostic.IDE0011.severity = warning
-csharp_preserve_single_line_blocks = false
+csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = false
 
 # Implementation subfolders intentionally share their module's public namespace.
