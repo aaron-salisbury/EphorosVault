@@ -27,6 +27,8 @@ public sealed class VaultFolderService
             throw new ArgumentException("A folder name is required.", nameof(folder));
         }
 
+        folder.Name = folder.Name.Trim();
+
         if (folder.Id == Guid.Empty)
         {
             folder.Id = Guid.NewGuid();
