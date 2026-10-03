@@ -17,7 +17,7 @@ public static class DependencyInjection
     {
         Guard.ArgumentNotNull(services, nameof(services));
 
-        services.AddSingleton<IVaultEncryption, EnterpriseLibraryVaultEncryption>();
+        services.AddSingleton<IVaultEncryption, VaultKeyEncryption>();
         services.AddScoped<IUserCredentialRepository, SqlCeUserCredentialRepository>();
         services.AddScoped<IVaultRepository, SqlCeVaultRepository>();
         services.AddScoped<KeePassCsvExporter, KeePassCsvExporter>();
