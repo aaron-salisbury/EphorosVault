@@ -1,4 +1,3 @@
-using Microsoft.Practices.EnterpriseLibrary.Security.Cryptography;
 using System;
 using System.IO;
 using System.Security.Cryptography;
@@ -53,7 +52,11 @@ public sealed class DpapiVaultKeyStore : IVaultKeyStore
     public void EnsureCreated()
     {
         if (Exists) return;
-        byte[] key = CryptographyUtility.GetRandomBytes(32);
+        byte[] key = new byte[32];
+        using (RNGCryptoServiceProvider random = new())
+        {
+            random.GetBytes(key);
+        }
         try { Save(key); }
         finally { Array.Clear(key, 0, key.Length); }
     }
