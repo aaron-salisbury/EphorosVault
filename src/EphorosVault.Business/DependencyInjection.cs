@@ -19,6 +19,7 @@ public static class DependencyInjection
         services.AddScoped<AccessService, AccessService>();
         services.AddScoped<PasswordGenerator, PasswordGenerator>();
         services.AddScoped<VaultService, VaultService>();
+        services.AddScoped<VaultFolderService, VaultFolderService>();
 
         return services;
     }
