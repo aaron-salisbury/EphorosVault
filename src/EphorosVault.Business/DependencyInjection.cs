@@ -16,6 +16,7 @@ public static class DependencyInjection
         Guard.ArgumentNotNull(services, nameof(services));
 
         // Internal business domain logic.
+        services.AddScoped<FlatUIColorProvider, FlatUIColorProvider>();
         services.AddScoped<LineSorter, LineSorter>();
         services.AddScoped<UUIDGenerator, UUIDGenerator>();
 
