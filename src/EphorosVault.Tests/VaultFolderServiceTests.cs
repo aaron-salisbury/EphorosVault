@@ -22,6 +22,25 @@ public class VaultFolderServiceTests
     }
 
     [TestMethod]
+    public void SaveTrimsName()
+    {
+        MemoryFolderRepository repository = new();
+        VaultFolderService service = new(repository);
+        VaultFolder folder = new() { Name = "  Shopping  " };
+
+        service.Save(folder);
+
+        Assert.AreEqual("Shopping", folder.Name);
+    }
+
+    [TestMethod]
+    public void SaveRejectsNullFolder()
+    {
+        VaultFolderService service = new(new MemoryFolderRepository());
+        Assert.ThrowsException<ArgumentNullException>(() => service.Save(null));
+    }
+
+    [TestMethod]
     public void SaveRequiresName()
     {
         VaultFolderService service = new(new MemoryFolderRepository());
