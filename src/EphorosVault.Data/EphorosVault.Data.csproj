@@ -74,18 +74,10 @@
     <Compile Include="DependencyInjection.cs" />
     <Compile Include="Entities\Sample\FlatColor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Vault\SqlCeVaultRepository.cs" />
-    <Compile Include="Vault\VaultDatabase.cs" />
     <Compile Include="Services\IEmbeddedDataAccess.cs" />
     <Compile Include="Services\EmbeddedDataAccess.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EphorosVault.Business\EphorosVault.Business.csproj">
-      <Project>{e86dca0a-c8ce-4e5a-8de8-006ea16bcb31}</Project>
-      <Name>EphorosVault.Business</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+<ItemGroup>
     <EmbeddedResource Include="Base\Resources\FlatColors.xml" />
   </ItemGroup>
   <ItemGroup>
