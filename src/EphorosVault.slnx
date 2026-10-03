@@ -4,4 +4,5 @@
   <Project Path="EphorosVault.DesktopApp/EphorosVault.DesktopApp.csproj" Id="aa9d4441-a700-4fbf-823b-b67b39e8b7f8" />
   <Project Path="EphorosVault.Integrations/EphorosVault.Integrations.csproj" Id="0bce36eb-ce68-49f8-9795-ad593c62696c" />
   <Project Path="EphorosVault.Presentation.Desktop/EphorosVault.Presentation.Desktop.csproj" Id="021f22c8-0539-4559-ba51-4378d4402746" />
+  <Project Path="EphorosVault.Tests/EphorosVault.Tests.csproj" Id="bf6c2b1e-0ca3-48fd-8fff-b50e90082412" />
 </Solution>
