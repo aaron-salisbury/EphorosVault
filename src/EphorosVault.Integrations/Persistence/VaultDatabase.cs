@@ -37,6 +37,24 @@ public sealed class VaultDatabase
             create.ExecuteNonQuery();
         }
 
+        using SqlCeCommand folderCheck = connection.CreateCommand();
+        folderCheck.CommandText = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'VaultFolders'";
+        if (Convert.ToInt32(folderCheck.ExecuteScalar()) == 0)
+        {
+            using SqlCeCommand createFolders = connection.CreateCommand();
+            createFolders.CommandText = "CREATE TABLE VaultFolders (Id uniqueidentifier NOT NULL PRIMARY KEY, Name nvarchar(256) NOT NULL)";
+            createFolders.ExecuteNonQuery();
+        }
+
+        using SqlCeCommand folderColumnCheck = connection.CreateCommand();
+        folderColumnCheck.CommandText = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'VaultEntries' AND COLUMN_NAME = 'FolderId'";
+        if (Convert.ToInt32(folderColumnCheck.ExecuteScalar()) == 0)
+        {
+            using SqlCeCommand addFolder = connection.CreateCommand();
+            addFolder.CommandText = "ALTER TABLE VaultEntries ADD FolderId uniqueidentifier NULL";
+            addFolder.ExecuteNonQuery();
+        }
+
         using SqlCeCommand userCheck = connection.CreateCommand();
         userCheck.CommandText = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'UserCredential'";
         if (Convert.ToInt32(userCheck.ExecuteScalar()) == 0)
