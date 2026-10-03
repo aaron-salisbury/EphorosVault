@@ -15,6 +15,7 @@ public sealed class VaultEntryForm : Form
     private readonly TextBox _notes = new();
     private readonly VaultEntry _entry;
     private readonly PasswordGenerator _passwordGenerator;
+    private readonly Button _showPassword = new();
 
     public VaultEntryForm(VaultEntry entry, IList<VaultFolder> folders, PasswordGenerator passwordGenerator)
     {
@@ -31,9 +32,16 @@ public sealed class VaultEntryForm : Form
         AddField("Folder:", _folder, 50);
         AddField("User name:", _userName, 80);
         AddField("Password:", _password, 110);
-        Button generate = new() { Text = "Generate...", Left = 365, Top = 108, Width = 85 };
+        _password.PasswordChar = '*';
+        _password.Width = 155;
+        _showPassword.Text = "Show";
+        _showPassword.Left = 275;
+        _showPassword.Top = 108;
+        _showPassword.Width = 70;
+        _showPassword.Click += ShowPassword_Click;
+        Controls.Add(_showPassword);
+        Button generate = new() { Text = "Generate...", Left = 350, Top = 108, Width = 100 };
         generate.Click += Generate_Click;
-        _password.Width = 240;
         Controls.Add(generate);
         AddField("URL:", _url, 140);
         AddField("Notes:", _notes, 170);
@@ -77,6 +85,14 @@ public sealed class VaultEntryForm : Form
             if (item.Id == folderId) { _folder.SelectedIndex = i; return; }
         }
         _folder.SelectedIndex = 0;
+    }
+
+    private void ShowPassword_Click(object sender, EventArgs e)
+    {
+        bool show = _password.PasswordChar == '*';
+        _password.PasswordChar = show ? (char)0 : '*';
+        _showPassword.Text = show ? "Hide" : "Show";
+        _password.Focus();
     }
 
     private void Generate_Click(object sender, EventArgs e)
