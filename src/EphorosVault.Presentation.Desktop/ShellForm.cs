@@ -16,7 +16,7 @@ namespace EphorosVault.Presentation.Desktop
         private readonly KeePassCsvExporter _keePassExporter;
         private readonly BitwardenCsvExporter _bitwardenExporter;
         private readonly IVaultKeyStore _keyStore;
-        private readonly ListBox _folders = new();
+        private readonly ComboBox _folders = new();
         private readonly ListView _entries = new();
         private readonly TextBox _search = new();
         private readonly TextBox _detailName = new();
@@ -71,7 +71,7 @@ namespace EphorosVault.Presentation.Desktop
             _folders.Left = 55;
             _folders.Top = 6;
             _folders.Width = 170;
-            _folders.Height = 21;
+            _folders.DropDownStyle = ComboBoxStyle.DropDownList;
             _folders.SelectedIndexChanged += FilterChanged;
             filterPanel.Controls.Add(_folders);
             filterPanel.Controls.Add(new Label { Text = "Search:", Left = 240, Top = 10, Width = 50 });
