@@ -4,7 +4,7 @@ namespace EphorosVault.Presentation.Desktop.Base.Helpers
 {
     internal class StandardErrorProvider : ErrorProvider
     {
-        private const int DEFAULT_ICON_PADDING = 10;
+        private const int DEFAULT_ICON_PADDING = 5;
 
         internal StandardErrorProvider()
         {
