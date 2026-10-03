@@ -29,7 +29,7 @@ namespace EphorosVault.Presentation.Desktop.Properties
 
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Sample App")]
+        [global::System.Configuration.DefaultSettingValueAttribute("EphorosVault")]
         public string ApplicationFriendlyName
         {
             get
@@ -60,7 +60,7 @@ namespace EphorosVault.Presentation.Desktop.Properties
 
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/aaron-salisbury/ProjectTemplates")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/aaron-salisbury/EphorosVault")]
         public string ApplicationLink
         {
             get
