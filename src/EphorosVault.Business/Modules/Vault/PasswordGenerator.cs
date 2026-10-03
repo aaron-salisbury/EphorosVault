@@ -1,5 +1,5 @@
-using Microsoft.Practices.EnterpriseLibrary.Security.Cryptography;
 using System;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace EphorosVault.Business.Modules.Vault;
@@ -41,56 +41,47 @@ public sealed class PasswordGenerator
         }
 
         char[] password = new char[length];
-        byte[] random = CryptographyUtility.GetRandomBytes(length * 2);
-        try
+        RNGCryptoServiceProvider random = new();
+        int index = 0;
+        if (requireUppercase) password[index++] = Pick(UppercaseCharacters, random);
+        if (requireLowercase) password[index++] = Pick(LowercaseCharacters, random);
+        if (requireNumbers) password[index++] = Pick(NumberCharacters, random);
+        if (requireSpecialCharacters) password[index++] = Pick(SpecialCharacters, random);
+
+        string pool = characters.ToString();
+        while (index < password.Length)
         {
-            int index = 0;
-            int randomIndex = 0;
-            if (requireUppercase)
-            {
-                password[index++] = Pick(UppercaseCharacters, random[randomIndex++]);
-            }
-
-            if (requireLowercase)
-            {
-                password[index++] = Pick(LowercaseCharacters, random[randomIndex++]);
-            }
-
-            if (requireNumbers)
-            {
-                password[index++] = Pick(NumberCharacters, random[randomIndex++]);
-            }
-
-            if (requireSpecialCharacters)
-            {
-                password[index++] = Pick(SpecialCharacters, random[randomIndex++]);
-            }
-
-            string pool = characters.ToString();
-            while (index < password.Length)
-            {
-                password[index++] = Pick(pool, random[randomIndex++]);
-            }
-
-            for (int i = password.Length - 1; i > 0; i--)
-            {
-                int swapIndex = random[randomIndex++] % (i + 1);
-                char temporary = password[i];
-                password[i] = password[swapIndex];
-                password[swapIndex] = temporary;
-            }
-
-            return new string(password);
+            password[index++] = Pick(pool, random);
         }
-        finally
+
+        for (int i = password.Length - 1; i > 0; i--)
         {
-            Array.Clear(random, 0, random.Length);
-            Array.Clear(password, 0, password.Length);
+            int swapIndex = NextIndex(random, i + 1);
+            char temporary = password[i];
+            password[i] = password[swapIndex];
+            password[swapIndex] = temporary;
         }
+
+        string result = new(password);
+        Array.Clear(password, 0, password.Length);
+        return result;
     }
 
-    private static char Pick(string characters, byte value)
+    private static char Pick(string characters, RNGCryptoServiceProvider random)
     {
-        return characters[value % characters.Length];
+        return characters[NextIndex(random, characters.Length)];
+    }
+
+    private static int NextIndex(RNGCryptoServiceProvider random, int exclusiveMaximum)
+    {
+        byte[] value = new byte[1];
+        int upperBound = 256 - (256 % exclusiveMaximum);
+        do
+        {
+            random.GetBytes(value);
+        }
+        while (value[0] >= upperBound);
+
+        return value[0] % exclusiveMaximum;
     }
 }
