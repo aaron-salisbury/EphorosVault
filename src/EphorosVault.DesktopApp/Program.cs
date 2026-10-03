@@ -1,7 +1,6 @@
 using DotNetFrameworkToolkit.Modules.DependencyInjection;
 using EphorosVault.Presentation.Desktop;
 using EphorosVault.Presentation.Desktop.Forms;
-using EphorosVault.Presentation.Desktop.Forms;
 using System;
 using System.Windows.Forms;
 
@@ -29,15 +28,6 @@ internal static class Program
                 {
                     return;
                 }
-            }
-
-            LoginForm loginForm = Ioc.Default.GetRequiredService<LoginForm>();
-            DialogResult loginResult = loginForm.ShowDialog();
-            loginForm.Dispose();
-
-            if (loginResult != DialogResult.OK || !loginForm.IsAuthenticated)
-            {
-                return;
             }
 
             Application.Run(Ioc.Default.GetRequiredService<ShellForm>());
