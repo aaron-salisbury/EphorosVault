@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CsvExporterTests.cs" />
+    <Compile Include="DpapiVaultKeyStoreTests.cs" />
     <Compile Include="PasswordGeneratorTests.cs" />
     <Compile Include="VaultFolderServiceTests.cs" />
     <Compile Include="VaultKeyEncryptionTests.cs" />
