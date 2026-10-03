@@ -61,7 +61,7 @@ partial class LoginForm
             this.PasswordTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.PasswordTextBox.Name = "PasswordTextBox";
             this.PasswordTextBox.PasswordChar = '*';
-            this.PasswordTextBox.Size = new System.Drawing.Size(350, 26);
+            this.PasswordTextBox.Size = new System.Drawing.Size(320, 26);
             this.PasswordTextBox.TabIndex = 3;
             // 
             // ConfirmPasswordLabel
@@ -80,7 +80,7 @@ partial class LoginForm
             this.ConfirmPasswordTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ConfirmPasswordTextBox.Name = "ConfirmPasswordTextBox";
             this.ConfirmPasswordTextBox.PasswordChar = '*';
-            this.ConfirmPasswordTextBox.Size = new System.Drawing.Size(350, 26);
+            this.ConfirmPasswordTextBox.Size = new System.Drawing.Size(320, 26);
             this.ConfirmPasswordTextBox.TabIndex = 5;
             // 
             // SubmitButton
