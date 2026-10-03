@@ -1,4 +1,4 @@
-﻿using DotNetFrameworkToolkit.Modules.DependencyInjection;
+using DotNetFrameworkToolkit.Modules.DependencyInjection;
 using Microsoft.Practices.Unity.Utility;
 
 namespace EphorosVault.Data;

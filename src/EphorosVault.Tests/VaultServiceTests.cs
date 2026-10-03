@@ -13,7 +13,10 @@ public class VaultServiceTests
     {
         MemoryRepository repository = new();
         VaultService service = new(repository);
-        VaultEntry entry = new() { Name = "Example" };
+        VaultEntry entry = new()
+        {
+            Name = "Example"
+        };
 
         service.Save(entry);
 
@@ -33,7 +36,11 @@ public class VaultServiceTests
         internal List<VaultEntry> Items { get; } = new();
         public IList<VaultEntry> GetAll() => Items;
         public VaultEntry Get(Guid id) => Items.Find(x => x.Id == id);
-        public void Save(VaultEntry entry) { Items.RemoveAll(x => x.Id == entry.Id); Items.Add(entry); }
+        public void Save(VaultEntry entry)
+        {
+            Items.RemoveAll(x => x.Id == entry.Id);
+            Items.Add(entry);
+        }
         public void Delete(Guid id) => Items.RemoveAll(x => x.Id == id);
     }
 }

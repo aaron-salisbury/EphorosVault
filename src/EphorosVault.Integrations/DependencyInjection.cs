@@ -1,4 +1,4 @@
-﻿using DotNetFrameworkToolkit.Modules.DependencyInjection;
+using DotNetFrameworkToolkit.Modules.DependencyInjection;
 using EphorosVault.Business.Modules.Access;
 using EphorosVault.Business.Modules.Vault;
 using EphorosVault.Integrations.Cryptography;

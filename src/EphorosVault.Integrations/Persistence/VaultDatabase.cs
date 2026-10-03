@@ -11,14 +11,21 @@ public sealed class VaultDatabase
 
     public VaultDatabase(string databasePath)
     {
-        if (databasePath == null) throw new ArgumentNullException(nameof(databasePath));
+        if (databasePath == null)
+        {
+            throw new ArgumentNullException(nameof(databasePath));
+        }
+
         _connectionString = SqlServerCeDatabase.BuildConnectionString(databasePath);
     }
 
     public void Initialize()
     {
         SqlCeConnectionStringBuilder builder = new(_connectionString);
-        if (!File.Exists(builder.DataSource)) SqlServerCeDatabase.CreateDatabase(_connectionString);
+        if (!File.Exists(builder.DataSource))
+        {
+            SqlServerCeDatabase.CreateDatabase(_connectionString);
+        }
 
         using SqlCeConnection connection = SqlServerCeDatabase.OpenConnection(_connectionString);
         using SqlCeCommand check = connection.CreateCommand();

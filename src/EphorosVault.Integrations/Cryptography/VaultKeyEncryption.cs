@@ -17,7 +17,11 @@ public sealed class VaultKeyEncryption : IVaultEncryption
 
     public string Encrypt(string plaintext)
     {
-        if (plaintext == null) throw new ArgumentNullException(nameof(plaintext));
+        if (plaintext == null)
+        {
+            throw new ArgumentNullException(nameof(plaintext));
+        }
+
         byte[] key = _keyStore.Load();
         try
         {
@@ -39,14 +43,22 @@ public sealed class VaultKeyEncryption : IVaultEncryption
 
     public string Decrypt(string ciphertext)
     {
-        if (ciphertext == null) throw new ArgumentNullException(nameof(ciphertext));
+        if (ciphertext == null)
+        {
+            throw new ArgumentNullException(nameof(ciphertext));
+        }
+
         byte[] payload = Convert.FromBase64String(ciphertext);
         byte[] key = _keyStore.Load();
         try
         {
             using RijndaelManaged algorithm = CreateAlgorithm(key);
             int ivLength = algorithm.BlockSize / 8;
-            if (payload.Length < ivLength) throw new CryptographicException("The encrypted vault value is invalid.");
+            if (payload.Length < ivLength)
+            {
+                throw new CryptographicException("The encrypted vault value is invalid.");
+            }
+
             byte[] iv = new byte[ivLength];
             Buffer.BlockCopy(payload, 0, iv, 0, ivLength);
             algorithm.IV = iv;
@@ -55,7 +67,11 @@ public sealed class VaultKeyEncryption : IVaultEncryption
             using MemoryStream output = new();
             byte[] buffer = new byte[256];
             int read;
-            while ((read = crypto.Read(buffer, 0, buffer.Length)) > 0) output.Write(buffer, 0, read);
+            while ((read = crypto.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                output.Write(buffer, 0, read);
+            }
+
             return Encoding.UTF8.GetString(output.ToArray());
         }
         finally

@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System;
 
 namespace EphorosVault.Presentation.Desktop.Views
 {
@@ -21,7 +21,10 @@ namespace EphorosVault.Presentation.Desktop.Views
 
         private void DownloadButton_Click(object sender, EventArgs e)
         {
-            if (DownloadCommand == null) { return; }
+            if (DownloadCommand == null)
+            {
+                return;
+            }
 
             DownloadCommand.Invoke(this, new EventArgs());
         }

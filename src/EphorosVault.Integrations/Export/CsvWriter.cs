@@ -9,7 +9,11 @@ internal static class CsvWriter
     {
         for (int i = 0; i < values.Length; i++)
         {
-            if (i > 0) writer.Write(",");
+            if (i > 0)
+            {
+                writer.Write(",");
+            }
+
             writer.Write(Escape(values[i]));
         }
         writer.WriteLine();
@@ -19,7 +23,11 @@ internal static class CsvWriter
     {
         value ??= string.Empty;
         bool quote = value.IndexOf(',') >= 0 || value.IndexOf('"') >= 0 || value.IndexOf('\r') >= 0 || value.IndexOf('\n') >= 0;
-        if (!quote) return value;
+        if (!quote)
+        {
+            return value;
+        }
+
         return "\"" + value.Replace("\"", "\"\"") + "\"";
     }
 }

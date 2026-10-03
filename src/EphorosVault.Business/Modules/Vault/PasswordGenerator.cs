@@ -10,13 +10,20 @@ public sealed class PasswordGenerator
 
     public string Generate(int length)
     {
-        if (length < 8 || length > 128) throw new ArgumentOutOfRangeException(nameof(length));
+        if (length < 8 || length > 128)
+        {
+            throw new ArgumentOutOfRangeException(nameof(length));
+        }
 
         byte[] random = CryptographyUtility.GetRandomBytes(length);
         StringBuilder password = new(length);
         try
         {
-            for (int i = 0; i < random.Length; i++) password.Append(Characters[random[i] % Characters.Length]);
+            for (int i = 0; i < random.Length; i++)
+            {
+                password.Append(Characters[random[i] % Characters.Length]);
+            }
+
             return password.ToString();
         }
         finally

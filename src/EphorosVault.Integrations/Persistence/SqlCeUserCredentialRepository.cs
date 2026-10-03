@@ -26,7 +26,11 @@ public sealed class SqlCeUserCredentialRepository : IUserCredentialRepository
         using SqlCeConnection connection = _database.OpenConnection();
         using SqlCeCommand command = new("SELECT LoginSalt, LoginHash, LoginWorkFactor FROM UserCredential", connection);
         using SqlCeDataReader reader = command.ExecuteReader();
-        if (!reader.Read()) return null;
+        if (!reader.Read())
+        {
+            return null;
+        }
+
         return new CryptographyCredential
         {
             LoginSalt = (byte[])reader.GetValue(0),
@@ -37,7 +41,11 @@ public sealed class SqlCeUserCredentialRepository : IUserCredentialRepository
 
     public void Save(CryptographyCredential credential)
     {
-        if (credential == null) throw new ArgumentNullException(nameof(credential));
+        if (credential == null)
+        {
+            throw new ArgumentNullException(nameof(credential));
+        }
+
         using SqlCeConnection connection = _database.OpenConnection();
         using SqlCeTransaction transaction = connection.BeginTransaction();
         using SqlCeCommand delete = new("DELETE FROM UserCredential", connection, transaction);

@@ -1,4 +1,4 @@
-﻿using DotNetFrameworkToolkit.Modules.DependencyInjection;
+using DotNetFrameworkToolkit.Modules.DependencyInjection;
 using EphorosVault.Presentation.Desktop.Base.MVP;
 using Microsoft.Practices.Unity.Utility;
 using System;

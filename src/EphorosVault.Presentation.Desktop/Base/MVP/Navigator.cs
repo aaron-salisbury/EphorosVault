@@ -1,12 +1,15 @@
-using System.Windows.Forms;
 using System;
+using System.Windows.Forms;
 using static System.Windows.Forms.Control;
 
 namespace EphorosVault.Presentation.Desktop.Base.MVP;
 
 public class Navigator
 {
-    internal ControlCollection Window { get; set; }
+    internal ControlCollection Window
+    {
+        get; set;
+    }
 
     private readonly IServiceProvider _serviceProvider;
     private Presenter _current;

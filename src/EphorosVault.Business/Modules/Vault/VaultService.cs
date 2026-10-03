@@ -16,9 +16,21 @@ public sealed class VaultService
 
     public void Save(VaultEntry entry)
     {
-        if (entry == null) throw new ArgumentNullException(nameof(entry));
-        if (entry.Name == null || entry.Name.Trim().Length == 0) throw new ArgumentException("A name is required.", nameof(entry));
-        if (entry.Id == Guid.Empty) entry.Id = Guid.NewGuid();
+        if (entry == null)
+        {
+            throw new ArgumentNullException(nameof(entry));
+        }
+
+        if (entry.Name == null || entry.Name.Trim().Length == 0)
+        {
+            throw new ArgumentException("A name is required.", nameof(entry));
+        }
+
+        if (entry.Id == Guid.Empty)
+        {
+            entry.Id = Guid.NewGuid();
+        }
+
         _repository.Save(entry);
     }
 

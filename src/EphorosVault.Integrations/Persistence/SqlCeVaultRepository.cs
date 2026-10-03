@@ -22,7 +22,11 @@ public sealed class SqlCeVaultRepository : IVaultRepository
         using SqlCeConnection connection = _database.OpenConnection();
         using SqlCeCommand command = new("SELECT Id, Name, UserName, Password, Url, Notes FROM VaultEntries ORDER BY Name", connection);
         using SqlCeDataReader reader = command.ExecuteReader();
-        while (reader.Read()) entries.Add(Read(reader));
+        while (reader.Read())
+        {
+            entries.Add(Read(reader));
+        }
+
         return entries;
     }
 
