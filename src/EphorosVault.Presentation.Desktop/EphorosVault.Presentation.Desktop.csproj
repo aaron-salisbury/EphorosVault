@@ -86,9 +86,15 @@
     <Compile Include="Forms\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FolderNameForm.cs"><SubType>Form</SubType></Compile>
-    <Compile Include="Forms\VaultEntryForm.cs"><SubType>Form</SubType></Compile>
-    <Compile Include="Forms\OptionsForm.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="Forms\FolderNameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\VaultEntryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,13 +138,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Base\Assets\Attributions.txt" />
-    <Content Include="Base\Assets\Icons\YusukeKamiyamane\color-swatch.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\cross-circle-frame.png" />
-    <Content Include="Base\Assets\Icons\YusukeKamiyamane\home.png" />
-    <Content Include="Base\Assets\Icons\YusukeKamiyamane\monitor-window.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\document--arrow.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\folder--plus.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\key--plus.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\lock--arrow.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\question-frame.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\report.png" />
-    <Content Include="Base\Assets\Icons\YusukeKamiyamane\sort-alphabet.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\ui-scroll-pane-form.png" />
     <Resource Include="Base\Assets\Icons\SampleAppIcon.ico" />
   </ItemGroup>
   <ItemGroup>
