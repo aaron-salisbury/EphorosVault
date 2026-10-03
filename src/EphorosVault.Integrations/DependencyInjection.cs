@@ -20,6 +20,7 @@ public static class DependencyInjection
         services.AddSingleton<IVaultEncryption, VaultKeyEncryption>();
         services.AddScoped<IUserCredentialRepository, SqlCeUserCredentialRepository>();
         services.AddScoped<IVaultRepository, SqlCeVaultRepository>();
+        services.AddScoped<IVaultFolderRepository, SqlCeVaultFolderRepository>();
         services.AddScoped<KeePassCsvExporter, KeePassCsvExporter>();
         services.AddScoped<BitwardenCsvExporter, BitwardenCsvExporter>();
 
