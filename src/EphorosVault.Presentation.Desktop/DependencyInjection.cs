@@ -1,6 +1,7 @@
 using DotNetFrameworkToolkit.Modules.DependencyInjection;
 using EphorosVault.Presentation.Desktop.Base.MVP;
 using EphorosVault.Presentation.Desktop.Forms;
+using EphorosVault.Presentation.Desktop.Forms;
 using Microsoft.Practices.Unity.Utility;
 using System;
 using System.Reflection;
@@ -18,6 +19,7 @@ public static class DependencyInjection
 
         services.AddSingleton<Navigator, Navigator>();
         services.AddSingleton<ShellForm, ShellForm>();
+        services.AddScoped<LoginForm, LoginForm>();
         services.AddScoped<LoginForm, LoginForm>();
 
         // Presenters.
