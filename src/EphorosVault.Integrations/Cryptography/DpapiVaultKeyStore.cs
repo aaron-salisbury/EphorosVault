@@ -33,6 +33,11 @@ public sealed class DpapiVaultKeyStore : IVaultKeyStore
             throw new ArgumentNullException(nameof(key));
         }
 
+        if (key.Length != 32)
+        {
+            throw new ArgumentException("The vault key must be 32 bytes.", nameof(key));
+        }
+
         File.WriteAllBytes(_keyFilePath, ProtectedData.Protect(key, Entropy, DataProtectionScope.CurrentUser));
     }
 
@@ -63,7 +68,7 @@ public sealed class DpapiVaultKeyStore : IVaultKeyStore
         {
             if (key.Length != 32)
             {
-                throw new InvalidDataException("The recovery key is not a valid EphorosVault key.");
+                throw new InvalidDataException("The recovery key is not a valid Ephoros Vault key.");
             }
 
             Save(key);
