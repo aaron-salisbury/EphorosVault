@@ -1,4 +1,5 @@
 using EphorosVault.Business.Modules.Access;
+using EphorosVault.Presentation.Desktop.Base.Helpers;
 using System;
 using System.Windows.Forms;
 
@@ -7,12 +8,14 @@ namespace EphorosVault.Presentation.Desktop.Forms;
 public partial class LoginForm : Form
 {
     private readonly AccessService _accessService;
+    private readonly StandardErrorProvider _errors = new();
 
     public LoginForm(AccessService accessService)
     {
         _accessService = accessService ?? throw new ArgumentNullException(nameof(accessService));
 
         InitializeComponent();
+        _errors.ContainerControl = this;
         ConfigureMode();
     }
 
@@ -37,7 +40,7 @@ public partial class LoginForm : Form
 
     private void SubmitButton_Click(object sender, EventArgs e)
     {
-        ErrorLabel.Text = string.Empty;
+        _errors.Clear();
 
         try
         {
@@ -45,7 +48,7 @@ public partial class LoginForm : Form
             {
                 if (!string.Equals(PasswordTextBox.Text, ConfirmPasswordTextBox.Text, StringComparison.Ordinal))
                 {
-                    ErrorLabel.Text = "The passwords do not match.";
+                    _errors.UpdateError(ConfirmPasswordTextBox, "The passwords do not match.");
                     ConfirmPasswordTextBox.Focus();
                     ConfirmPasswordTextBox.SelectAll();
                     return;
@@ -55,7 +58,7 @@ public partial class LoginForm : Form
             }
             else if (!_accessService.Authenticate(PasswordTextBox.Text))
             {
-                ErrorLabel.Text = "The master password is incorrect.";
+                _errors.UpdateError(PasswordTextBox, "The master password is incorrect.");
                 PasswordTextBox.Focus();
                 PasswordTextBox.SelectAll();
                 return;
@@ -67,7 +70,7 @@ public partial class LoginForm : Form
         }
         catch (ArgumentException ex)
         {
-            ErrorLabel.Text = ex.Message;
+            _errors.UpdateError(PasswordTextBox, ex.Message);
         }
     }
 
