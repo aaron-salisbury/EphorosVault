@@ -33,6 +33,12 @@ partial class ShellForm
         this.MenuStrip = new System.Windows.Forms.MenuStrip();
         this.FileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.NewFolderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+        this.ExportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+        this.ExportKeePassMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+        this.ExportBitwardenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+        this.ExportRecoveryKeyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+        this.ToolsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+        this.PasswordGeneratorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.HelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.LogMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,6 +52,7 @@ partial class ShellForm
         this.MenuStrip.Font = new System.Drawing.Font("Segoe UI", 9F);
         this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
         this.FileMenuItem,
+        this.ToolsMenuItem,
         this.HelpMenuItem});
         this.MenuStrip.Location = new System.Drawing.Point(0, 0);
         this.MenuStrip.Name = "MenuStrip";
@@ -57,6 +64,8 @@ partial class ShellForm
         // 
         this.FileMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
         this.NewFolderMenuItem,
+        this.ExportMenuItem,
+        this.ExportRecoveryKeyMenuItem,
         this.ExitMenuItem});
         this.FileMenuItem.Name = "FileMenuItem";
         this.FileMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -69,6 +78,24 @@ partial class ShellForm
         this.NewFolderMenuItem.Text = "New &Folder...";
         this.NewFolderMenuItem.Click += new System.EventHandler(this.NewFolderMenuItem_Click);
         // 
+        // ExportMenuItem
+        //
+        this.ExportMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.ExportKeePassMenuItem, this.ExportBitwardenMenuItem });
+        this.ExportMenuItem.Text = "&Export";
+        this.ExportKeePassMenuItem.Text = "&KeePass CSV...";
+        this.ExportKeePassMenuItem.Click += new System.EventHandler(this.ExportKeePassMenuItem_Click);
+        this.ExportBitwardenMenuItem.Text = "&Bitwarden CSV...";
+        this.ExportBitwardenMenuItem.Click += new System.EventHandler(this.ExportBitwardenMenuItem_Click);
+        // ExportRecoveryKeyMenuItem
+        //
+        this.ExportRecoveryKeyMenuItem.Text = "Export &Recovery Key...";
+        this.ExportRecoveryKeyMenuItem.Click += new System.EventHandler(this.ExportRecoveryKeyMenuItem_Click);
+        // ToolsMenuItem
+        //
+        this.ToolsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.PasswordGeneratorMenuItem });
+        this.ToolsMenuItem.Text = "&Tools";
+        this.PasswordGeneratorMenuItem.Text = "&Password Generator";
+        this.PasswordGeneratorMenuItem.Click += new System.EventHandler(this.PasswordGeneratorMenuItem_Click);
         // ExitMenuItem
         // 
         this.ExitMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ExitMenuItem.Image")));
@@ -135,6 +162,12 @@ partial class ShellForm
     private System.Windows.Forms.MenuStrip MenuStrip;
     private System.Windows.Forms.ToolStripMenuItem FileMenuItem;
     private System.Windows.Forms.ToolStripMenuItem NewFolderMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem ExportMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem ExportKeePassMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem ExportBitwardenMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem ExportRecoveryKeyMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem ToolsMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem PasswordGeneratorMenuItem;
     private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
     private System.Windows.Forms.ToolStripMenuItem HelpMenuItem;
     private System.Windows.Forms.ToolStripMenuItem LogMenuItem;
