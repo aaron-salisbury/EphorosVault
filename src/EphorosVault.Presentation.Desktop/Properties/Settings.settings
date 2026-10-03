@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EphorosVault.DesktopApp.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EphorosVault.Presentation.Desktop.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="ApplicationFriendlyName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">EphorosVault</Value>
+      <Value Profile="(Default)">Ephoros Vault</Value>
     </Setting>
     <Setting Name="AboutDescription" Type="System.String" Scope="User">
       <Value Profile="(Default)">A classic desktop password vault for securely storing credentials.</Value>

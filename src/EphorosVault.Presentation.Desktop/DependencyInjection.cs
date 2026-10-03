@@ -21,8 +21,8 @@ public static class DependencyInjection
         services.AddSingleton<Navigator, Navigator>();
         services.AddSingleton<ShellForm, ShellForm>();
         services.AddScoped<LoginForm, LoginForm>();
-        services.AddScoped<LoginForm, LoginForm>();
-        services.AddScoped<LoginForm, LoginForm>();
+        //services.AddScoped<LoginForm, LoginForm>();
+        //services.AddScoped<LoginForm, LoginForm>();
 
         // Presenters.
         foreach (Type assemblyType in Assembly.GetExecutingAssembly().GetTypes())

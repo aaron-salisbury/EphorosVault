@@ -12,7 +12,7 @@ internal static class Program
     /// The main entry point for the application.
     /// </summary>
     [STAThread]
-    static void Main()
+    private static void Main()
     {
         try
         {
@@ -22,6 +22,7 @@ internal static class Program
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             using (LoginForm loginForm = Ioc.Default.GetRequiredService<LoginForm>())
             {
                 if (loginForm.ShowDialog() != DialogResult.OK || !loginForm.IsAuthenticated)

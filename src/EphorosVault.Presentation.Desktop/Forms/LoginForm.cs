@@ -16,13 +16,16 @@ public partial class LoginForm : Form
         ConfigureMode();
     }
 
-    public bool IsAuthenticated { get; private set; }
+    public bool IsAuthenticated
+    {
+        get; private set;
+    }
 
     private void ConfigureMode()
     {
         bool requiresSetup = _accessService.RequiresSetup;
 
-        Text = requiresSetup ? "Create EphorosVault Master Password" : "Unlock EphorosVault";
+        Text = requiresSetup ? "Create Ephoros Vault Master Password" : "Unlock Ephoros Vault";
         HeadingLabel.Text = requiresSetup ? "Create Master Password" : "Unlock Vault";
         InstructionLabel.Text = requiresSetup
             ? "Choose the master password that will protect access to this vault."
