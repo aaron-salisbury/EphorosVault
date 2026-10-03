@@ -1,4 +1,6 @@
 using EphorosVault.Business.Modules.Vault;
+using EphorosVault.Integrations.Cryptography;
+using EphorosVault.Integrations.Export;
 using EphorosVault.Presentation.Desktop.Forms;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,10 @@ namespace EphorosVault.Presentation.Desktop
     {
         private readonly VaultService _vaultService;
         private readonly VaultFolderService _folderService;
+        private readonly PasswordGenerator _passwordGenerator;
+        private readonly KeePassCsvExporter _keePassExporter;
+        private readonly BitwardenCsvExporter _bitwardenExporter;
+        private readonly IVaultKeyStore _keyStore;
         private readonly ListBox _folders = new();
         private readonly ListView _entries = new();
         private readonly TextBox _search = new();
@@ -19,10 +25,14 @@ namespace EphorosVault.Presentation.Desktop
         private readonly TextBox _detailNotes = new();
         private readonly List<VaultEntry> _loadedEntries = new();
 
-        public ShellForm(VaultService vaultService, VaultFolderService folderService)
+        public ShellForm(VaultService vaultService, VaultFolderService folderService, PasswordGenerator passwordGenerator, KeePassCsvExporter keePassExporter, BitwardenCsvExporter bitwardenExporter, IVaultKeyStore keyStore)
         {
             _vaultService = vaultService;
             _folderService = folderService;
+            _passwordGenerator = passwordGenerator;
+            _keePassExporter = keePassExporter;
+            _bitwardenExporter = bitwardenExporter;
+            _keyStore = keyStore;
             InitializeComponent();
             Text = Properties.Settings.Default.ApplicationFriendlyName;
             BuildVaultWorkspace();
@@ -37,8 +47,11 @@ namespace EphorosVault.Presentation.Desktop
             ToolStripButton newEntry = new("New");
             ToolStripButton editEntry = new("Edit");
             ToolStripButton deleteEntry = new("Delete");
+            ToolStripButton copyUser = new("Copy User");
+            ToolStripButton copyPassword = new("Copy Password");
             newEntry.Click += NewEntry_Click; editEntry.Click += EditEntry_Click; deleteEntry.Click += DeleteEntry_Click;
-            tools.Items.Add(newEntry); tools.Items.Add(editEntry); tools.Items.Add(deleteEntry);
+            copyUser.Click += CopyUserName_Click; copyPassword.Click += CopyPassword_Click;
+            tools.Items.Add(newEntry); tools.Items.Add(editEntry); tools.Items.Add(deleteEntry); tools.Items.Add(new ToolStripSeparator()); tools.Items.Add(copyUser); tools.Items.Add(copyPassword);
             tools.Dock = DockStyle.Top;
 
             SplitContainer outer = new() { Dock = DockStyle.Fill, SplitterDistance = 155 };
@@ -127,6 +140,46 @@ namespace EphorosVault.Presentation.Desktop
         {
             VaultEntry entry = SelectedEntry(); if (entry == null) return;
             if (MessageBox.Show(this, "Delete '" + entry.Name + "'?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) { _vaultService.Delete(entry.Id); RefreshVault(); }
+        }
+
+        private void CopyUserName_Click(object sender, System.EventArgs e)
+        {
+            VaultEntry entry = SelectedEntry();
+            if (entry != null && entry.UserName.Length > 0) Clipboard.SetText(entry.UserName);
+        }
+
+        private void CopyPassword_Click(object sender, System.EventArgs e)
+        {
+            VaultEntry entry = SelectedEntry();
+            if (entry != null && entry.Password.Length > 0) Clipboard.SetText(entry.Password);
+        }
+
+        private void PasswordGeneratorMenuItem_Click(object sender, System.EventArgs e)
+        {
+            string password = _passwordGenerator.Generate(16);
+            Clipboard.SetText(password);
+            MessageBox.Show(this, "A generated 16-character password has been copied to the clipboard.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ExportKeePassMenuItem_Click(object sender, System.EventArgs e) => Export(_keePassExporter);
+        private void ExportBitwardenMenuItem_Click(object sender, System.EventArgs e) => Export(_bitwardenExporter);
+
+        private void Export(IVaultExporter exporter)
+        {
+            if (MessageBox.Show(this, "CSV exports contain passwords in plaintext. Continue?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
+            using (SaveFileDialog dialog = new()) {
+                dialog.Filter = exporter.FileFilter; dialog.DefaultExt = "csv"; dialog.AddExtension = true;
+                if (dialog.ShowDialog(this) == DialogResult.OK) { exporter.Export(dialog.FileName, _vaultService.GetEntries()); MessageBox.Show(this, "Export completed.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+            }
+        }
+
+        private void ExportRecoveryKeyMenuItem_Click(object sender, System.EventArgs e)
+        {
+            if (MessageBox.Show(this, "The recovery key grants access to the encrypted vault database. Store it securely and separately from the database. Continue?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
+            using (SaveFileDialog dialog = new()) {
+                dialog.Filter = "Ephoros Vault recovery key (*.evkey)|*.evkey|All files (*.*)|*.*"; dialog.DefaultExt = "evkey"; dialog.AddExtension = true;
+                if (dialog.ShowDialog(this) == DialogResult.OK) { _keyStore.ExportRecoveryKey(dialog.FileName); MessageBox.Show(this, "Recovery key exported.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+            }
         }
 
         private void NewFolderMenuItem_Click(object sender, System.EventArgs e)
