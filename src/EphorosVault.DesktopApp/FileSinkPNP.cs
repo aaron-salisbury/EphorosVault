@@ -3,19 +3,23 @@ using Microsoft.Practices.EnterpriseLibrary.Logging;
 using Microsoft.Practices.EnterpriseLibrary.Logging.Configuration;
 using Microsoft.Practices.EnterpriseLibrary.Logging.Formatters;
 using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners;
+using System;
 using System.Diagnostics;
 
 namespace EphorosVault.Presentation;
 
-[ConfigurationElementType(typeof(CustomTraceListenerData))]
 /// <summary>
 /// Writes Patterns & Practices Enterprise Library log entries to a file by leveraging a <see cref="TextWriterTraceListener"/>.
 /// </summary>
+[ConfigurationElementType(typeof(CustomTraceListenerData))]
 public class FileSinkPNP : CustomTraceListener
 {
     private readonly TextWriterTraceListener _fileListener;
     private readonly object _syncLock = new();
     private bool _disposed;
+
+    /// <inheritdoc/>
+    public override bool IsThreadSafe => true;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FileSinkPNP"/> class.
@@ -25,6 +29,11 @@ public class FileSinkPNP : CustomTraceListener
     /// <param name="formatter">The formatter used for <see cref="LogEntry"/> instances. If <see langword="null"/>, a default formatter is used.</param>
     public FileSinkPNP(string filePath, ILogFormatter formatter = null)
     {
+        if (filePath == null || filePath.Trim().Length == 0)
+        {
+            throw new ArgumentException("File path cannot be null or whitespace.", nameof(filePath));
+        }
+
         _fileListener = new TextWriterTraceListener(filePath);
 
         Formatter = formatter ?? DefaultFormatter();
@@ -38,6 +47,7 @@ public class FileSinkPNP : CustomTraceListener
     {
         lock (_syncLock)
         {
+            ThrowIfDisposed();
             _fileListener.Write(message);
         }
     }
@@ -51,6 +61,7 @@ public class FileSinkPNP : CustomTraceListener
     {
         lock (_syncLock)
         {
+            ThrowIfDisposed();
             _fileListener.WriteLine(message);
         }
     }
@@ -67,6 +78,8 @@ public class FileSinkPNP : CustomTraceListener
     {
         lock (_syncLock)
         {
+            ThrowIfDisposed();
+
             if (Formatter is not null && data is LogEntry logEntry)
             {
                 string message = Formatter.Format(logEntry);
@@ -93,9 +106,18 @@ public class FileSinkPNP : CustomTraceListener
     {
         lock (_syncLock)
         {
+            ThrowIfDisposed();
             _fileListener.Flush();
         }
         base.Flush();
+    }
+
+    /// <summary>
+    /// Flushes and closes the underlying file listener. Repeated calls are harmless.
+    /// </summary>
+    public override void Close()
+    {
+        Dispose();
     }
 
     /// <summary>
@@ -104,21 +126,32 @@ public class FileSinkPNP : CustomTraceListener
     /// <param name="disposing"><see langword="true"/> to dispose managed resources; otherwise, <see langword="false"/>.</param>
     protected override void Dispose(bool disposing)
     {
-        if (_disposed)
+        if (!disposing)
         {
+            _disposed = true;
+            base.Dispose(disposing);
             return;
         }
 
-        if (disposing)
+        lock (_syncLock)
         {
-            lock (_syncLock)
+            if (_disposed)
             {
-                _fileListener.Dispose();
+                return;
             }
+
+            _fileListener.Dispose();
+            _disposed = true;
         }
 
-        _disposed = true;
-
         base.Dispose(disposing);
+    }
+
+    private void ThrowIfDisposed()
+    {
+        if (_disposed)
+        {
+            throw new ObjectDisposedException(nameof(FileSinkPNP));
+        }
     }
 }
