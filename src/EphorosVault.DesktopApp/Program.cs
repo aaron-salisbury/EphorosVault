@@ -27,8 +27,6 @@ namespace EphorosVault.DesktopApp
             {
                 Ioc.Default?.Dispose();
             }
-
-
         }
     }
 }
