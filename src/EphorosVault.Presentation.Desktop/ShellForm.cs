@@ -19,10 +19,15 @@ namespace EphorosVault.Presentation.Desktop
         private readonly ListBox _folders = new();
         private readonly ListView _entries = new();
         private readonly TextBox _search = new();
-        private readonly Label _detailName = new();
-        private readonly Label _detailUser = new();
-        private readonly Label _detailUrl = new();
+        private readonly TextBox _detailName = new();
+        private readonly TextBox _detailUser = new();
+        private readonly TextBox _detailPassword = new();
+        private readonly TextBox _detailUrl = new();
         private readonly TextBox _detailNotes = new();
+        private ToolStripButton _editEntryButton;
+        private ToolStripButton _deleteEntryButton;
+        private ToolStripButton _copyUserButton;
+        private ToolStripButton _copyPasswordButton;
         private readonly List<VaultEntry> _loadedEntries = new();
 
         public ShellForm(VaultService vaultService, VaultFolderService folderService, PasswordGenerator passwordGenerator, KeePassCsvExporter keePassExporter, BitwardenCsvExporter bitwardenExporter, IVaultKeyStore keyStore)
@@ -43,43 +48,79 @@ namespace EphorosVault.Presentation.Desktop
         {
             MainContentPanel.Controls.Clear();
 
-            ToolStrip tools = new();
+            ToolStrip tools = new() { Dock = DockStyle.Top };
             ToolStripButton newEntry = new("New");
-            ToolStripButton editEntry = new("Edit");
-            ToolStripButton deleteEntry = new("Delete");
-            ToolStripButton copyUser = new("Copy User");
-            ToolStripButton copyPassword = new("Copy Password");
-            newEntry.Click += NewEntry_Click; editEntry.Click += EditEntry_Click; deleteEntry.Click += DeleteEntry_Click;
-            copyUser.Click += CopyUserName_Click; copyPassword.Click += CopyPassword_Click;
-            tools.Items.Add(newEntry); tools.Items.Add(editEntry); tools.Items.Add(deleteEntry); tools.Items.Add(new ToolStripSeparator()); tools.Items.Add(copyUser); tools.Items.Add(copyPassword);
-            tools.Dock = DockStyle.Top;
+            _editEntryButton = new ToolStripButton("Edit") { Enabled = false };
+            _deleteEntryButton = new ToolStripButton("Delete") { Enabled = false };
+            _copyUserButton = new ToolStripButton("Copy User") { Enabled = false };
+            _copyPasswordButton = new ToolStripButton("Copy Password") { Enabled = false };
+            newEntry.Click += NewEntry_Click;
+            _editEntryButton.Click += EditEntry_Click;
+            _deleteEntryButton.Click += DeleteEntry_Click;
+            _copyUserButton.Click += CopyUserName_Click;
+            _copyPasswordButton.Click += CopyPassword_Click;
+            tools.Items.Add(newEntry);
+            tools.Items.Add(_editEntryButton);
+            tools.Items.Add(_deleteEntryButton);
+            tools.Items.Add(new ToolStripSeparator());
+            tools.Items.Add(_copyUserButton);
+            tools.Items.Add(_copyPasswordButton);
 
-            SplitContainer outer = new() { Dock = DockStyle.Fill, SplitterDistance = 155 };
-            _folders.Dock = DockStyle.Fill;
+            Panel filterPanel = new() { Dock = DockStyle.Top, Height = 34 };
+            filterPanel.Controls.Add(new Label { Text = "Folder:", Left = 8, Top = 10, Width = 45 });
+            _folders.Left = 55;
+            _folders.Top = 6;
+            _folders.Width = 170;
+            _folders.Height = 21;
             _folders.SelectedIndexChanged += FilterChanged;
-            outer.Panel1.Controls.Add(_folders);
+            filterPanel.Controls.Add(_folders);
+            filterPanel.Controls.Add(new Label { Text = "Search:", Left = 240, Top = 10, Width = 50 });
+            _search.Left = 292;
+            _search.Top = 6;
+            _search.Width = 240;
+            _search.TextChanged += FilterChanged;
+            filterPanel.Controls.Add(_search);
 
-            SplitContainer right = new() { Dock = DockStyle.Fill, Orientation = Orientation.Horizontal, SplitterDistance = 235 };
-            Panel searchPanel = new() { Dock = DockStyle.Top, Height = 30 };
-            searchPanel.Controls.Add(new Label { Text = "Search:", Left = 6, Top = 8, Width = 50 });
-            _search.Left = 60; _search.Top = 5; _search.Width = 260; _search.TextChanged += FilterChanged; searchPanel.Controls.Add(_search);
+            SplitContainer workspace = new() { Dock = DockStyle.Fill, SplitterDistance = 260, FixedPanel = FixedPanel.Panel1 };
+            _entries.Dock = DockStyle.Fill;
+            _entries.View = View.Details;
+            _entries.FullRowSelect = true;
+            _entries.HideSelection = false;
+            _entries.MultiSelect = false;
+            _entries.Columns.Add("Credentials", 235);
+            _entries.SelectedIndexChanged += EntrySelected;
+            _entries.DoubleClick += EditEntry_Click;
+            workspace.Panel1.Controls.Add(_entries);
 
-            _entries.Dock = DockStyle.Fill; _entries.View = View.Details; _entries.FullRowSelect = true; _entries.HideSelection = false;
-            _entries.Columns.Add("Name", 190); _entries.Columns.Add("User Name", 170); _entries.Columns.Add("URL", 230);
-            _entries.SelectedIndexChanged += EntrySelected; _entries.DoubleClick += EditEntry_Click;
-            Panel listPanel = new() { Dock = DockStyle.Fill }; listPanel.Controls.Add(_entries); listPanel.Controls.Add(searchPanel);
-            right.Panel1.Controls.Add(listPanel);
+            Panel details = new() { Dock = DockStyle.Fill, Padding = new Padding(10) };
+            int labelWidth = 75;
+            int fieldLeft = 90;
+            int fieldWidth = 430;
+            AddDetailField(details, "Name:", _detailName, 12, labelWidth, fieldLeft, fieldWidth);
+            AddDetailField(details, "User name:", _detailUser, 42, labelWidth, fieldLeft, fieldWidth);
+            AddDetailField(details, "Password:", _detailPassword, 72, labelWidth, fieldLeft, fieldWidth);
+            _detailPassword.PasswordChar = '*';
+            AddDetailField(details, "URL:", _detailUrl, 102, labelWidth, fieldLeft, fieldWidth);
+            AddDetailField(details, "Notes:", _detailNotes, 132, labelWidth, fieldLeft, fieldWidth);
+            _detailNotes.Multiline = true;
+            _detailNotes.Height = 140;
+            _detailNotes.ScrollBars = ScrollBars.Vertical;
+            workspace.Panel2.Controls.Add(details);
 
-            Panel details = new() { Dock = DockStyle.Fill, Padding = new Padding(8) };
-            _detailName.SetBounds(8, 8, 600, 20); _detailName.Font = new System.Drawing.Font(_detailName.Font, System.Drawing.FontStyle.Bold);
-            _detailUser.SetBounds(8, 34, 600, 20); _detailUrl.SetBounds(8, 58, 600, 20);
-            _detailNotes.SetBounds(8, 84, 600, 90); _detailNotes.Multiline = true; _detailNotes.ReadOnly = true; _detailNotes.ScrollBars = ScrollBars.Vertical;
-            details.Controls.Add(_detailName); details.Controls.Add(_detailUser); details.Controls.Add(_detailUrl); details.Controls.Add(_detailNotes);
-            right.Panel2.Controls.Add(details);
-            outer.Panel2.Controls.Add(right);
-
-            MainContentPanel.Controls.Add(outer);
+            MainContentPanel.Controls.Add(workspace);
+            MainContentPanel.Controls.Add(filterPanel);
             MainContentPanel.Controls.Add(tools);
+        }
+
+        private static void AddDetailField(Panel panel, string labelText, TextBox field, int top, int labelWidth, int fieldLeft, int fieldWidth)
+        {
+            panel.Controls.Add(new Label { Text = labelText, Left = 10, Top = top + 3, Width = labelWidth });
+            field.Left = fieldLeft;
+            field.Top = top;
+            field.Width = fieldWidth;
+            field.ReadOnly = true;
+            field.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel.Controls.Add(field);
         }
 
         private void RefreshVault()
@@ -104,7 +145,7 @@ namespace EphorosVault.Presentation.Desktop
             {
                 if (filter != null && !filter.All && entry.FolderId != filter.Id) continue;
                 if (search.Length > 0 && entry.Name.IndexOf(search, System.StringComparison.OrdinalIgnoreCase) < 0 && entry.UserName.IndexOf(search, System.StringComparison.OrdinalIgnoreCase) < 0 && entry.Url.IndexOf(search, System.StringComparison.OrdinalIgnoreCase) < 0) continue;
-                ListViewItem item = new(entry.Name); item.SubItems.Add(entry.UserName); item.SubItems.Add(entry.Url); item.Tag = entry; _entries.Items.Add(item);
+                ListViewItem item = new(entry.Name); item.Tag = entry; _entries.Items.Add(item);
             }
             ClearDetails();
         }
@@ -115,10 +156,31 @@ namespace EphorosVault.Presentation.Desktop
         {
             if (_entries.SelectedItems.Count == 0) { ClearDetails(); return; }
             VaultEntry entry = (VaultEntry)_entries.SelectedItems[0].Tag;
-            _detailName.Text = entry.Name; _detailUser.Text = "User name: " + entry.UserName; _detailUrl.Text = "URL: " + entry.Url; _detailNotes.Text = entry.Notes;
+            _detailName.Text = entry.Name;
+            _detailUser.Text = entry.UserName;
+            _detailPassword.Text = entry.Password;
+            _detailUrl.Text = entry.Url;
+            _detailNotes.Text = entry.Notes;
+            SetEntryCommandsEnabled(true);
         }
 
-        private void ClearDetails() { _detailName.Text = string.Empty; _detailUser.Text = string.Empty; _detailUrl.Text = string.Empty; _detailNotes.Text = string.Empty; }
+        private void ClearDetails()
+        {
+            _detailName.Text = string.Empty;
+            _detailUser.Text = string.Empty;
+            _detailPassword.Text = string.Empty;
+            _detailUrl.Text = string.Empty;
+            _detailNotes.Text = string.Empty;
+            SetEntryCommandsEnabled(false);
+        }
+
+        private void SetEntryCommandsEnabled(bool enabled)
+        {
+            _editEntryButton.Enabled = enabled;
+            _deleteEntryButton.Enabled = enabled;
+            _copyUserButton.Enabled = enabled;
+            _copyPasswordButton.Enabled = enabled;
+        }
 
         private VaultEntry SelectedEntry() => _entries.SelectedItems.Count == 0 ? null : (VaultEntry)_entries.SelectedItems[0].Tag;
 
