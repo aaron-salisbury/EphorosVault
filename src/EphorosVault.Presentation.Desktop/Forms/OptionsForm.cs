@@ -1,3 +1,4 @@
+using EphorosVault.Presentation.Desktop.Base.Helpers;
 using System;
 using System.Windows.Forms;
 
@@ -10,9 +11,11 @@ public sealed class OptionsForm : Form
     private readonly CheckBox _lowercase = new();
     private readonly CheckBox _numbers = new();
     private readonly CheckBox _special = new();
+    private readonly StandardErrorProvider _errors = new();
 
     public OptionsForm()
     {
+        _errors.ContainerControl = this;
         Text = "Options - Ephoros Vault";
         FormBorderStyle = FormBorderStyle.FixedDialog;
         StartPosition = FormStartPosition.CenterParent;
@@ -45,9 +48,10 @@ public sealed class OptionsForm : Form
 
     private void Ok_Click(object sender, EventArgs e)
     {
+        _errors.Clear();
         if (!_uppercase.Checked && !_lowercase.Checked && !_numbers.Checked && !_special.Checked)
         {
-            MessageBox.Show(this, "Enable at least one character type.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            _errors.UpdateError(_special, "Enable at least one character type.");
             return;
         }
 
