@@ -25,6 +25,25 @@ public class VaultServiceTests
     }
 
     [TestMethod]
+    public void SaveTrimsName()
+    {
+        MemoryRepository repository = new();
+        VaultService service = new(repository);
+        VaultEntry entry = new() { Name = "  Example  " };
+
+        service.Save(entry);
+
+        Assert.AreEqual("Example", entry.Name);
+    }
+
+    [TestMethod]
+    public void SaveRejectsNullEntry()
+    {
+        VaultService service = new(new MemoryRepository());
+        Assert.ThrowsException<ArgumentNullException>(() => service.Save(null));
+    }
+
+    [TestMethod]
     public void SaveRequiresName()
     {
         VaultService service = new(new MemoryRepository());
