@@ -12,6 +12,8 @@ namespace EphorosVault.Data
         {
             Guard.ArgumentNotNull(services, nameof(services));
 
+            services.AddScoped<IEmbeddedDataAccess, EmbeddedDataAccess>();
+
             return services;
         }
     }
