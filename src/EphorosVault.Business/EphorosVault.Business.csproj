@@ -74,19 +74,18 @@
     <Compile Include="DependencyInjection.cs" />
     <Compile Include="Modules\Sample\ApplicationServices\ISampleToolsService.cs" />
     <Compile Include="Modules\Sample\ApplicationServices\SampleToolsService.cs" />
-    <Compile Include="Modules\Sample\DomainServices\FlatUIColorProvider.cs" />
     <Compile Include="Modules\Sample\DomainServices\LineSorter.cs" />
     <Compile Include="Modules\Sample\DomainServices\UUIDGenerator.cs" />
     <Compile Include="Modules\Sample\DTOs\FlatColorDto.cs" />
+    <Compile Include="Modules\Vault\IVaultEncryption.cs" />
+    <Compile Include="Modules\Vault\IVaultExporter.cs" />
+    <Compile Include="Modules\Vault\IVaultRepository.cs" />
+    <Compile Include="Modules\Vault\PasswordGenerator.cs" />
+    <Compile Include="Modules\Vault\VaultEntry.cs" />
+    <Compile Include="Modules\Vault\VaultService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EphorosVault.Data\EphorosVault.Data.csproj">
-      <Project>{1c04e92d-bea9-4dc4-b877-429a81d9b9a6}</Project>
-      <Name>EphorosVault.Data</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+<ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
