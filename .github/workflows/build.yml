@@ -26,4 +26,13 @@ jobs:
         run: msbuild src/EphorosVault.slnx /p:Configuration=Release /m
 
       - name: Test
-        run: vstest.console.exe src/EphorosVault.Tests/bin/Release/EphorosVault.Tests.dll
+        shell: pwsh
+        run: |
+          $vstest = (Get-ChildItem "$env:ProgramFiles\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -ErrorAction SilentlyContinue).FullName
+          if (-not $vstest) {
+            $vstest = (Get-ChildItem "$env:ProgramFiles\Microsoft Visual Studio\18\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -ErrorAction SilentlyContinue).FullName
+          }
+          if (-not $vstest) {
+            throw "vstest.console.exe could not be found on the runner."
+          }
+          & $vstest src/EphorosVault.Tests/bin/Release/EphorosVault.Tests.dll
