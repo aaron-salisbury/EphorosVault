@@ -20,7 +20,7 @@ public sealed class SqlCeVaultRepository : IVaultRepository
     {
         List<VaultEntry> entries = new();
         using SqlCeConnection connection = _database.OpenConnection();
-        using SqlCeCommand command = new("SELECT Id, Name, UserName, Password, Url, Notes FROM VaultEntries ORDER BY Name", connection);
+        using SqlCeCommand command = new("SELECT Id, FolderId, Name, UserName, Password, Url, Notes FROM VaultEntries ORDER BY Name", connection);
         using SqlCeDataReader reader = command.ExecuteReader();
         while (reader.Read())
         {
@@ -33,7 +33,7 @@ public sealed class SqlCeVaultRepository : IVaultRepository
     public VaultEntry Get(Guid id)
     {
         using SqlCeConnection connection = _database.OpenConnection();
-        using SqlCeCommand command = new("SELECT Id, Name, UserName, Password, Url, Notes FROM VaultEntries WHERE Id = @id", connection);
+        using SqlCeCommand command = new("SELECT Id, FolderId, Name, UserName, Password, Url, Notes FROM VaultEntries WHERE Id = @id", connection);
         command.Parameters.AddWithValue("@id", id);
         using SqlCeDataReader reader = command.ExecuteReader();
         return reader.Read() ? Read(reader) : null;
@@ -46,8 +46,9 @@ public sealed class SqlCeVaultRepository : IVaultRepository
         exists.Parameters.AddWithValue("@id", entry.Id);
         bool update = Convert.ToInt32(exists.ExecuteScalar()) > 0;
         using SqlCeCommand command = connection.CreateCommand();
-        command.CommandText = update ? "UPDATE VaultEntries SET Name=@name, UserName=@user, Password=@password, Url=@url, Notes=@notes WHERE Id=@id" : "INSERT INTO VaultEntries (Id, Name, UserName, Password, Url, Notes) VALUES (@id, @name, @user, @password, @url, @notes)";
+        command.CommandText = update ? "UPDATE VaultEntries SET FolderId=@folderId, Name=@name, UserName=@user, Password=@password, Url=@url, Notes=@notes WHERE Id=@id" : "INSERT INTO VaultEntries (Id, FolderId, Name, UserName, Password, Url, Notes) VALUES (@id, @folderId, @name, @user, @password, @url, @notes)";
         command.Parameters.AddWithValue("@id", entry.Id);
+        command.Parameters.AddWithValue("@folderId", entry.FolderId.HasValue ? (object)entry.FolderId.Value : DBNull.Value);
         command.Parameters.AddWithValue("@name", entry.Name);
         command.Parameters.AddWithValue("@user", _encryption.Encrypt(entry.UserName ?? string.Empty));
         command.Parameters.AddWithValue("@password", _encryption.Encrypt(entry.Password ?? string.Empty));
@@ -67,10 +68,11 @@ public sealed class SqlCeVaultRepository : IVaultRepository
     private VaultEntry Read(SqlCeDataReader reader) => new()
     {
         Id = reader.GetGuid(0),
-        Name = reader.GetString(1),
-        UserName = _encryption.Decrypt(reader.GetString(2)),
-        Password = _encryption.Decrypt(reader.GetString(3)),
-        Url = _encryption.Decrypt(reader.GetString(4)),
-        Notes = _encryption.Decrypt(reader.GetString(5))
+        FolderId = reader.IsDBNull(1) ? (Guid?)null : reader.GetGuid(1),
+        Name = reader.GetString(2),
+        UserName = _encryption.Decrypt(reader.GetString(3)),
+        Password = _encryption.Decrypt(reader.GetString(4)),
+        Url = _encryption.Decrypt(reader.GetString(5)),
+        Notes = _encryption.Decrypt(reader.GetString(6))
     };
 }
