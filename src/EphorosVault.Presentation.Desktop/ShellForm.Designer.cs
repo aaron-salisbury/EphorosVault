@@ -39,6 +39,7 @@ partial class ShellForm
         this.ExportRecoveryKeyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.ToolsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.PasswordGeneratorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+        this.OptionsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.HelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.LogMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -92,10 +93,12 @@ partial class ShellForm
         this.ExportRecoveryKeyMenuItem.Click += new System.EventHandler(this.ExportRecoveryKeyMenuItem_Click);
         // ToolsMenuItem
         //
-        this.ToolsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.PasswordGeneratorMenuItem });
+        this.ToolsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.PasswordGeneratorMenuItem, this.OptionsMenuItem });
         this.ToolsMenuItem.Text = "&Tools";
         this.PasswordGeneratorMenuItem.Text = "&Password Generator";
         this.PasswordGeneratorMenuItem.Click += new System.EventHandler(this.PasswordGeneratorMenuItem_Click);
+        this.OptionsMenuItem.Text = "&Options...";
+        this.OptionsMenuItem.Click += new System.EventHandler(this.OptionsMenuItem_Click);
         // ExitMenuItem
         // 
         this.ExitMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ExitMenuItem.Image")));
@@ -168,6 +171,7 @@ partial class ShellForm
     private System.Windows.Forms.ToolStripMenuItem ExportRecoveryKeyMenuItem;
     private System.Windows.Forms.ToolStripMenuItem ToolsMenuItem;
     private System.Windows.Forms.ToolStripMenuItem PasswordGeneratorMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem OptionsMenuItem;
     private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
     private System.Windows.Forms.ToolStripMenuItem HelpMenuItem;
     private System.Windows.Forms.ToolStripMenuItem LogMenuItem;
