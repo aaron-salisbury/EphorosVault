@@ -70,22 +70,11 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EphorosVault.Data\EphorosVault.Data.csproj">
-      <Project>{84052292-CEF5-4D54-B3CD-591CAEFA1C7D}</Project>
-      <Name>EphorosVault.Data</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup></ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyInjection.cs" />
     <Compile Include="Modules\Access\AccessService.cs" />
     <Compile Include="Modules\Access\IUserCredentialRepository.cs" />
-    <Compile Include="Modules\Sample\ApplicationServices\ISampleToolsService.cs" />
-    <Compile Include="Modules\Sample\ApplicationServices\SampleToolsService.cs" />
-    <Compile Include="Modules\Sample\DomainServices\FlatUIColorProvider.cs" />
-    <Compile Include="Modules\Sample\DomainServices\LineSorter.cs" />
-    <Compile Include="Modules\Sample\DomainServices\UUIDGenerator.cs" />
-    <Compile Include="Modules\Sample\DTOs\FlatColorDto.cs" />
     <Compile Include="Modules\Vault\IVaultEncryption.cs" />
     <Compile Include="Modules\Vault\IVaultExporter.cs" />
     <Compile Include="Modules\Vault\IVaultRepository.cs" />
