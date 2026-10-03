@@ -11,6 +11,7 @@
     <AssemblyName>EphorosVault.Integrations</AssemblyName>
     <Description>Integrations tier of application.</Description>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <LangVersion>latest</LangVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
