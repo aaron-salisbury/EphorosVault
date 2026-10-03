@@ -11,5 +11,10 @@
     <Setting Name="ApplicationLink" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://github.com/aaron-salisbury/EphorosVault</Value>
     </Setting>
+    <Setting Name="PasswordLength" Type="System.Int32" Scope="User"><Value Profile="(Default)">20</Value></Setting>
+    <Setting Name="PasswordRequireUppercase" Type="System.Boolean" Scope="User"><Value Profile="(Default)">True</Value></Setting>
+    <Setting Name="PasswordRequireLowercase" Type="System.Boolean" Scope="User"><Value Profile="(Default)">True</Value></Setting>
+    <Setting Name="PasswordRequireNumbers" Type="System.Boolean" Scope="User"><Value Profile="(Default)">True</Value></Setting>
+    <Setting Name="PasswordRequireSpecialCharacters" Type="System.Boolean" Scope="User"><Value Profile="(Default)">True</Value></Setting>
   </Settings>
 </SettingsFile>
