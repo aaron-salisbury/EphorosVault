@@ -29,6 +29,15 @@ public sealed class VaultDatabase
             create.CommandText = "CREATE TABLE VaultEntries (Id uniqueidentifier NOT NULL PRIMARY KEY, Name nvarchar(256) NOT NULL, UserName ntext NOT NULL, Password ntext NOT NULL, Url ntext NOT NULL, Notes ntext NOT NULL)";
             create.ExecuteNonQuery();
         }
+
+        using SqlCeCommand userCheck = connection.CreateCommand();
+        userCheck.CommandText = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'UserCredential'";
+        if (Convert.ToInt32(userCheck.ExecuteScalar()) == 0)
+        {
+            using SqlCeCommand createUser = connection.CreateCommand();
+            createUser.CommandText = "CREATE TABLE UserCredential (LoginSalt image NOT NULL, LoginHash image NOT NULL, LoginWorkFactor int NOT NULL)";
+            createUser.ExecuteNonQuery();
+        }
     }
 
     public SqlCeConnection OpenConnection() => SqlServerCeDatabase.OpenConnection(_connectionString);
