@@ -29,6 +29,7 @@ namespace EphorosVault.Presentation.Desktop
         private ToolStripButton _copyUserButton;
         private ToolStripButton _copyPasswordButton;
         private readonly List<VaultEntry> _loadedEntries = new();
+        private readonly ToolStripStatusLabel _statusLabel = new();
 
         public ShellForm(VaultService vaultService, VaultFolderService folderService, PasswordGenerator passwordGenerator, KeePassCsvExporter keePassExporter, BitwardenCsvExporter bitwardenExporter, IVaultKeyStore keyStore)
         {
@@ -47,6 +48,7 @@ namespace EphorosVault.Presentation.Desktop
         private void BuildVaultWorkspace()
         {
             MainContentPanel.Controls.Clear();
+            MainContentPanel.Padding = new Padding(8, 4, 8, 8);
 
             ToolStrip tools = new() { Dock = DockStyle.Top };
             ToolStripButton newEntry = new("New");
@@ -66,7 +68,7 @@ namespace EphorosVault.Presentation.Desktop
             tools.Items.Add(_copyUserButton);
             tools.Items.Add(_copyPasswordButton);
 
-            Panel filterPanel = new() { Dock = DockStyle.Top, Height = 34 };
+            Panel filterPanel = new() { Dock = DockStyle.Top, Height = 38, Padding = new Padding(0, 2, 0, 4) };
             filterPanel.Controls.Add(new Label { Text = "Folder:", Left = 8, Top = 10, Width = 45 });
             _folders.Left = 55;
             _folders.Top = 6;
@@ -107,9 +109,14 @@ namespace EphorosVault.Presentation.Desktop
             _detailNotes.ScrollBars = ScrollBars.Vertical;
             workspace.Panel2.Controls.Add(details);
 
+            StatusStrip status = new();
+            status.Items.Add(_statusLabel);
+            status.SizingGrip = false;
+
             MainContentPanel.Controls.Add(workspace);
             MainContentPanel.Controls.Add(filterPanel);
             MainContentPanel.Controls.Add(tools);
+            MainContentPanel.Controls.Add(status);
         }
 
         private static void AddDetailField(Panel panel, string labelText, TextBox field, int top, int labelWidth, int fieldLeft, int fieldWidth)
@@ -188,14 +195,19 @@ namespace EphorosVault.Presentation.Desktop
         {
             VaultEntry entry = new();
             using (VaultEntryForm form = new(entry, _folderService.GetFolders(), _passwordGenerator))
-                if (form.ShowDialog(this) == DialogResult.OK) { _vaultService.Save(entry); RefreshVault(); }
+                if (form.ShowDialog(this) == DialogResult.OK) { _vaultService.Save(entry); RefreshVault(); ShowStatus("Credential created."); }
         }
 
         private void EditEntry_Click(object sender, System.EventArgs e)
         {
             VaultEntry entry = SelectedEntry(); if (entry == null) return;
             using (VaultEntryForm form = new(entry, _folderService.GetFolders(), _passwordGenerator))
-                if (form.ShowDialog(this) == DialogResult.OK) { _vaultService.Save(entry); RefreshVault(); }
+                if (form.ShowDialog(this) == DialogResult.OK) { _vaultService.Save(entry); RefreshVault(); ShowStatus("Changes saved."); }
+        }
+
+        private void ShowStatus(string message)
+        {
+            _statusLabel.Text = message;
         }
 
         private void DeleteEntry_Click(object sender, System.EventArgs e)
@@ -220,7 +232,7 @@ namespace EphorosVault.Presentation.Desktop
         {
             string password = GeneratePassword();
             Clipboard.SetText(password);
-            MessageBox.Show(this, "A generated 16-character password has been copied to the clipboard.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(this, "A generated password has been copied to the clipboard.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private string GeneratePassword()
