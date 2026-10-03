@@ -65,13 +65,17 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\SqlServerCompact.4.0.8482.1\lib\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cryptography\DpapiVaultKeyStore.cs" />
     <Compile Include="Cryptography\EnterpriseLibraryVaultEncryption.cs" />
+    <Compile Include="Cryptography\IVaultKeyStore.cs" />
+    <Compile Include="Cryptography\VaultKeyEncryption.cs" />
     <Compile Include="DependencyInjection.cs" />
     <Compile Include="Export\BitwardenCsvExporter.cs" />
     <Compile Include="Export\CsvWriter.cs" />
