@@ -16,10 +16,16 @@ public sealed class VaultEntryForm : Form
     private readonly VaultEntry _entry;
     private readonly PasswordGenerator _passwordGenerator;
     private readonly Button _showPassword = new();
+    private readonly Button _saveButton = new();
+    private readonly Label _saveStatus = new();
+    private readonly bool _isNewEntry;
+    private bool _initializing;
 
     public VaultEntryForm(VaultEntry entry, IList<VaultFolder> folders, PasswordGenerator passwordGenerator)
     {
         _entry = entry ?? throw new ArgumentNullException(nameof(entry));
+        _isNewEntry = entry.Id == Guid.Empty;
+        _initializing = true;
         _passwordGenerator = passwordGenerator ?? throw new ArgumentNullException(nameof(passwordGenerator));
         Text = entry.Id == Guid.Empty ? "New Entry - Ephoros Vault" : "Edit Entry - Ephoros Vault";
         FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -59,13 +65,30 @@ public sealed class VaultEntryForm : Form
         _notes.Text = entry.Notes;
         SelectFolder(entry.FolderId);
 
-        Button ok = new() { Text = "OK", Left = 294, Top = 292, Width = 75, DialogResult = DialogResult.OK };
+        _saveStatus.Left = 20;
+        _saveStatus.Top = 297;
+        _saveStatus.Width = 180;
+        Controls.Add(_saveStatus);
+
+        _saveButton.Text = _isNewEntry ? "Create" : "Save";
+        _saveButton.Left = 294;
+        _saveButton.Top = 292;
+        _saveButton.Width = 75;
+        _saveButton.Enabled = _isNewEntry;
+        _saveButton.Click += SaveButton_Click;
         Button cancel = new() { Text = "Cancel", Left = 375, Top = 292, Width = 75, DialogResult = DialogResult.Cancel };
-        ok.Click += Ok_Click;
-        Controls.Add(ok);
+        Controls.Add(_saveButton);
         Controls.Add(cancel);
-        AcceptButton = ok;
+        AcceptButton = _saveButton;
         CancelButton = cancel;
+
+        _name.TextChanged += FieldChanged;
+        _folder.SelectedIndexChanged += FieldChanged;
+        _userName.TextChanged += FieldChanged;
+        _password.TextChanged += FieldChanged;
+        _url.TextChanged += FieldChanged;
+        _notes.TextChanged += FieldChanged;
+        _initializing = false;
     }
 
     private void AddField(string label, Control control, int top)
@@ -112,7 +135,14 @@ public sealed class VaultEntryForm : Form
             Properties.Settings.Default.PasswordRequireSpecialCharacters);
     }
 
-    private void Ok_Click(object sender, EventArgs e)
+    private void FieldChanged(object sender, EventArgs e)
+    {
+        if (_initializing) return;
+        _saveButton.Enabled = true;
+        _saveStatus.Text = "Unsaved changes";
+    }
+
+    private void SaveButton_Click(object sender, EventArgs e)
     {
         if (_name.Text.Trim().Length == 0)
         {
@@ -128,6 +158,9 @@ public sealed class VaultEntryForm : Form
         _entry.Password = _password.Text;
         _entry.Url = _url.Text;
         _entry.Notes = _notes.Text;
+        _saveStatus.Text = _isNewEntry ? "Created" : "Saved";
+        DialogResult = DialogResult.OK;
+        Close();
     }
 
     private sealed class FolderItem
