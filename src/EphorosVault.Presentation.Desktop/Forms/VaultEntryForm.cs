@@ -59,7 +59,10 @@ public sealed class VaultEntryForm : Form
 
         _folder.DropDownStyle = ComboBoxStyle.DropDownList;
         _folder.Items.Add(new FolderItem(null, "(None)"));
-        foreach (VaultFolder folder in folders) _folder.Items.Add(new FolderItem(folder.Id, folder.Name));
+        foreach (VaultFolder folder in folders)
+        {
+            _folder.Items.Add(new FolderItem(folder.Id, folder.Name));
+        }
 
         _name.Text = entry.Name;
         _userName.Text = entry.UserName;
@@ -108,7 +111,8 @@ public sealed class VaultEntryForm : Form
         for (int i = 0; i < _folder.Items.Count; i++)
         {
             FolderItem item = (FolderItem)_folder.Items[i];
-            if (item.Id == folderId) { _folder.SelectedIndex = i; return; }
+            if (item.Id == folderId)
+            { _folder.SelectedIndex = i; return; }
         }
         _folder.SelectedIndex = 0;
     }
@@ -140,7 +144,11 @@ public sealed class VaultEntryForm : Form
 
     private void FieldChanged(object sender, EventArgs e)
     {
-        if (_initializing) return;
+        if (_initializing)
+        {
+            return;
+        }
+
         _saveButton.Enabled = true;
         _saveStatus.Text = "Unsaved changes";
     }

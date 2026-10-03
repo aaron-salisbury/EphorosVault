@@ -15,10 +15,16 @@ public sealed class FolderNameForm : Form
         MaximizeBox = false;
         MinimizeBox = false;
         Controls.Add(new Label { Text = "Folder name:", Left = 15, Top = 20, Width = 80 });
-        _name.Left = 100; _name.Top = 17; _name.Width = 230; Controls.Add(_name);
+        _name.Left = 100;
+        _name.Top = 17;
+        _name.Width = 230;
+        Controls.Add(_name);
         Button ok = new() { Text = "OK", Left = 174, Top = 62, Width = 75, DialogResult = DialogResult.OK };
         Button cancel = new() { Text = "Cancel", Left = 255, Top = 62, Width = 75, DialogResult = DialogResult.Cancel };
-        Controls.Add(ok); Controls.Add(cancel); AcceptButton = ok; CancelButton = cancel;
+        Controls.Add(ok);
+        Controls.Add(cancel);
+        AcceptButton = ok;
+        CancelButton = cancel;
     }
 
     public string FolderName => _name.Text.Trim();

@@ -134,11 +134,19 @@ namespace EphorosVault.Presentation.Desktop
             object selectedFolder = _folders.SelectedItem;
             _folders.Items.Clear();
             _folders.Items.Add(new FolderFilter(null, "All Entries", true));
-            foreach (VaultFolder folder in _folderService.GetFolders()) _folders.Items.Add(new FolderFilter(folder.Id, folder.Name, false));
+            foreach (VaultFolder folder in _folderService.GetFolders())
+            {
+                _folders.Items.Add(new FolderFilter(folder.Id, folder.Name, false));
+            }
+
             _folders.SelectedIndex = 0;
 
             _loadedEntries.Clear();
-            foreach (VaultEntry entry in _vaultService.GetEntries()) _loadedEntries.Add(entry);
+            foreach (VaultEntry entry in _vaultService.GetEntries())
+            {
+                _loadedEntries.Add(entry);
+            }
+
             ApplyFilter();
         }
 
@@ -149,9 +157,19 @@ namespace EphorosVault.Presentation.Desktop
             string search = _search.Text.Trim();
             foreach (VaultEntry entry in _loadedEntries)
             {
-                if (filter != null && !filter.All && entry.FolderId != filter.Id) continue;
-                if (search.Length > 0 && entry.Name.IndexOf(search, System.StringComparison.OrdinalIgnoreCase) < 0 && entry.UserName.IndexOf(search, System.StringComparison.OrdinalIgnoreCase) < 0 && entry.Url.IndexOf(search, System.StringComparison.OrdinalIgnoreCase) < 0) continue;
-                ListViewItem item = new(entry.Name); item.Tag = entry; _entries.Items.Add(item);
+                if (filter != null && !filter.All && entry.FolderId != filter.Id)
+                {
+                    continue;
+                }
+
+                if (search.Length > 0 && entry.Name.IndexOf(search, System.StringComparison.OrdinalIgnoreCase) < 0 && entry.UserName.IndexOf(search, System.StringComparison.OrdinalIgnoreCase) < 0 && entry.Url.IndexOf(search, System.StringComparison.OrdinalIgnoreCase) < 0)
+                {
+                    continue;
+                }
+
+                ListViewItem item = new(entry.Name);
+                item.Tag = entry;
+                _entries.Items.Add(item);
             }
             ClearDetails();
         }
@@ -160,7 +178,8 @@ namespace EphorosVault.Presentation.Desktop
 
         private void EntrySelected(object sender, System.EventArgs e)
         {
-            if (_entries.SelectedItems.Count == 0) { ClearDetails(); return; }
+            if (_entries.SelectedItems.Count == 0)
+            { ClearDetails(); return; }
             VaultEntry entry = (VaultEntry)_entries.SelectedItems[0].Tag;
             _detailName.Text = entry.Name;
             _detailUser.Text = entry.UserName;
@@ -194,14 +213,25 @@ namespace EphorosVault.Presentation.Desktop
         {
             VaultEntry entry = new();
             using (VaultEntryForm form = new(entry, _folderService.GetFolders(), _passwordGenerator))
-                if (form.ShowDialog(this) == DialogResult.OK) { _vaultService.Save(entry); RefreshVault(); ShowStatus("Credential created."); }
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                { _vaultService.Save(entry); RefreshVault(); ShowStatus("Credential created."); }
+            }
         }
 
         private void EditEntry_Click(object sender, System.EventArgs e)
         {
-            VaultEntry entry = SelectedEntry(); if (entry == null) return;
+            VaultEntry entry = SelectedEntry();
+            if (entry == null)
+            {
+                return;
+            }
+
             using (VaultEntryForm form = new(entry, _folderService.GetFolders(), _passwordGenerator))
-                if (form.ShowDialog(this) == DialogResult.OK) { _vaultService.Save(entry); RefreshVault(); ShowStatus("Changes saved."); }
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                { _vaultService.Save(entry); RefreshVault(); ShowStatus("Changes saved."); }
+            }
         }
 
         private void ShowStatus(string message)
@@ -211,20 +241,32 @@ namespace EphorosVault.Presentation.Desktop
 
         private void DeleteEntry_Click(object sender, System.EventArgs e)
         {
-            VaultEntry entry = SelectedEntry(); if (entry == null) return;
-            if (MessageBox.Show(this, "Delete '" + entry.Name + "'?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) { _vaultService.Delete(entry.Id); RefreshVault(); }
+            VaultEntry entry = SelectedEntry();
+            if (entry == null)
+            {
+                return;
+            }
+
+            if (MessageBox.Show(this, "Delete '" + entry.Name + "'?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            { _vaultService.Delete(entry.Id); RefreshVault(); }
         }
 
         private void CopyUserName_Click(object sender, System.EventArgs e)
         {
             VaultEntry entry = SelectedEntry();
-            if (entry != null && entry.UserName.Length > 0) Clipboard.SetText(entry.UserName);
+            if (entry != null && entry.UserName.Length > 0)
+            {
+                Clipboard.SetText(entry.UserName);
+            }
         }
 
         private void CopyPassword_Click(object sender, System.EventArgs e)
         {
             VaultEntry entry = SelectedEntry();
-            if (entry != null && entry.Password.Length > 0) Clipboard.SetText(entry.Password);
+            if (entry != null && entry.Password.Length > 0)
+            {
+                Clipboard.SetText(entry.Password);
+            }
         }
 
         private void PasswordGeneratorMenuItem_Click(object sender, System.EventArgs e)
@@ -246,7 +288,10 @@ namespace EphorosVault.Presentation.Desktop
 
         private void OptionsMenuItem_Click(object sender, System.EventArgs e)
         {
-            using (OptionsForm form = new()) form.ShowDialog(this);
+            using (OptionsForm form = new())
+            {
+                form.ShowDialog(this);
+            }
         }
 
         private void ExportKeePassMenuItem_Click(object sender, System.EventArgs e) => Export(_keePassExporter);
@@ -254,39 +299,64 @@ namespace EphorosVault.Presentation.Desktop
 
         private void Export(IVaultExporter exporter)
         {
-            if (MessageBox.Show(this, "CSV exports contain passwords in plaintext. Continue?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
-            using (SaveFileDialog dialog = new()) {
-                dialog.Filter = exporter.FileFilter; dialog.DefaultExt = "csv"; dialog.AddExtension = true;
-                if (dialog.ShowDialog(this) == DialogResult.OK) { exporter.Export(dialog.FileName, _vaultService.GetEntries()); MessageBox.Show(this, "Export completed.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+            if (MessageBox.Show(this, "CSV exports contain passwords in plaintext. Continue?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+            {
+                return;
+            }
+
+            using (SaveFileDialog dialog = new())
+            {
+                dialog.Filter = exporter.FileFilter;
+                dialog.DefaultExt = "csv";
+                dialog.AddExtension = true;
+                if (dialog.ShowDialog(this) == DialogResult.OK)
+                { exporter.Export(dialog.FileName, _vaultService.GetEntries()); MessageBox.Show(this, "Export completed.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Information); }
             }
         }
 
         private void ExportRecoveryKeyMenuItem_Click(object sender, System.EventArgs e)
         {
-            if (MessageBox.Show(this, "The recovery key grants access to the encrypted vault database. Store it securely and separately from the database. Continue?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
-            using (SaveFileDialog dialog = new()) {
-                dialog.Filter = "Ephoros Vault recovery key (*.evkey)|*.evkey|All files (*.*)|*.*"; dialog.DefaultExt = "evkey"; dialog.AddExtension = true;
-                if (dialog.ShowDialog(this) == DialogResult.OK) { _keyStore.ExportRecoveryKey(dialog.FileName); MessageBox.Show(this, "Recovery key exported.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+            if (MessageBox.Show(this, "The recovery key grants access to the encrypted vault database. Store it securely and separately from the database. Continue?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+            {
+                return;
+            }
+
+            using (SaveFileDialog dialog = new())
+            {
+                dialog.Filter = "Ephoros Vault recovery key (*.evkey)|*.evkey|All files (*.*)|*.*";
+                dialog.DefaultExt = "evkey";
+                dialog.AddExtension = true;
+                if (dialog.ShowDialog(this) == DialogResult.OK)
+                { _keyStore.ExportRecoveryKey(dialog.FileName); MessageBox.Show(this, "Recovery key exported.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Information); }
             }
         }
 
         private void NewFolderMenuItem_Click(object sender, System.EventArgs e)
         {
             using (FolderNameForm form = new())
-                if (form.ShowDialog(this) == DialogResult.OK && form.FolderName.Length > 0) { _folderService.Save(new VaultFolder { Name = form.FolderName }); RefreshVault(); }
+            {
+                if (form.ShowDialog(this) == DialogResult.OK && form.FolderName.Length > 0)
+                { _folderService.Save(new VaultFolder { Name = form.FolderName }); RefreshVault(); }
+            }
         }
 
         private void LogMenuItem_Click(object sender, System.EventArgs e)
         {
         }
 
-        private void AboutMenuItem_Click(object sender, System.EventArgs e) { using (AboutForm form = new()) form.ShowDialog(this); }
+        private void AboutMenuItem_Click(object sender, System.EventArgs e) { using (AboutForm form = new())
+            {
+                form.ShowDialog(this);
+            }
+        }
         private void ExitMenuItem_Click(object sender, System.EventArgs e) => Application.Exit();
 
         private sealed class FolderFilter
         {
             public FolderFilter(System.Guid? id, string name, bool all) { Id = id; Name = name; All = all; }
-            public System.Guid? Id { get; } public string Name { get; } public bool All { get; }
+            public System.Guid? Id { get; }
+            public string Name { get; }
+            public bool All { get; }
             public override string ToString() => Name;
         }
     }

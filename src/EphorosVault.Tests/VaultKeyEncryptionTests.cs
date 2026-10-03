@@ -56,7 +56,11 @@ public class VaultKeyEncryptionTests
     private static byte[] CreateKey()
     {
         byte[] key = new byte[32];
-        for (int i = 0; i < key.Length; i++) key[i] = (byte)(i + 1);
+        for (int i = 0; i < key.Length; i++)
+        {
+            key[i] = (byte)(i + 1);
+        }
+
         return key;
     }
 

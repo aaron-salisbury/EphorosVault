@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.Practices.Unity.Utility;
 
 namespace EphorosVault.Integrations.Cryptography;
 
@@ -19,10 +20,7 @@ public sealed class VaultKeyEncryption : IVaultEncryption
 
     public string Encrypt(string plaintext)
     {
-        if (plaintext == null)
-        {
-            throw new ArgumentNullException(nameof(plaintext));
-        }
+        Guard.ArgumentNotNull(plaintext, nameof(plaintext));
 
         byte[] masterKey = _keyStore.Load();
         byte[] encryptionKey = DeriveKey(masterKey, "Ephoros Vault encryption");
@@ -178,7 +176,8 @@ public sealed class VaultKeyEncryption : IVaultEncryption
             }
 
             byte[] plaintext = output.ToArray();
-            try { return Encoding.UTF8.GetString(plaintext); }
+            try
+            { return Encoding.UTF8.GetString(plaintext); }
             finally { Array.Clear(plaintext, 0, plaintext.Length); }
         }
         finally { Array.Clear(buffer, 0, buffer.Length); }

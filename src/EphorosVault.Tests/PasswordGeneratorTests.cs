@@ -49,7 +49,10 @@ public class PasswordGeneratorTests
     {
         foreach (char character in value)
         {
-            if (characters.IndexOf(character) >= 0) return true;
+            if (characters.IndexOf(character) >= 0)
+            {
+                return true;
+            }
         }
 
         return false;
@@ -59,7 +62,10 @@ public class PasswordGeneratorTests
     {
         foreach (char character in value)
         {
-            if (characters.IndexOf(character) < 0) return false;
+            if (characters.IndexOf(character) < 0)
+            {
+                return false;
+            }
         }
 
         return true;

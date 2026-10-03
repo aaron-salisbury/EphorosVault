@@ -25,10 +25,22 @@ public sealed class PasswordGenerator
 
         StringBuilder characters = new();
         int requiredCount = 0;
-        if (requireUppercase) { characters.Append(UppercaseCharacters); requiredCount++; }
-        if (requireLowercase) { characters.Append(LowercaseCharacters); requiredCount++; }
-        if (requireNumbers) { characters.Append(NumberCharacters); requiredCount++; }
-        if (requireSpecialCharacters) { characters.Append(SpecialCharacters); requiredCount++; }
+        if (requireUppercase)
+        {
+            characters.Append(UppercaseCharacters); requiredCount++;
+        }
+        if (requireLowercase)
+        {
+            characters.Append(LowercaseCharacters); requiredCount++;
+        }
+        if (requireNumbers)
+        {
+            characters.Append(NumberCharacters); requiredCount++;
+        }
+        if (requireSpecialCharacters)
+        {
+            characters.Append(SpecialCharacters); requiredCount++;
+        }
 
         if (requiredCount == 0)
         {
@@ -43,10 +55,25 @@ public sealed class PasswordGenerator
         char[] password = new char[length];
         RNGCryptoServiceProvider random = new();
         int index = 0;
-        if (requireUppercase) password[index++] = Pick(UppercaseCharacters, random);
-        if (requireLowercase) password[index++] = Pick(LowercaseCharacters, random);
-        if (requireNumbers) password[index++] = Pick(NumberCharacters, random);
-        if (requireSpecialCharacters) password[index++] = Pick(SpecialCharacters, random);
+        if (requireUppercase)
+        {
+            password[index++] = Pick(UppercaseCharacters, random);
+        }
+
+        if (requireLowercase)
+        {
+            password[index++] = Pick(LowercaseCharacters, random);
+        }
+
+        if (requireNumbers)
+        {
+            password[index++] = Pick(NumberCharacters, random);
+        }
+
+        if (requireSpecialCharacters)
+        {
+            password[index++] = Pick(SpecialCharacters, random);
+        }
 
         string pool = characters.ToString();
         while (index < password.Length)
