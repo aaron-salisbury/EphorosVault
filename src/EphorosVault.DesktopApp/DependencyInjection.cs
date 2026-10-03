@@ -3,7 +3,7 @@ using DotNetFrameworkToolkit.Modules.DependencyInjection;
 using DotNetFrameworkToolkit.Modules.FileSystem;
 using DotNetFrameworkToolkit.Modules.Logging;
 using EphorosVault.Presentation;
-using EphorosVault.Data.Vault;
+using EphorosVault.Integrations.Persistence;
 using System;
 using System.IO;
 using BusinessDI = EphorosVault.Business.DependencyInjection;
