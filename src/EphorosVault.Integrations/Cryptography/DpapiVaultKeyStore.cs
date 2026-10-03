@@ -53,10 +53,8 @@ public sealed class DpapiVaultKeyStore : IVaultKeyStore
     {
         if (Exists) return;
         byte[] key = new byte[32];
-        using (RNGCryptoServiceProvider random = new())
-        {
-            random.GetBytes(key);
-        }
+        RNGCryptoServiceProvider random = new();
+        random.GetBytes(key);
         try { Save(key); }
         finally { Array.Clear(key, 0, key.Length); }
     }
