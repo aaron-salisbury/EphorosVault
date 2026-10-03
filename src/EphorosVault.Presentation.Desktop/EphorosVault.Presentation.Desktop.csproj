@@ -88,6 +88,7 @@
     </Compile>
     <Compile Include="Forms\FolderNameForm.cs"><SubType>Form</SubType></Compile>
     <Compile Include="Forms\VaultEntryForm.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="Forms\OptionsForm.cs"><SubType>Form</SubType></Compile>
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
