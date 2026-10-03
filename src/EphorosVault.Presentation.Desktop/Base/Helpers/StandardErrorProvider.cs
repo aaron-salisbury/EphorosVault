@@ -4,7 +4,7 @@ namespace EphorosVault.Presentation.Desktop.Base.Helpers
 {
     internal class StandardErrorProvider : ErrorProvider
     {
-        private const int DEFAULT_ICON_PADDING = 5;
+        private const int DEFAULT_ICON_PADDING = 10;
 
         internal StandardErrorProvider()
         {
@@ -15,6 +15,7 @@ namespace EphorosVault.Presentation.Desktop.Base.Helpers
         {
             if (!string.IsNullOrEmpty(errorMessage))
             {
+                SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
                 SetIconPadding(control, DEFAULT_ICON_PADDING);
                 SetError(control, errorMessage);
             }
