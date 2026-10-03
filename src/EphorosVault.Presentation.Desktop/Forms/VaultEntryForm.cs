@@ -97,9 +97,19 @@ public sealed class VaultEntryForm : Form
 
     private void Generate_Click(object sender, EventArgs e)
     {
-        _password.Text = _passwordGenerator.Generate(16);
+        _password.Text = GeneratePassword();
         _password.SelectAll();
         _password.Focus();
+    }
+
+    private string GeneratePassword()
+    {
+        return _passwordGenerator.Generate(
+            Properties.Settings.Default.PasswordLength,
+            Properties.Settings.Default.PasswordRequireUppercase,
+            Properties.Settings.Default.PasswordRequireLowercase,
+            Properties.Settings.Default.PasswordRequireNumbers,
+            Properties.Settings.Default.PasswordRequireSpecialCharacters);
     }
 
     private void Ok_Click(object sender, EventArgs e)
