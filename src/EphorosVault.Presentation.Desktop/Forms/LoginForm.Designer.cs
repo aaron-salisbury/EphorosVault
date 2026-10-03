@@ -22,7 +22,6 @@ partial class LoginForm
             this.PasswordTextBox = new System.Windows.Forms.TextBox();
             this.ConfirmPasswordLabel = new System.Windows.Forms.Label();
             this.ConfirmPasswordTextBox = new System.Windows.Forms.TextBox();
-            this.ErrorLabel = new System.Windows.Forms.Label();
             this.SubmitButton = new System.Windows.Forms.Button();
             this.CancelLoginButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -84,14 +83,6 @@ partial class LoginForm
             this.ConfirmPasswordTextBox.Size = new System.Drawing.Size(350, 26);
             this.ConfirmPasswordTextBox.TabIndex = 5;
             // 
-            // ErrorLabel
-            // 
-            this.ErrorLabel.Location = new System.Drawing.Point(30, 223);
-            this.ErrorLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.ErrorLabel.Name = "ErrorLabel";
-            this.ErrorLabel.Size = new System.Drawing.Size(540, 46);
-            this.ErrorLabel.TabIndex = 6;
-            // 
             // SubmitButton
             // 
             this.SubmitButton.Location = new System.Drawing.Point(336, 278);
@@ -124,7 +115,6 @@ partial class LoginForm
             this.ClientSize = new System.Drawing.Size(603, 342);
             this.Controls.Add(this.CancelLoginButton);
             this.Controls.Add(this.SubmitButton);
-            this.Controls.Add(this.ErrorLabel);
             this.Controls.Add(this.ConfirmPasswordTextBox);
             this.Controls.Add(this.ConfirmPasswordLabel);
             this.Controls.Add(this.PasswordTextBox);
@@ -149,7 +139,6 @@ partial class LoginForm
     private System.Windows.Forms.TextBox PasswordTextBox;
     private System.Windows.Forms.Label ConfirmPasswordLabel;
     private System.Windows.Forms.TextBox ConfirmPasswordTextBox;
-    private System.Windows.Forms.Label ErrorLabel;
     private System.Windows.Forms.Button SubmitButton;
     private System.Windows.Forms.Button CancelLoginButton;
 }
