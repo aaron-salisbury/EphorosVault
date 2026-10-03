@@ -3,6 +3,7 @@ using DotNetFrameworkToolkit.Modules.DependencyInjection;
 using DotNetFrameworkToolkit.Modules.FileSystem;
 using DotNetFrameworkToolkit.Modules.Logging;
 using EphorosVault.Presentation;
+using EphorosVault.Integrations.Cryptography;
 using EphorosVault.Integrations.Persistence;
 using System;
 using System.IO;
@@ -26,6 +27,10 @@ internal static class DependencyInjection
         services.AddSingleton(inMemorySink);
 
         services.AddScoped<IFileSystemAccess, FileSystemAccess>();
+
+        DpapiVaultKeyStore vaultKeyStore = new(Path.Combine(appDirectoryPath, "EphorosVault.key"));
+        vaultKeyStore.EnsureCreated();
+        services.AddSingleton<IVaultKeyStore>(vaultKeyStore);
 
         VaultDatabase vaultDatabase = new(Path.Combine(appDirectoryPath, "EphorosVault.sdf"));
         vaultDatabase.Initialize();
