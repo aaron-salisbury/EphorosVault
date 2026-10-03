@@ -125,7 +125,7 @@ namespace EphorosVault.Presentation.Desktop
         private void NewEntry_Click(object sender, System.EventArgs e)
         {
             VaultEntry entry = new();
-            using (VaultEntryForm form = new(entry, _folderService.GetFolders()))
+            using (VaultEntryForm form = new(entry, _folderService.GetFolders(), _passwordGenerator))
                 if (form.ShowDialog(this) == DialogResult.OK) { _vaultService.Save(entry); RefreshVault(); }
         }
 
