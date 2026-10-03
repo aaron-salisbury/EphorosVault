@@ -1,4 +1,7 @@
 ﻿using DotNetFrameworkToolkit.Modules.DependencyInjection;
+using EphorosVault.Business.Modules.Vault;
+using EphorosVault.Integrations.Cryptography;
+using EphorosVault.Integrations.Export;
 using Microsoft.Practices.Unity.Utility;
 
 namespace EphorosVault.Integrations;
@@ -11,6 +14,10 @@ public static class DependencyInjection
     public static IServiceCollection RegisterInternalIntegrationsServices(IServiceCollection services)
     {
         Guard.ArgumentNotNull(services, nameof(services));
+
+        services.AddSingleton<IVaultEncryption, EnterpriseLibraryVaultEncryption>();
+        services.AddScoped<KeePassCsvExporter, KeePassCsvExporter>();
+        services.AddScoped<BitwardenCsvExporter, BitwardenCsvExporter>();
 
         return services;
     }
