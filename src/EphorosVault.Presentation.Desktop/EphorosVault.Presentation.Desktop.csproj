@@ -140,8 +140,6 @@
     <Content Include="Base\Assets\Attributions.txt" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\cross-circle-frame.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\document--arrow.png" />
-    <Content Include="Base\Assets\Icons\YusukeKamiyamane\exclamation-circle.png" />
-    <Content Include="Base\Assets\Icons\YusukeKamiyamane\exclamation-red.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\folder--plus.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\key--plus.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\lock--arrow.png" />
