@@ -3,13 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="ApplicationFriendlyName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Sample App</Value>
+      <Value Profile="(Default)">EphorosVault</Value>
     </Setting>
     <Setting Name="AboutDescription" Type="System.String" Scope="User">
-      <Value Profile="(Default)">This is a sample application generated from Aaron Salisbury's Windows 98 App Solution Template.</Value>
+      <Value Profile="(Default)">A classic desktop password vault for securely storing credentials.</Value>
     </Setting>
     <Setting Name="ApplicationLink" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://github.com/aaron-salisbury/ProjectTemplates</Value>
+      <Value Profile="(Default)">https://github.com/aaron-salisbury/EphorosVault</Value>
     </Setting>
   </Settings>
 </SettingsFile>
