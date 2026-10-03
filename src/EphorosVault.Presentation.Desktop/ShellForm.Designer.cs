@@ -32,6 +32,7 @@ partial class ShellForm
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShellForm));
         this.MenuStrip = new System.Windows.Forms.MenuStrip();
         this.FileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+        this.NewFolderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.HelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.LogMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,10 +56,18 @@ partial class ShellForm
         // FileMenuItem
         // 
         this.FileMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+        this.NewFolderMenuItem,
         this.ExitMenuItem});
         this.FileMenuItem.Name = "FileMenuItem";
         this.FileMenuItem.Size = new System.Drawing.Size(37, 20);
         this.FileMenuItem.Text = "&File";
+        // 
+        // NewFolderMenuItem
+        // 
+        this.NewFolderMenuItem.Name = "NewFolderMenuItem";
+        this.NewFolderMenuItem.Size = new System.Drawing.Size(180, 22);
+        this.NewFolderMenuItem.Text = "New &Folder...";
+        this.NewFolderMenuItem.Click += new System.EventHandler(this.NewFolderMenuItem_Click);
         // 
         // ExitMenuItem
         // 
@@ -125,6 +134,7 @@ partial class ShellForm
 
     private System.Windows.Forms.MenuStrip MenuStrip;
     private System.Windows.Forms.ToolStripMenuItem FileMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem NewFolderMenuItem;
     private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
     private System.Windows.Forms.ToolStripMenuItem HelpMenuItem;
     private System.Windows.Forms.ToolStripMenuItem LogMenuItem;
