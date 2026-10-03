@@ -82,6 +82,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
 <ItemGroup>
+    <ProjectReference Include="..\EphorosVault.Business\EphorosVault.Business.csproj">
+      <Project>{e86dca0a-c8ce-4e5a-8de8-006ea16bcb31}</Project>
+      <Name>EphorosVault.Business</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
