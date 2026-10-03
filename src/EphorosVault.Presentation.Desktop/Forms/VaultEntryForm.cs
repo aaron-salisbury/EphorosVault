@@ -99,7 +99,7 @@ public sealed class VaultEntryForm : Form
         Controls.Add(new Label { Text = label, Left = 20, Top = top + 3, Width = 90 });
         control.Left = 115;
         control.Top = top;
-        control.Width = 335;
+        control.Width = 315;
         Controls.Add(control);
     }
 
