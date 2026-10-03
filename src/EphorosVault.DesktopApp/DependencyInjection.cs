@@ -3,6 +3,7 @@ using DotNetFrameworkToolkit.Modules.DependencyInjection;
 using DotNetFrameworkToolkit.Modules.FileSystem;
 using DotNetFrameworkToolkit.Modules.Logging;
 using EphorosVault.Presentation;
+using EphorosVault.Data.Vault;
 using System;
 using System.IO;
 using BusinessDI = EphorosVault.Business.DependencyInjection;
@@ -25,6 +26,10 @@ internal static class DependencyInjection
         services.AddSingleton(inMemorySink);
 
         services.AddScoped<IFileSystemAccess, FileSystemAccess>();
+
+        VaultDatabase vaultDatabase = new(Path.Combine(appDirectoryPath, "EphorosVault.sdf"));
+        vaultDatabase.Initialize();
+        services.AddSingleton(vaultDatabase);
 
         services = BusinessDI.RegisterInternalBusinessServices(services);
         services = DataDI.RegisterInternalDataServices(services);
