@@ -15,6 +15,7 @@ public interface IVaultView
     event EventHandler NewEntryRequested;
     event EventHandler NewFolderRequested;
     event EventHandler RenameFolderRequested;
+    event EventHandler<VaultStatusEventArgs> StatusChanged;
 
     Guid? SelectedFolderId { get; }
     string SelectedFolderName { get; }
@@ -26,4 +27,14 @@ public interface IVaultView
     void SetFolders(IEnumerable<VaultFolder> folders);
     void ShowEntry(VaultEntry entry);
     void ShowStatus(string message);
+}
+
+public sealed class VaultStatusEventArgs : EventArgs
+{
+    public VaultStatusEventArgs(string message)
+    {
+        Message = message;
+    }
+
+    public string Message { get; }
 }
