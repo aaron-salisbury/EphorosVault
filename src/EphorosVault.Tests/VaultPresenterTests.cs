@@ -43,12 +43,16 @@ public class VaultPresenterTests
     private sealed class MemoryView : IVaultView
     {
         public event EventHandler CopyPasswordRequested;
+        public event EventHandler DeleteFolderRequested;
         public event EventHandler CopyUserNameRequested;
         public event EventHandler DeleteEntryRequested;
         public event EventHandler EditEntryRequested;
         public event EventHandler FilterChanged;
         public event EventHandler NewEntryRequested;
+        public event EventHandler NewFolderRequested;
+        public event EventHandler RenameFolderRequested;
         public Guid? SelectedFolderId { get; set; }
+        public string SelectedFolderName { get; set; } = string.Empty;
         public VaultEntry SelectedEntry { get; set; }
         public string SearchText { get; set; } = string.Empty;
         internal List<VaultEntry> Entries { get; } = [];
