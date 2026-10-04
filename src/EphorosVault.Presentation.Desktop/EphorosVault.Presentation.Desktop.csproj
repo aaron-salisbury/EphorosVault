@@ -87,11 +87,20 @@
     <Compile Include="Forms\FolderNameForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\FolderNameForm.Designer.cs">
+      <DependentUpon>FolderNameForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\VaultEntryForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\VaultEntryForm.Designer.cs">
+      <DependentUpon>VaultEntryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\OptionsForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OptionsForm.Designer.cs">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
@@ -114,6 +123,9 @@
     <Compile Include="Vault\VaultPresenter.cs" />
     <Compile Include="Vault\VaultView.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Vault\VaultView.Designer.cs">
+      <DependentUpon>VaultView.cs</DependentUpon>
     </Compile>
     <Compile Include="ShellForm.cs">
       <SubType>Form</SubType>
@@ -140,6 +152,22 @@
     <Resource Include="Base\Assets\Icons\SampleAppIcon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\FolderNameForm.resx">
+      <DependentUpon>FolderNameForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OptionsForm.resx">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\VaultEntryForm.resx">
+      <DependentUpon>VaultEntryForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vault\VaultView.resx">
+      <DependentUpon>VaultView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
