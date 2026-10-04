@@ -1,4 +1,5 @@
 using DotNetFrameworkToolkit.Modules.DependencyInjection;
+using EphorosVault.Business.Modules.Access;
 using EphorosVault.Presentation.Desktop;
 using EphorosVault.Presentation.Desktop.Forms;
 using System;
@@ -32,7 +33,8 @@ internal sealed class VaultApplicationContext : ApplicationContext
 
     private bool Authenticate()
     {
-        using LoginForm login = Ioc.Default.GetRequiredService<LoginForm>();
+        AccessService accessService = Ioc.Default.GetRequiredService<AccessService>();
+        using LoginForm login = new(accessService);
         return login.ShowDialog() == DialogResult.OK && login.IsAuthenticated;
     }
 
