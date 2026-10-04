@@ -38,7 +38,7 @@ partial class FolderNameForm
             // 
             this.NameTextBox.Location = new System.Drawing.Point(100, 17);
             this.NameTextBox.Name = "NameTextBox";
-            this.NameTextBox.Size = new System.Drawing.Size(230, 26);
+            this.NameTextBox.Size = new System.Drawing.Size(200, 26);
             this.NameTextBox.TabIndex = 1;
             // 
             // OkButton
