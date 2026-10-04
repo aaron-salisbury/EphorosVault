@@ -47,6 +47,30 @@ public class VaultFolderServiceTests
         Assert.ThrowsException<ArgumentException>(() => service.Save(new VaultFolder()));
     }
 
+    [TestMethod]
+    public void SaveRejectsDuplicateNameIgnoringCase()
+    {
+        MemoryFolderRepository repository = new();
+        VaultFolderService service = new(repository);
+        service.Save(new VaultFolder { Name = "Personal" });
+
+        Assert.ThrowsException<ArgumentException>(() => service.Save(new VaultFolder { Name = "personal" }));
+        Assert.AreEqual(1, repository.Items.Count);
+    }
+
+    [TestMethod]
+    public void SaveAllowsExistingFolderToKeepItsName()
+    {
+        MemoryFolderRepository repository = new();
+        VaultFolderService service = new(repository);
+        VaultFolder folder = new() { Name = "Personal" };
+        service.Save(folder);
+
+        service.Save(new VaultFolder { Id = folder.Id, Name = "PERSONAL" });
+
+        Assert.AreEqual(1, repository.Items.Count);
+    }
+
     private sealed class MemoryFolderRepository : IVaultFolderRepository
     {
         internal List<VaultFolder> Items { get; } = [];
