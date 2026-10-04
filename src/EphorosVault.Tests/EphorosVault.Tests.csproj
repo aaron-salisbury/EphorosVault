@@ -58,12 +58,17 @@
     <Compile Include="VaultFolderServiceTests.cs" />
     <Compile Include="VaultKeyEncryptionTests.cs" />
     <Compile Include="VaultServiceTests.cs" />
+    <Compile Include="VaultPresenterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EphorosVault.Presentation.Desktop\EphorosVault.Presentation.Desktop.csproj">
+      <Project>{021F22C8-0539-4559-BA51-4378D4402746}</Project>
+      <Name>EphorosVault.Presentation.Desktop</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EphorosVault.Business\EphorosVault.Business.csproj">
       <Project>{e86dca0a-c8ce-4e5a-8de8-006ea16bcb31}</Project>
       <Name>EphorosVault.Business</Name>
