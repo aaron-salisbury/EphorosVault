@@ -1,4 +1,3 @@
-using DotNetFrameworkToolkit.Modules.DependencyInjection;
 using EphorosVault.Business.Modules.Access;
 using EphorosVault.Presentation.Desktop;
 using EphorosVault.Presentation.Desktop.Forms;
@@ -11,9 +10,12 @@ internal sealed class VaultApplicationContext : ApplicationContext
 {
     private readonly ShellForm _shell;
 
-    internal VaultApplicationContext()
+    private readonly AccessService _accessService;
+
+    internal VaultApplicationContext(ShellForm shell, AccessService accessService)
     {
-        _shell = Ioc.Default.GetRequiredService<ShellForm>();
+        _shell = shell ?? throw new ArgumentNullException(nameof(shell));
+        _accessService = accessService ?? throw new ArgumentNullException(nameof(accessService));
         _shell.LockRequested += Shell_LockRequested;
         _shell.FormClosed += Shell_FormClosed;
     }
@@ -33,8 +35,7 @@ internal sealed class VaultApplicationContext : ApplicationContext
 
     private bool Authenticate()
     {
-        AccessService accessService = Ioc.Default.GetRequiredService<AccessService>();
-        using LoginForm login = new(accessService);
+        using LoginForm login = new(_accessService);
         return login.ShowDialog() == DialogResult.OK && login.IsAuthenticated;
     }
 
