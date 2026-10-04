@@ -69,6 +69,7 @@
     <Compile Include="Cryptography\DpapiVaultKeyStore.cs" />
     <Compile Include="Cryptography\IVaultKeyStore.cs" />
     <Compile Include="Cryptography\VaultKeyEncryption.cs" />
+    <Compile Include="Cryptography\VaultRecoveryService.cs" />
     <Compile Include="DependencyInjection.cs" />
     <Compile Include="Export\BitwardenJsonExporter.cs" />
     <Compile Include="Export\KeePass2XmlExporter.cs" />
