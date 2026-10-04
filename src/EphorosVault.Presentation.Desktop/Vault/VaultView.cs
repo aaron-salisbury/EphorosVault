@@ -18,6 +18,9 @@ public sealed class VaultView : UserControl, IVaultView
     private readonly ToolStripButton _edit = new("Edit") { Enabled = false };
     private readonly ListView _entries = new();
     private readonly ComboBox _folders = new();
+    private readonly ContextMenuStrip _folderMenu = new();
+    private readonly ToolStripMenuItem _renameFolder = new("Rename Folder...");
+    private readonly ToolStripMenuItem _deleteFolder = new("Delete Folder...");
     private readonly TextBox _search = new();
     private readonly ToolStripStatusLabel _status = new();
 
@@ -32,19 +35,41 @@ public sealed class VaultView : UserControl, IVaultView
     public event EventHandler CopyUserNameRequested;
     public event EventHandler DeleteEntryRequested;
     public event EventHandler EditEntryRequested;
+    public event EventHandler DeleteFolderRequested;
     public event EventHandler FilterChanged;
     public event EventHandler NewEntryRequested;
+    public event EventHandler NewFolderRequested;
+    public event EventHandler RenameFolderRequested;
 
     public Guid? SelectedFolderId => (_folders.SelectedItem as FolderItem)?.Id;
+    public string SelectedFolderName => (_folders.SelectedItem as FolderItem)?.Name ?? string.Empty;
     public VaultEntry SelectedEntry => _entries.SelectedItems.Count == 0 ? null : (VaultEntry)_entries.SelectedItems[0].Tag;
     public string SearchText => _search.Text;
 
     public void SetFolders(IEnumerable<VaultFolder> folders)
     {
+        Guid? selectedFolderId = SelectedFolderId;
         _folders.Items.Clear();
         _folders.Items.Add(new FolderItem(null, "All Entries"));
-        foreach (VaultFolder folder in folders) _folders.Items.Add(new FolderItem(folder.Id, folder.Name));
+        foreach (VaultFolder folder in folders)
+        {
+            _folders.Items.Add(new FolderItem(folder.Id, folder.Name));
+        }
+
         _folders.SelectedIndex = 0;
+        if (selectedFolderId.HasValue)
+        {
+            for (int i = 1; i < _folders.Items.Count; i++)
+            {
+                if (((FolderItem)_folders.Items[i]).Id == selectedFolderId)
+                {
+                    _folders.SelectedIndex = i;
+                    break;
+                }
+            }
+        }
+
+        UpdateFolderCommands();
     }
 
     public void SetEntries(IEnumerable<VaultEntry> entries)
@@ -101,10 +126,29 @@ public sealed class VaultView : UserControl, IVaultView
         filters.Controls.Add(new Label { Text = "Folder:", Left = 8, Top = 10, Width = 45 });
         _folders.SetBounds(55, 6, 170, 26);
         _folders.DropDownStyle = ComboBoxStyle.DropDownList;
-        _folders.SelectedIndexChanged += (s, e) => FilterChanged?.Invoke(this, EventArgs.Empty);
+        _folders.SelectedIndexChanged += (s, e) =>
+        {
+            UpdateFolderCommands();
+            FilterChanged?.Invoke(this, EventArgs.Empty);
+        };
+        _folders.ContextMenuStrip = _folderMenu;
         filters.Controls.Add(_folders);
-        filters.Controls.Add(new Label { Text = "Search:", Left = 240, Top = 10, Width = 50 });
-        _search.SetBounds(292, 6, 240, 26);
+
+        Button folderActions = new() { Text = "...", Left = 229, Top = 6, Width = 32, Height = 24 };
+        folderActions.Click += (s, e) => _folderMenu.Show(folderActions, 0, folderActions.Height);
+        filters.Controls.Add(folderActions);
+
+        ToolStripMenuItem newFolder = new("New Folder...");
+        newFolder.Click += (s, e) => NewFolderRequested?.Invoke(this, EventArgs.Empty);
+        _renameFolder.Click += (s, e) => RenameFolderRequested?.Invoke(this, EventArgs.Empty);
+        _deleteFolder.Click += (s, e) => DeleteFolderRequested?.Invoke(this, EventArgs.Empty);
+        _folderMenu.Items.Add(newFolder);
+        _folderMenu.Items.Add(new ToolStripSeparator());
+        _folderMenu.Items.Add(_renameFolder);
+        _folderMenu.Items.Add(_deleteFolder);
+
+        filters.Controls.Add(new Label { Text = "Search:", Left = 276, Top = 10, Width = 50 });
+        _search.SetBounds(328, 6, 240, 26);
         _search.TextChanged += (s, e) => FilterChanged?.Invoke(this, EventArgs.Empty);
         filters.Controls.Add(_search);
 
@@ -167,6 +211,13 @@ public sealed class VaultView : UserControl, IVaultView
         _detailUrl.Clear();
         _detailNotes.Clear();
         SetCommands(false);
+    }
+
+    private void UpdateFolderCommands()
+    {
+        bool hasFolder = SelectedFolderId.HasValue;
+        _renameFolder.Enabled = hasFolder;
+        _deleteFolder.Enabled = hasFolder;
     }
 
     private void SetCommands(bool enabled)
