@@ -12,7 +12,7 @@ namespace EphorosVault.Presentation.Desktop.Forms;
 public sealed partial class VaultEntryForm : Form
 {
     private readonly VaultEntry _entry;
-    private readonly PasswordGenerator PasswordTextBoxGenerator;
+    private readonly PasswordGenerator _passwordGenerator;
     private readonly StandardErrorProvider _errors = new();
     private readonly bool _isNewEntry;
     private bool _initializing;
@@ -25,7 +25,7 @@ public sealed partial class VaultEntryForm : Form
         _entry = entry;
         _isNewEntry = entry.Id == Guid.Empty;
         _initializing = true;
-        PasswordTextBoxGenerator = passwordGenerator;
+        _passwordGenerator = passwordGenerator;
         InitializeComponent();
         _errors.ContainerControl = this;
         Text = entry.Id == Guid.Empty ? $"New Entry - {Resources.ProductName}" : $"Edit Entry - {Resources.ProductName}";
@@ -81,7 +81,7 @@ public sealed partial class VaultEntryForm : Form
 
     private string GeneratePassword()
     {
-        return PasswordTextBoxGenerator.Generate(
+        return _passwordGenerator.Generate(
             Properties.Settings.Default.PasswordLength,
             Properties.Settings.Default.PasswordRequireUppercase,
             Properties.Settings.Default.PasswordRequireLowercase,
