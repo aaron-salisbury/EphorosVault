@@ -78,6 +78,7 @@
     <Compile Include="Persistence\SqlCeUserCredentialRepository.cs" />
     <Compile Include="Persistence\SqlCeVaultFolderRepository.cs" />
     <Compile Include="Persistence\SqlCeVaultRepository.cs" />
+    <Compile Include="Persistence\SqlCeVaultRecoveryMetadataRepository.cs" />
     <Compile Include="Persistence\VaultDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
