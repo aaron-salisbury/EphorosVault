@@ -41,35 +41,6 @@ public sealed class DpapiVaultKeyStore : IVaultKeyStore
         File.WriteAllBytes(_keyFilePath, ProtectedData.Protect(key, Entropy, DataProtectionScope.CurrentUser));
     }
 
-    public void ExportRecoveryKey(string filePath)
-    {
-        Guard.ArgumentNotNull(filePath, nameof(filePath));
-
-        byte[] key = Load();
-        try
-        {
-            File.WriteAllBytes(filePath, key);
-        }
-        finally { Array.Clear(key, 0, key.Length); }
-    }
-
-    public void ImportRecoveryKey(string filePath)
-    {
-        Guard.ArgumentNotNull(filePath, nameof(filePath));
-
-        byte[] key = File.ReadAllBytes(filePath);
-        try
-        {
-            if (key.Length != 32)
-            {
-                throw new InvalidDataException("The recovery key is not a valid Ephoros Vault key.");
-            }
-
-            Save(key);
-        }
-        finally { Array.Clear(key, 0, key.Length); }
-    }
-
     public void EnsureCreated()
     {
         if (Exists)
