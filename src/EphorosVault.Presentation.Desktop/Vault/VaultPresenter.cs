@@ -85,18 +85,18 @@ public sealed class VaultPresenter
     private void NewFolderRequested(object sender, EventArgs e)
     {
         using Forms.FolderNameForm form = new();
-        if (form.ShowDialog((System.Windows.Forms.IWin32Window)_view) == System.Windows.Forms.DialogResult.OK)
+        while (form.ShowDialog((System.Windows.Forms.IWin32Window)_view) == System.Windows.Forms.DialogResult.OK)
         {
             try
             {
                 _folderService.Save(new VaultFolder { Name = form.FolderName });
                 Refresh();
                 _view.ShowStatus("Folder created.");
+                return;
             }
             catch (ArgumentException exception)
             {
                 form.ShowValidationError(exception.Message);
-                NewFolderRequested(sender, e);
             }
         }
     }
@@ -110,18 +110,18 @@ public sealed class VaultPresenter
         }
 
         using Forms.FolderNameForm form = new(_view.SelectedFolderName, "Rename Folder");
-        if (form.ShowDialog((System.Windows.Forms.IWin32Window)_view) == System.Windows.Forms.DialogResult.OK)
+        while (form.ShowDialog((System.Windows.Forms.IWin32Window)_view) == System.Windows.Forms.DialogResult.OK)
         {
             try
             {
                 _folderService.Save(new VaultFolder { Id = folderId.Value, Name = form.FolderName });
                 Refresh();
                 _view.ShowStatus("Folder renamed.");
+                return;
             }
             catch (ArgumentException exception)
             {
                 form.ShowValidationError(exception.Message);
-                RenameFolderRequested(sender, e);
             }
         }
     }
