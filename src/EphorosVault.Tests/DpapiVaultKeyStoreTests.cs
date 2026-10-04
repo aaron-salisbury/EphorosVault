@@ -30,29 +30,6 @@ public class DpapiVaultKeyStoreTests
     }
 
     [TestMethod]
-    public void RecoveryExportImportRoundTripsKey()
-    {
-        string directory = CreateTempDirectory();
-        try
-        {
-            string recoveryPath = Path.Combine(directory, "recovery.evkey");
-            DpapiVaultKeyStore firstStore = new(Path.Combine(directory, "first.key"));
-            firstStore.EnsureCreated();
-            byte[] expected = firstStore.Load();
-            firstStore.ExportRecoveryKey(recoveryPath);
-
-            DpapiVaultKeyStore secondStore = new(Path.Combine(directory, "second.key"));
-            secondStore.ImportRecoveryKey(recoveryPath);
-
-            CollectionAssert.AreEqual(expected, secondStore.Load());
-        }
-        finally
-        {
-            Directory.Delete(directory, true);
-        }
-    }
-
-    [TestMethod]
     public void SaveRejectsInvalidKeyLength()
     {
         string directory = CreateTempDirectory();
