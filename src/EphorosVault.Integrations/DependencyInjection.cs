@@ -16,6 +16,7 @@ public static class DependencyInjection
         Guard.ArgumentNotNull(services, nameof(services));
 
         services.AddSingleton<IVaultEncryption, VaultKeyEncryption>();
+        services.AddSingleton<IVaultRecoveryService, VaultRecoveryService>();
         services.AddScoped<KeePass2XmlExporter, KeePass2XmlExporter>();
         services.AddScoped<BitwardenJsonExporter, BitwardenJsonExporter>();
 
