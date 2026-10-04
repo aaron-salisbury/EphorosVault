@@ -61,8 +61,6 @@ partial class VaultView
             this._detailUrl = new System.Windows.Forms.TextBox();
             this._notesLabel = new System.Windows.Forms.Label();
             this._detailNotes = new System.Windows.Forms.TextBox();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this._status = new System.Windows.Forms.ToolStripStatusLabel();
             this.tools.SuspendLayout();
             this.filters.SuspendLayout();
             this._folderMenu.SuspendLayout();
@@ -70,7 +68,6 @@ partial class VaultView
             this.workspace.Panel2.SuspendLayout();
             this.workspace.SuspendLayout();
             this.details.SuspendLayout();
-            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tools
@@ -363,28 +360,10 @@ partial class VaultView
             this._detailNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this._detailNotes.Size = new System.Drawing.Size(1848, 140);
             this._detailNotes.TabIndex = 9;
-            // 
-            // statusStrip
-            // 
-            this.statusStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._status});
-            this.statusStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.statusStrip.Location = new System.Drawing.Point(8, 801);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(1743, 22);
-            this.statusStrip.SizingGrip = false;
-            this.statusStrip.TabIndex = 3;
-            // 
-            // _status
-            // 
-            this._status.Name = "_status";
-            this._status.Size = new System.Drawing.Size(0, 15);
-            // 
+            //
             // VaultView
             // 
             this.Controls.Add(this.workspace);
-            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.filters);
             this.Controls.Add(this.tools);
             this.Name = "VaultView";
@@ -400,8 +379,6 @@ partial class VaultView
             this.workspace.ResumeLayout(false);
             this.details.ResumeLayout(false);
             this.details.PerformLayout();
-            this.statusStrip.ResumeLayout(false);
-            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -416,5 +393,4 @@ partial class VaultView
     private System.Windows.Forms.Label searchLabel;
     private System.Windows.Forms.SplitContainer workspace;
     private System.Windows.Forms.Panel details;
-    private System.Windows.Forms.StatusStrip statusStrip;
 }
