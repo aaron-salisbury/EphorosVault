@@ -18,6 +18,7 @@ public partial class ShellForm : Form
     private readonly VaultPresenter _vaultPresenter;
     private readonly VaultService _vaultService;
     private readonly VaultView _vaultView;
+    private readonly Timer _statusTimer;
 
     public ShellForm(VaultService vaultService, VaultFolderService folderService, PasswordGenerator passwordGenerator, IVaultExporter keePassExporter, IVaultExporter bitwardenExporter, IVaultRecoveryService recoveryService)
     {
@@ -37,6 +38,12 @@ public partial class ShellForm : Form
 
         InitializeComponent();
         Text = Resources.ProductName;
+
+        _statusTimer = new Timer
+        {
+            Interval = 3000
+        };
+        _statusTimer.Tick += StatusTimer_Tick;
 
         _vaultView = new VaultView();
         MainContentPanel.Controls.Add(_vaultView);
@@ -86,6 +93,14 @@ public partial class ShellForm : Form
     private void ShowStatus(string message)
     {
         StatusLabel.Text = message;
+        _statusTimer.Stop();
+        _statusTimer.Start();
+    }
+
+    private void StatusTimer_Tick(object sender, EventArgs e)
+    {
+        _statusTimer.Stop();
+        StatusLabel.Text = string.Empty;
     }
 
     private void ExportKeePassMenuItem_Click(object sender, EventArgs e)
