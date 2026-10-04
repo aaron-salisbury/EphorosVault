@@ -369,6 +369,7 @@ partial class VaultView
             this.statusStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._status});
+            this.statusStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.statusStrip.Location = new System.Drawing.Point(8, 801);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1743, 22);
