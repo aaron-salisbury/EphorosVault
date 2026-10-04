@@ -32,7 +32,7 @@ internal static class Program
                 Ioc.Default.GetRequiredService<PasswordGenerator>(),
                 Ioc.Default.GetRequiredService<KeePass2XmlExporter>(),
                 Ioc.Default.GetRequiredService<BitwardenJsonExporter>(),
-                Ioc.Default.GetRequiredService<IVaultKeyStore>());
+                Ioc.Default.GetRequiredService<IVaultRecoveryService>());
 
             using VaultApplicationContext applicationContext = new(
                 shell,
