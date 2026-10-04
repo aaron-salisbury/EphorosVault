@@ -70,9 +70,8 @@
     <Compile Include="Cryptography\IVaultKeyStore.cs" />
     <Compile Include="Cryptography\VaultKeyEncryption.cs" />
     <Compile Include="DependencyInjection.cs" />
-    <Compile Include="Export\BitwardenCsvExporter.cs" />
-    <Compile Include="Export\CsvWriter.cs" />
-    <Compile Include="Export\KeePassCsvExporter.cs" />
+    <Compile Include="Export\BitwardenJsonExporter.cs" />
+    <Compile Include="Export\KeePass2XmlExporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
