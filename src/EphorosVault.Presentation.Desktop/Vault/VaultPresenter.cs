@@ -64,7 +64,7 @@ public sealed class VaultPresenter
     {
         VaultEntry entry = new();
         using Forms.VaultEntryForm form = new(entry, _folderService.GetFolders(), _passwordGenerator);
-        if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        if (form.ShowDialog((System.Windows.Forms.IWin32Window)_view) == System.Windows.Forms.DialogResult.OK)
         {
             _vaultService.Save(entry);
             Refresh();
@@ -77,7 +77,7 @@ public sealed class VaultPresenter
         VaultEntry entry = _view.SelectedEntry;
         if (entry == null) return;
         using Forms.VaultEntryForm form = new(entry, _folderService.GetFolders(), _passwordGenerator);
-        if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        if (form.ShowDialog((System.Windows.Forms.IWin32Window)_view) == System.Windows.Forms.DialogResult.OK)
         {
             _vaultService.Save(entry);
             Refresh();
