@@ -51,6 +51,7 @@ public class VaultPresenterTests
         public event EventHandler NewEntryRequested;
         public event EventHandler NewFolderRequested;
         public event EventHandler RenameFolderRequested;
+        public event EventHandler<VaultStatusEventArgs> StatusChanged;
         public Guid? SelectedFolderId { get; set; }
         public string SelectedFolderName { get; set; } = string.Empty;
         public VaultEntry SelectedEntry { get; set; }
