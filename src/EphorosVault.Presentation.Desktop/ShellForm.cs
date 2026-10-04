@@ -56,16 +56,6 @@ public partial class ShellForm : Form
         LockRequested?.Invoke(this, EventArgs.Empty);
     }
 
-    private void NewFolderMenuItem_Click(object sender, EventArgs e)
-    {
-        using FolderNameForm form = new();
-        if (form.ShowDialog(this) == DialogResult.OK && form.FolderName.Length > 0)
-        {
-            _folderService.Save(new VaultFolder { Name = form.FolderName });
-            _vaultPresenter.Refresh();
-        }
-    }
-
     private void PasswordGeneratorMenuItem_Click(object sender, EventArgs e)
     {
         string password = _passwordGenerator.Generate(
