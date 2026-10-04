@@ -77,8 +77,6 @@
     <Compile Include="Base\Helpers\StandardErrorProvider.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Base\MVP\Navigator.cs" />
-    <Compile Include="Base\MVP\Presenter.cs" />
     <Compile Include="DependencyInjection.cs" />
     <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
@@ -111,6 +109,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Vault\IVaultView.cs" />
+    <Compile Include="Vault\VaultPresenter.cs" />
+    <Compile Include="Vault\VaultView.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ShellForm.cs">
       <SubType>Form</SubType>
@@ -163,10 +166,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Presenters\" />
-    <Folder Include="Views\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
