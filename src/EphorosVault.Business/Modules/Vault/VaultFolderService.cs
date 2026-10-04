@@ -31,6 +31,14 @@ public sealed class VaultFolderService
 
         folder.Name = folder.Name.Trim();
 
+        foreach (VaultFolder existing in _repository.GetAll())
+        {
+            if (existing.Id != folder.Id && string.Equals(existing.Name, folder.Name, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException("A folder with this name already exists.", nameof(folder));
+            }
+        }
+
         if (folder.Id == Guid.Empty)
         {
             folder.Id = Guid.NewGuid();
