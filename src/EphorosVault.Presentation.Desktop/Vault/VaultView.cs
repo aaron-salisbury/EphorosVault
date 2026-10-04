@@ -22,6 +22,7 @@ public sealed partial class VaultView : UserControl, IVaultView
     public event EventHandler NewEntryRequested;
     public event EventHandler NewFolderRequested;
     public event EventHandler RenameFolderRequested;
+    public event EventHandler<VaultStatusEventArgs> StatusChanged;
 
     public Guid? SelectedFolderId => (_folders.SelectedItem as FolderItem)?.Id;
     public string SelectedFolderName => (_folders.SelectedItem as FolderItem)?.Name ?? string.Empty;
@@ -77,7 +78,7 @@ public sealed partial class VaultView : UserControl, IVaultView
 
     public void ShowStatus(string message)
     {
-        _status.Text = message;
+        StatusChanged?.Invoke(this, new VaultStatusEventArgs(message));
     }
 
     public void ClearSensitiveState()
