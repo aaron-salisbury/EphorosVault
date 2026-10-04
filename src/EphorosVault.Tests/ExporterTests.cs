@@ -18,8 +18,8 @@ public class ExporterTests
         try
         {
             new BitwardenJsonExporter().Export(path,
-                new[] { new VaultEntry { Id = Guid.NewGuid(), FolderId = folderId, Name = "Example \"Login\"", UserName = "user", Password = "secret", Url = "https://example.com", Notes = "line 1\nline 2" } },
-                new[] { new VaultFolder { Id = folderId, Name = "Work" } });
+                [new VaultEntry { Id = Guid.NewGuid(), FolderId = folderId, Name = "Example \"Login\"", UserName = "user", Password = "secret", Url = "https://example.com", Notes = "line 1\nline 2" }],
+                [new VaultFolder { Id = folderId, Name = "Work" }]);
 
             string json = File.ReadAllText(path);
             StringAssert.Contains(json, "\"encrypted\": false");
@@ -38,7 +38,7 @@ public class ExporterTests
         string path = Path.GetTempFileName();
         try
         {
-            new BitwardenJsonExporter().Export(path, new[] { new VaultEntry { Id = Guid.NewGuid(), Name = "Unfiled" } }, Array.Empty<VaultFolder>());
+            new BitwardenJsonExporter().Export(path, [new VaultEntry { Id = Guid.NewGuid(), Name = "Unfiled" }], []);
             Assert.IsFalse(File.ReadAllText(path).Contains("\"folderId\""));
         }
         finally { File.Delete(path); }
@@ -52,8 +52,8 @@ public class ExporterTests
         try
         {
             new KeePass2XmlExporter().Export(path,
-                new[] { new VaultEntry { Id = Guid.NewGuid(), FolderId = folderId, Name = "A < B & C", UserName = "user", Password = "p&<>", Url = "https://example.com?a=1&b=2", Notes = "line 1\r\nline 2" } },
-                new[] { new VaultFolder { Id = folderId, Name = "Work & Personal" } });
+                [new VaultEntry { Id = Guid.NewGuid(), FolderId = folderId, Name = "A < B & C", UserName = "user", Password = "p&<>", Url = "https://example.com?a=1&b=2", Notes = "line 1\r\nline 2" }],
+                [new VaultFolder { Id = folderId, Name = "Work & Personal" }]);
 
             XmlDocument document = new();
             document.Load(path);

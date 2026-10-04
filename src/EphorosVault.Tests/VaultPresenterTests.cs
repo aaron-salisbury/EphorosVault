@@ -51,8 +51,8 @@ public class VaultPresenterTests
         public Guid? SelectedFolderId { get; set; }
         public VaultEntry SelectedEntry { get; set; }
         public string SearchText { get; set; } = string.Empty;
-        internal List<VaultEntry> Entries { get; } = new();
-        internal List<VaultFolder> Folders { get; } = new();
+        internal List<VaultEntry> Entries { get; } = [];
+        internal List<VaultFolder> Folders { get; } = [];
         public void ClearSensitiveState() => Entries.Clear();
         public void SetEntries(IEnumerable<VaultEntry> entries) { Entries.Clear(); Entries.AddRange(entries); }
         public void SetFolders(IEnumerable<VaultFolder> folders) { Folders.Clear(); Folders.AddRange(folders); }
@@ -62,7 +62,7 @@ public class VaultPresenterTests
 
     private sealed class MemoryVaultRepository : IVaultRepository
     {
-        internal List<VaultEntry> Items { get; } = new();
+        internal List<VaultEntry> Items { get; } = [];
         public IList<VaultEntry> GetAll() => Items;
         public VaultEntry Get(Guid id) => Items.Find(x => x.Id == id);
         public void Save(VaultEntry entry) { }
@@ -71,7 +71,7 @@ public class VaultPresenterTests
 
     private sealed class MemoryFolderRepository : IVaultFolderRepository
     {
-        internal List<VaultFolder> Items { get; } = new();
+        internal List<VaultFolder> Items { get; } = [];
         public IList<VaultFolder> GetAll() => Items;
         public void Save(VaultFolder folder) { }
         public void Delete(Guid id) { }

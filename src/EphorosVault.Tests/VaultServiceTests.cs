@@ -52,7 +52,7 @@ public class VaultServiceTests
 
     private sealed class MemoryRepository : IVaultRepository
     {
-        internal List<VaultEntry> Items { get; } = new();
+        internal List<VaultEntry> Items { get; } = [];
         public IList<VaultEntry> GetAll() => Items;
         public VaultEntry Get(Guid id) => Items.Find(x => x.Id == id);
         public void Save(VaultEntry entry)

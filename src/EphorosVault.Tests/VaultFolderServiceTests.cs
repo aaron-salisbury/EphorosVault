@@ -49,7 +49,7 @@ public class VaultFolderServiceTests
 
     private sealed class MemoryFolderRepository : IVaultFolderRepository
     {
-        internal List<VaultFolder> Items { get; } = new();
+        internal List<VaultFolder> Items { get; } = [];
         public IList<VaultFolder> GetAll() => Items;
         public void Save(VaultFolder folder) { Items.RemoveAll(x => x.Id == folder.Id); Items.Add(folder); }
         public void Delete(Guid id) => Items.RemoveAll(x => x.Id == id);
