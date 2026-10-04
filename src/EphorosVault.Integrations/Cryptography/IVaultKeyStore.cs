@@ -7,6 +7,4 @@ public interface IVaultKeyStore
     void EnsureCreated();
     byte[] Load();
     void Save(byte[] key);
-    void ExportRecoveryKey(string filePath);
-    void ImportRecoveryKey(string filePath);
 }
