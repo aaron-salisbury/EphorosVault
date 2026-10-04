@@ -75,7 +75,9 @@
     <Compile Include="Modules\Vault\IVaultEncryption.cs" />
     <Compile Include="Modules\Vault\IVaultExporter.cs" />
     <Compile Include="Modules\Vault\IVaultRepository.cs" />
+    <Compile Include="Modules\Vault\IVaultRecoveryMetadataRepository.cs" />
     <Compile Include="Modules\Vault\IVaultRecoveryService.cs" />
+    <Compile Include="Modules\Vault\VaultRecoveryMetadata.cs" />
     <Compile Include="Modules\Vault\IVaultFolderRepository.cs" />
     <Compile Include="Modules\Vault\PasswordGenerator.cs" />
     <Compile Include="Modules\Vault\VaultEntry.cs" />
