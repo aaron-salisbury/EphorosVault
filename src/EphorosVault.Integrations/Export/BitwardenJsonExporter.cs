@@ -22,19 +22,31 @@ public sealed class BitwardenJsonExporter : IVaultExporter
         bool first = true;
         foreach (VaultFolder folder in folders)
         {
-            if (!first) json.Append(",");
+            if (!first)
+            {
+                json.Append(",");
+            }
+
             string id = folder.Id.ToString("D");
             folderIds[folder.Id] = id;
             json.Append("\r\n    {\"id\": ").Append(Json(folder.Id.ToString("D"))).Append(", \"name\": ").Append(Json(folder.Name)).Append("}");
             first = false;
         }
 
-        if (!first) json.Append("\r\n  ");
+        if (!first)
+        {
+            json.Append("\r\n  ");
+        }
+
         json.Append("],\r\n  \"items\": [");
         first = true;
         foreach (VaultEntry entry in entries)
         {
-            if (!first) json.Append(",");
+            if (!first)
+            {
+                json.Append(",");
+            }
+
             json.Append("\r\n    {");
             json.Append("\"id\": ").Append(Json(entry.Id.ToString("D"))).Append(", ");
             if (entry.FolderId.HasValue && folderIds.ContainsKey(entry.FolderId.Value))
@@ -51,26 +63,48 @@ public sealed class BitwardenJsonExporter : IVaultExporter
             first = false;
         }
 
-        if (!first) json.Append("\r\n  ");
+        if (!first)
+        {
+            json.Append("\r\n  ");
+        }
+
         json.Append("]\r\n}\r\n");
         File.WriteAllText(filePath, json.ToString(), new UTF8Encoding(false));
     }
 
     private static string Json(string value)
     {
-        if (value == null) return "null";
+        if (value == null)
+        {
+            return "null";
+        }
+
         StringBuilder result = new("\"");
         foreach (char character in value)
         {
             switch (character)
             {
-                case '\"': result.Append("\\\""); break;
-                case '\\': result.Append("\\\\"); break;
-                case '\b': result.Append("\\b"); break;
-                case '\f': result.Append("\\f"); break;
-                case '\n': result.Append("\\n"); break;
-                case '\r': result.Append("\\r"); break;
-                case '\t': result.Append("\\t"); break;
+                case '\"':
+                    result.Append("\\\"");
+                    break;
+                case '\\':
+                    result.Append("\\\\");
+                    break;
+                case '\b':
+                    result.Append("\\b");
+                    break;
+                case '\f':
+                    result.Append("\\f");
+                    break;
+                case '\n':
+                    result.Append("\\n");
+                    break;
+                case '\r':
+                    result.Append("\\r");
+                    break;
+                case '\t':
+                    result.Append("\\t");
+                    break;
                 default:
                     if (character < 0x20)
                     {

@@ -27,19 +27,23 @@ public sealed class PasswordGenerator
         int requiredCount = 0;
         if (requireUppercase)
         {
-            characters.Append(UppercaseCharacters); requiredCount++;
+            characters.Append(UppercaseCharacters);
+            requiredCount++;
         }
         if (requireLowercase)
         {
-            characters.Append(LowercaseCharacters); requiredCount++;
+            characters.Append(LowercaseCharacters);
+            requiredCount++;
         }
         if (requireNumbers)
         {
-            characters.Append(NumberCharacters); requiredCount++;
+            characters.Append(NumberCharacters);
+            requiredCount++;
         }
         if (requireSpecialCharacters)
         {
-            characters.Append(SpecialCharacters); requiredCount++;
+            characters.Append(SpecialCharacters);
+            requiredCount++;
         }
 
         if (requiredCount == 0)

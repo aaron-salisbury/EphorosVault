@@ -1,9 +1,9 @@
 using EphorosVault.Business.Modules.Vault;
+using Microsoft.Practices.Unity.Utility;
 using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.Practices.Unity.Utility;
 
 namespace EphorosVault.Integrations.Cryptography;
 

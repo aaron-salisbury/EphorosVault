@@ -25,7 +25,11 @@ public sealed class KeePass2XmlExporter : IVaultExporter
                 continue;
             }
 
-            if (!grouped.ContainsKey(entry.FolderId.Value)) grouped.Add(entry.FolderId.Value, new List<VaultEntry>());
+            if (!grouped.ContainsKey(entry.FolderId.Value))
+            {
+                grouped.Add(entry.FolderId.Value, new List<VaultEntry>());
+            }
+
             grouped[entry.FolderId.Value].Add(entry);
         }
 
@@ -39,13 +43,20 @@ public sealed class KeePass2XmlExporter : IVaultExporter
         writer.WriteStartElement("Root");
         WriteGroupStart(writer, Guid.NewGuid(), "Ephoros Vault");
 
-        foreach (VaultEntry entry in unfiled) WriteEntry(writer, entry);
+        foreach (VaultEntry entry in unfiled)
+        {
+            WriteEntry(writer, entry);
+        }
+
         foreach (VaultFolder folder in folders)
         {
             WriteGroupStart(writer, folder.Id, folder.Name);
             if (grouped.ContainsKey(folder.Id))
             {
-                foreach (VaultEntry entry in grouped[folder.Id]) WriteEntry(writer, entry);
+                foreach (VaultEntry entry in grouped[folder.Id])
+                {
+                    WriteEntry(writer, entry);
+                }
             }
             writer.WriteEndElement();
         }

@@ -28,7 +28,7 @@ public partial class ShellForm : Form
     private ToolStripButton _deleteEntryButton;
     private ToolStripButton _copyUserButton;
     private ToolStripButton _copyPasswordButton;
-    private readonly List<VaultEntry> _loadedEntries = new();
+    private readonly List<VaultEntry> _loadedEntries = [];
     private readonly ToolStripStatusLabel _statusLabel = new();
 
     public event EventHandler LockRequested;
@@ -373,7 +373,9 @@ public partial class ShellForm : Form
         Clipboard.Clear();
     }
 
-    private void AboutMenuItem_Click(object sender, System.EventArgs e) { using (AboutForm form = new())
+    private void AboutMenuItem_Click(object sender, System.EventArgs e)
+    {
+        using (AboutForm form = new())
         {
             form.ShowDialog(this);
         }
