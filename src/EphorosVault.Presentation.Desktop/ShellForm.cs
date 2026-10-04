@@ -40,6 +40,7 @@ public partial class ShellForm : Form
 
         _vaultView = new VaultView();
         MainContentPanel.Controls.Add(_vaultView);
+        _vaultView.StatusChanged += VaultView_StatusChanged;
         _vaultPresenter = new VaultPresenter(_vaultView, _vaultService, _folderService, _passwordGenerator);
     }
 
@@ -71,7 +72,20 @@ public partial class ShellForm : Form
     private void OptionsMenuItem_Click(object sender, EventArgs e)
     {
         using OptionsForm form = new();
-        form.ShowDialog(this);
+        if (form.ShowDialog(this) == DialogResult.OK && form.SettingsChanged)
+        {
+            ShowStatus("Settings saved.");
+        }
+    }
+
+    private void VaultView_StatusChanged(object sender, VaultStatusEventArgs e)
+    {
+        ShowStatus(e.Message);
+    }
+
+    private void ShowStatus(string message)
+    {
+        StatusLabel.Text = message;
     }
 
     private void ExportKeePassMenuItem_Click(object sender, EventArgs e)
