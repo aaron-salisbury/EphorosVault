@@ -85,11 +85,19 @@ public sealed class VaultPresenter
     private void NewFolderRequested(object sender, EventArgs e)
     {
         using Forms.FolderNameForm form = new();
-        if (form.ShowDialog((System.Windows.Forms.IWin32Window)_view) == System.Windows.Forms.DialogResult.OK && form.FolderName.Length > 0)
+        if (form.ShowDialog((System.Windows.Forms.IWin32Window)_view) == System.Windows.Forms.DialogResult.OK)
         {
-            _folderService.Save(new VaultFolder { Name = form.FolderName });
-            Refresh();
-            _view.ShowStatus("Folder created.");
+            try
+            {
+                _folderService.Save(new VaultFolder { Name = form.FolderName });
+                Refresh();
+                _view.ShowStatus("Folder created.");
+            }
+            catch (ArgumentException exception)
+            {
+                form.ShowValidationError(exception.Message);
+                NewFolderRequested(sender, e);
+            }
         }
     }
 
@@ -102,11 +110,19 @@ public sealed class VaultPresenter
         }
 
         using Forms.FolderNameForm form = new(_view.SelectedFolderName, "Rename Folder");
-        if (form.ShowDialog((System.Windows.Forms.IWin32Window)_view) == System.Windows.Forms.DialogResult.OK && form.FolderName.Length > 0)
+        if (form.ShowDialog((System.Windows.Forms.IWin32Window)_view) == System.Windows.Forms.DialogResult.OK)
         {
-            _folderService.Save(new VaultFolder { Id = folderId.Value, Name = form.FolderName });
-            Refresh();
-            _view.ShowStatus("Folder renamed.");
+            try
+            {
+                _folderService.Save(new VaultFolder { Id = folderId.Value, Name = form.FolderName });
+                Refresh();
+                _view.ShowStatus("Folder renamed.");
+            }
+            catch (ArgumentException exception)
+            {
+                form.ShowValidationError(exception.Message);
+                RenameFolderRequested(sender, e);
+            }
         }
     }
 
