@@ -82,15 +82,17 @@ partial class ShellForm
             this.NewFolderMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("NewFolderMenuItem.Image")));
             this.NewFolderMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.NewFolderMenuItem.Name = "NewFolderMenuItem";
-            this.NewFolderMenuItem.Size = new System.Drawing.Size(286, 34);
+            this.NewFolderMenuItem.Size = new System.Drawing.Size(290, 34);
             this.NewFolderMenuItem.Text = "New &Folder...";
             this.NewFolderMenuItem.Click += new System.EventHandler(this.NewFolderMenuItem_Click);
             // 
             // LockVaultMenuItem
             // 
+            this.LockVaultMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("LockVaultMenuItem.Image")));
+            this.LockVaultMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.LockVaultMenuItem.Name = "LockVaultMenuItem";
             this.LockVaultMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.LockVaultMenuItem.Size = new System.Drawing.Size(286, 34);
+            this.LockVaultMenuItem.Size = new System.Drawing.Size(290, 34);
             this.LockVaultMenuItem.Text = "&Lock Vault";
             this.LockVaultMenuItem.Click += new System.EventHandler(this.LockVaultMenuItem_Click);
             // 
@@ -102,7 +104,7 @@ partial class ShellForm
             this.ExportMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ExportMenuItem.Image")));
             this.ExportMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.ExportMenuItem.Name = "ExportMenuItem";
-            this.ExportMenuItem.Size = new System.Drawing.Size(286, 34);
+            this.ExportMenuItem.Size = new System.Drawing.Size(290, 34);
             this.ExportMenuItem.Text = "&Export";
             // 
             // ExportKeePassMenuItem
@@ -124,14 +126,16 @@ partial class ShellForm
             this.ExportRecoveryKeyMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ExportRecoveryKeyMenuItem.Image")));
             this.ExportRecoveryKeyMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.ExportRecoveryKeyMenuItem.Name = "ExportRecoveryKeyMenuItem";
-            this.ExportRecoveryKeyMenuItem.Size = new System.Drawing.Size(286, 34);
+            this.ExportRecoveryKeyMenuItem.Size = new System.Drawing.Size(290, 34);
             this.ExportRecoveryKeyMenuItem.Text = "Export &Recovery Key...";
             this.ExportRecoveryKeyMenuItem.Click += new System.EventHandler(this.ExportRecoveryKeyMenuItem_Click);
             // 
             // ImportRecoveryKeyMenuItem
             // 
+            this.ImportRecoveryKeyMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ImportRecoveryKeyMenuItem.Image")));
+            this.ImportRecoveryKeyMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.ImportRecoveryKeyMenuItem.Name = "ImportRecoveryKeyMenuItem";
-            this.ImportRecoveryKeyMenuItem.Size = new System.Drawing.Size(286, 34);
+            this.ImportRecoveryKeyMenuItem.Size = new System.Drawing.Size(290, 34);
             this.ImportRecoveryKeyMenuItem.Text = "Import R&ecovery Key...";
             this.ImportRecoveryKeyMenuItem.Click += new System.EventHandler(this.ImportRecoveryKeyMenuItem_Click);
             // 
@@ -140,7 +144,7 @@ partial class ShellForm
             this.ExitMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ExitMenuItem.Image")));
             this.ExitMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.ExitMenuItem.Name = "ExitMenuItem";
-            this.ExitMenuItem.Size = new System.Drawing.Size(286, 34);
+            this.ExitMenuItem.Size = new System.Drawing.Size(290, 34);
             this.ExitMenuItem.Text = "E&xit";
             this.ExitMenuItem.Click += new System.EventHandler(this.ExitMenuItem_Click);
             // 
@@ -184,7 +188,7 @@ partial class ShellForm
             this.AboutMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("AboutMenuItem.Image")));
             this.AboutMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.AboutMenuItem.Name = "AboutMenuItem";
-            this.AboutMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.AboutMenuItem.Size = new System.Drawing.Size(164, 34);
             this.AboutMenuItem.Text = "&About";
             this.AboutMenuItem.Click += new System.EventHandler(this.AboutMenuItem_Click);
             // 

@@ -127,8 +127,10 @@
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\cross-circle-frame.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\document--arrow.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\folder--plus.png" />
-    <Content Include="Base\Assets\Icons\YusukeKamiyamane\key--plus.png" />
-    <Content Include="Base\Assets\Icons\YusukeKamiyamane\lock--arrow.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\key--export.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\key--import.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\license-key.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\lock.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\question-frame.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\ui-scroll-pane-form.png" />
     <Resource Include="Base\Assets\Icons\SampleAppIcon.ico" />
