@@ -43,7 +43,6 @@ partial class ShellForm
             this.PasswordGeneratorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OptionsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.LogMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainContentPanel = new System.Windows.Forms.Panel();
             this.MenuStrip.SuspendLayout();
@@ -60,7 +59,7 @@ partial class ShellForm
             this.HelpMenuItem});
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
-            this.MenuStrip.Size = new System.Drawing.Size(1138, 35);
+            this.MenuStrip.Size = new System.Drawing.Size(1138, 33);
             this.MenuStrip.TabIndex = 0;
             this.MenuStrip.Text = "menuStrip1";
             // 
@@ -88,9 +87,9 @@ partial class ShellForm
             // LockVaultMenuItem
             // 
             this.LockVaultMenuItem.Name = "LockVaultMenuItem";
+            this.LockVaultMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
             this.LockVaultMenuItem.Size = new System.Drawing.Size(286, 34);
             this.LockVaultMenuItem.Text = "&Lock Vault";
-            this.LockVaultMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
             this.LockVaultMenuItem.Click += new System.EventHandler(this.LockVaultMenuItem_Click);
             // 
             // ExportMenuItem
@@ -107,14 +106,14 @@ partial class ShellForm
             // ExportKeePassMenuItem
             // 
             this.ExportKeePassMenuItem.Name = "ExportKeePassMenuItem";
-            this.ExportKeePassMenuItem.Size = new System.Drawing.Size(241, 34);
+            this.ExportKeePassMenuItem.Size = new System.Drawing.Size(252, 34);
             this.ExportKeePassMenuItem.Text = "&KeePass 2 XML...";
             this.ExportKeePassMenuItem.Click += new System.EventHandler(this.ExportKeePassMenuItem_Click);
             // 
             // ExportBitwardenMenuItem
             // 
             this.ExportBitwardenMenuItem.Name = "ExportBitwardenMenuItem";
-            this.ExportBitwardenMenuItem.Size = new System.Drawing.Size(241, 34);
+            this.ExportBitwardenMenuItem.Size = new System.Drawing.Size(252, 34);
             this.ExportBitwardenMenuItem.Text = "&Bitwarden JSON...";
             this.ExportBitwardenMenuItem.Click += new System.EventHandler(this.ExportBitwardenMenuItem_Click);
             // 
@@ -166,20 +165,10 @@ partial class ShellForm
             // HelpMenuItem
             // 
             this.HelpMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.LogMenuItem,
             this.AboutMenuItem});
             this.HelpMenuItem.Name = "HelpMenuItem";
             this.HelpMenuItem.Size = new System.Drawing.Size(65, 29);
             this.HelpMenuItem.Text = "&Help";
-            // 
-            // LogMenuItem
-            // 
-            this.LogMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("LogMenuItem.Image")));
-            this.LogMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.LogMenuItem.Name = "LogMenuItem";
-            this.LogMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.LogMenuItem.Text = "&Log";
-            this.LogMenuItem.Click += new System.EventHandler(this.LogMenuItem_Click);
             // 
             // AboutMenuItem
             // 
@@ -195,10 +184,10 @@ partial class ShellForm
             this.MainContentPanel.AutoSize = true;
             this.MainContentPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MainContentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainContentPanel.Location = new System.Drawing.Point(0, 35);
+            this.MainContentPanel.Location = new System.Drawing.Point(0, 33);
             this.MainContentPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MainContentPanel.Name = "MainContentPanel";
-            this.MainContentPanel.Size = new System.Drawing.Size(1138, 597);
+            this.MainContentPanel.Size = new System.Drawing.Size(1138, 599);
             this.MainContentPanel.TabIndex = 1;
             // 
             // ShellForm
@@ -235,7 +224,6 @@ partial class ShellForm
     private System.Windows.Forms.ToolStripMenuItem OptionsMenuItem;
     private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
     private System.Windows.Forms.ToolStripMenuItem HelpMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem LogMenuItem;
     private System.Windows.Forms.ToolStripMenuItem AboutMenuItem;
     private System.Windows.Forms.Panel MainContentPanel;
 }

@@ -101,7 +101,6 @@
     <Compile Include="Forms\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presenters\LogsPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>
@@ -118,12 +117,6 @@
     </Compile>
     <Compile Include="ShellForm.Designer.cs">
       <DependentUpon>ShellForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LogsView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\LogsView.Designer.cs">
-      <DependentUpon>LogsView.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -144,7 +137,6 @@
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\key--plus.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\lock--arrow.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\question-frame.png" />
-    <Content Include="Base\Assets\Icons\YusukeKamiyamane\report.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\ui-scroll-pane-form.png" />
     <Resource Include="Base\Assets\Icons\SampleAppIcon.ico" />
   </ItemGroup>
@@ -171,6 +163,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Presenters\" />
+    <Folder Include="Views\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

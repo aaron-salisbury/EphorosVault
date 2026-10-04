@@ -22,10 +22,7 @@ internal static class DependencyInjection
 
         IServiceCollection services = new ServiceCollectionPNP();
 
-        InMemorySinkPNP inMemorySink = new();
-        services.AddSingleton<ILogger>(new LoggerPNP(LogLevel.Debug, inMemorySink, new FileSinkPNP(Path.Combine(appDirectoryPath, "logs.txt"))));
-        services.AddSingleton(inMemorySink);
-
+        services.AddSingleton<ILogger>(new LoggerPNP(LogLevel.Debug, new FileSinkPNP(Path.Combine(appDirectoryPath, "logs.txt"))));
         services.AddScoped<IFileSystemAccess, FileSystemAccess>();
 
         DpapiVaultKeyStore vaultKeyStore = new(Path.Combine(appDirectoryPath, "EphorosVault.key"));
