@@ -7,6 +7,7 @@ namespace EphorosVault.Presentation.Desktop.Forms;
 
 public sealed partial class OptionsForm : Form
 {
+    public bool SettingsChanged { get; private set; }
     private readonly StandardErrorProvider _errors = new();
 
     public OptionsForm()
@@ -30,12 +31,23 @@ public sealed partial class OptionsForm : Form
             return;
         }
 
-        Properties.Settings.Default.PasswordLength = decimal.ToInt32(LengthInput.Value);
-        Properties.Settings.Default.PasswordRequireUppercase = UppercaseCheckBox.Checked;
-        Properties.Settings.Default.PasswordRequireLowercase = LowercaseCheckBox.Checked;
-        Properties.Settings.Default.PasswordRequireNumbers = NumbersCheckBox.Checked;
-        Properties.Settings.Default.PasswordRequireSpecialCharacters = SpecialCheckBox.Checked;
-        Properties.Settings.Default.Save();
+        int length = decimal.ToInt32(LengthInput.Value);
+        SettingsChanged =
+            length != Properties.Settings.Default.PasswordLength ||
+            UppercaseCheckBox.Checked != Properties.Settings.Default.PasswordRequireUppercase ||
+            LowercaseCheckBox.Checked != Properties.Settings.Default.PasswordRequireLowercase ||
+            NumbersCheckBox.Checked != Properties.Settings.Default.PasswordRequireNumbers ||
+            SpecialCheckBox.Checked != Properties.Settings.Default.PasswordRequireSpecialCharacters;
+
+        if (SettingsChanged)
+        {
+            Properties.Settings.Default.PasswordLength = length;
+            Properties.Settings.Default.PasswordRequireUppercase = UppercaseCheckBox.Checked;
+            Properties.Settings.Default.PasswordRequireLowercase = LowercaseCheckBox.Checked;
+            Properties.Settings.Default.PasswordRequireNumbers = NumbersCheckBox.Checked;
+            Properties.Settings.Default.PasswordRequireSpecialCharacters = SpecialCheckBox.Checked;
+            Properties.Settings.Default.Save();
+        }
         DialogResult = DialogResult.OK;
         Close();
     }
