@@ -38,6 +38,7 @@ partial class ShellForm
             this.ExportKeePassMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExportBitwardenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExportRecoveryKeyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ImportRecoveryKeyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PasswordGeneratorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,6 +71,7 @@ partial class ShellForm
             this.LockVaultMenuItem,
             this.ExportMenuItem,
             this.ExportRecoveryKeyMenuItem,
+            this.ImportRecoveryKeyMenuItem,
             this.ExitMenuItem});
             this.FileMenuItem.Name = "FileMenuItem";
             this.FileMenuItem.Size = new System.Drawing.Size(54, 29);
@@ -125,6 +127,13 @@ partial class ShellForm
             this.ExportRecoveryKeyMenuItem.Size = new System.Drawing.Size(286, 34);
             this.ExportRecoveryKeyMenuItem.Text = "Export &Recovery Key...";
             this.ExportRecoveryKeyMenuItem.Click += new System.EventHandler(this.ExportRecoveryKeyMenuItem_Click);
+            // 
+            // ImportRecoveryKeyMenuItem
+            // 
+            this.ImportRecoveryKeyMenuItem.Name = "ImportRecoveryKeyMenuItem";
+            this.ImportRecoveryKeyMenuItem.Size = new System.Drawing.Size(286, 34);
+            this.ImportRecoveryKeyMenuItem.Text = "Import R&ecovery Key...";
+            this.ImportRecoveryKeyMenuItem.Click += new System.EventHandler(this.ImportRecoveryKeyMenuItem_Click);
             // 
             // ExitMenuItem
             // 
@@ -219,6 +228,7 @@ partial class ShellForm
     private System.Windows.Forms.ToolStripMenuItem ExportKeePassMenuItem;
     private System.Windows.Forms.ToolStripMenuItem ExportBitwardenMenuItem;
     private System.Windows.Forms.ToolStripMenuItem ExportRecoveryKeyMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem ImportRecoveryKeyMenuItem;
     private System.Windows.Forms.ToolStripMenuItem ToolsMenuItem;
     private System.Windows.Forms.ToolStripMenuItem PasswordGeneratorMenuItem;
     private System.Windows.Forms.ToolStripMenuItem OptionsMenuItem;
