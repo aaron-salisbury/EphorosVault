@@ -27,6 +27,9 @@ public sealed class VaultPresenter
         _passwordGenerator = passwordGenerator;
 
         _view.NewEntryRequested += NewEntryRequested;
+        _view.NewFolderRequested += NewFolderRequested;
+        _view.RenameFolderRequested += RenameFolderRequested;
+        _view.DeleteFolderRequested += DeleteFolderRequested;
         _view.EditEntryRequested += EditEntryRequested;
         _view.DeleteEntryRequested += DeleteEntryRequested;
         _view.CopyUserNameRequested += CopyUserNameRequested;
@@ -77,6 +80,51 @@ public sealed class VaultPresenter
         }
 
         _view.SetEntries(filtered);
+    }
+
+    private void NewFolderRequested(object sender, EventArgs e)
+    {
+        using Forms.FolderNameForm form = new();
+        if (form.ShowDialog((System.Windows.Forms.IWin32Window)_view) == System.Windows.Forms.DialogResult.OK && form.FolderName.Length > 0)
+        {
+            _folderService.Save(new VaultFolder { Name = form.FolderName });
+            Refresh();
+            _view.ShowStatus("Folder created.");
+        }
+    }
+
+    private void RenameFolderRequested(object sender, EventArgs e)
+    {
+        Guid? folderId = _view.SelectedFolderId;
+        if (!folderId.HasValue)
+        {
+            return;
+        }
+
+        using Forms.FolderNameForm form = new(_view.SelectedFolderName, "Rename Folder");
+        if (form.ShowDialog((System.Windows.Forms.IWin32Window)_view) == System.Windows.Forms.DialogResult.OK && form.FolderName.Length > 0)
+        {
+            _folderService.Save(new VaultFolder { Id = folderId.Value, Name = form.FolderName });
+            Refresh();
+            _view.ShowStatus("Folder renamed.");
+        }
+    }
+
+    private void DeleteFolderRequested(object sender, EventArgs e)
+    {
+        Guid? folderId = _view.SelectedFolderId;
+        if (!folderId.HasValue)
+        {
+            return;
+        }
+
+        string message = "Delete folder '" + _view.SelectedFolderName + "'? Credentials in this folder will not be deleted; they will remain in All Entries.";
+        if (System.Windows.Forms.MessageBox.Show((System.Windows.Forms.IWin32Window)_view, message, Resources.ProductName, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
+        {
+            _folderService.Delete(folderId.Value);
+            Refresh();
+            _view.ShowStatus("Folder deleted.");
+        }
     }
 
     private void NewEntryRequested(object sender, EventArgs e)
