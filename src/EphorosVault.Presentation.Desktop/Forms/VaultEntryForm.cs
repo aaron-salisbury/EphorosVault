@@ -1,5 +1,7 @@
+using EphorosVault.Business.Modules.Access;
 using EphorosVault.Business.Modules.Vault;
 using EphorosVault.Presentation.Desktop.Base.Helpers;
+using Microsoft.Practices.Unity.Utility;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -25,10 +27,13 @@ public sealed class VaultEntryForm : Form
 
     public VaultEntryForm(VaultEntry entry, IList<VaultFolder> folders, PasswordGenerator passwordGenerator)
     {
-        _entry = entry ?? throw new ArgumentNullException(nameof(entry));
+        Guard.ArgumentNotNull(entry, nameof(entry));
+        Guard.ArgumentNotNull(passwordGenerator, nameof(passwordGenerator));
+
+        _entry = entry;
         _isNewEntry = entry.Id == Guid.Empty;
         _initializing = true;
-        _passwordGenerator = passwordGenerator ?? throw new ArgumentNullException(nameof(passwordGenerator));
+        _passwordGenerator = passwordGenerator;
         _errors.ContainerControl = this;
         Text = entry.Id == Guid.Empty ? "New Entry - Ephoros Vault" : "Edit Entry - Ephoros Vault";
         FormBorderStyle = FormBorderStyle.FixedDialog;

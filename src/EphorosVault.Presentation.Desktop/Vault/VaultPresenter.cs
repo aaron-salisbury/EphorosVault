@@ -1,4 +1,5 @@
 using EphorosVault.Business.Modules.Vault;
+using Microsoft.Practices.Unity.Utility;
 using System;
 using System.Collections.Generic;
 
@@ -10,14 +11,19 @@ public sealed class VaultPresenter
     private readonly PasswordGenerator _passwordGenerator;
     private readonly VaultService _vaultService;
     private readonly IVaultView _view;
-    private readonly List<VaultEntry> _entries = new();
+    private readonly List<VaultEntry> _entries = [];
 
     public VaultPresenter(IVaultView view, VaultService vaultService, VaultFolderService folderService, PasswordGenerator passwordGenerator)
     {
-        _view = view ?? throw new ArgumentNullException(nameof(view));
-        _vaultService = vaultService ?? throw new ArgumentNullException(nameof(vaultService));
-        _folderService = folderService ?? throw new ArgumentNullException(nameof(folderService));
-        _passwordGenerator = passwordGenerator ?? throw new ArgumentNullException(nameof(passwordGenerator));
+        Guard.ArgumentNotNull(view, nameof(view));
+        Guard.ArgumentNotNull(vaultService, nameof(vaultService));
+        Guard.ArgumentNotNull(folderService, nameof(folderService));
+        Guard.ArgumentNotNull(passwordGenerator, nameof(passwordGenerator));
+
+        _view = view;
+        _vaultService = vaultService;
+        _folderService = folderService;
+        _passwordGenerator = passwordGenerator;
 
         _view.NewEntryRequested += NewEntryRequested;
         _view.EditEntryRequested += EditEntryRequested;

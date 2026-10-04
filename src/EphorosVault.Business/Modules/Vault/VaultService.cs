@@ -1,3 +1,4 @@
+using Microsoft.Practices.Unity.Utility;
 using System;
 using System.Collections.Generic;
 
@@ -9,7 +10,9 @@ public sealed class VaultService
 
     public VaultService(IVaultRepository repository)
     {
-        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        Guard.ArgumentNotNull(repository, nameof(repository));
+
+        _repository = repository;
     }
 
     public IList<VaultEntry> GetEntries()
@@ -19,10 +22,7 @@ public sealed class VaultService
 
     public void Save(VaultEntry entry)
     {
-        if (entry == null)
-        {
-            throw new ArgumentNullException(nameof(entry));
-        }
+        Guard.ArgumentNotNull(entry, nameof(entry));
 
         if (entry.Name == null || entry.Name.Trim().Length == 0)
         {

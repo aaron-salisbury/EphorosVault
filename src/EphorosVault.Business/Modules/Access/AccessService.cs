@@ -1,4 +1,5 @@
 using DotNetFrameworkToolkit.Modules.UserAccess;
+using Microsoft.Practices.Unity.Utility;
 using System;
 
 namespace EphorosVault.Business.Modules.Access;
@@ -10,8 +11,11 @@ public sealed class AccessService
 
     public AccessService(IUserAuthenticator authenticator, IUserCredentialRepository repository)
     {
-        _authenticator = authenticator ?? throw new ArgumentNullException(nameof(authenticator));
-        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        Guard.ArgumentNotNull(authenticator, nameof(authenticator));
+        Guard.ArgumentNotNull(repository, nameof(repository));
+
+        _authenticator = authenticator;
+        _repository = repository;
     }
 
     public bool RequiresSetup => !_repository.HasUser();

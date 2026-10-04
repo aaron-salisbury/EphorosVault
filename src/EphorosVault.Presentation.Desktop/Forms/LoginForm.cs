@@ -1,5 +1,6 @@
 using EphorosVault.Business.Modules.Access;
 using EphorosVault.Presentation.Desktop.Base.Helpers;
+using Microsoft.Practices.Unity.Utility;
 using System;
 using System.Windows.Forms;
 
@@ -12,8 +13,9 @@ public partial class LoginForm : Form
 
     public LoginForm(AccessService accessService)
     {
-        _accessService = accessService ?? throw new ArgumentNullException(nameof(accessService));
+        Guard.ArgumentNotNull(accessService, nameof(accessService));
 
+        _accessService = accessService;
         InitializeComponent();
         _errors.ContainerControl = this;
         ConfigureMode();

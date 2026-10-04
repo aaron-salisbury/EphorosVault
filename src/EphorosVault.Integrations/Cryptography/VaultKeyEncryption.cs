@@ -15,7 +15,9 @@ public sealed class VaultKeyEncryption : IVaultEncryption
 
     public VaultKeyEncryption(IVaultKeyStore keyStore)
     {
-        _keyStore = keyStore ?? throw new ArgumentNullException(nameof(keyStore));
+        Guard.ArgumentNotNull(keyStore, nameof(keyStore));
+
+        _keyStore = keyStore;
     }
 
     public string Encrypt(string plaintext)
@@ -74,10 +76,7 @@ public sealed class VaultKeyEncryption : IVaultEncryption
 
     public string Decrypt(string ciphertext)
     {
-        if (ciphertext == null)
-        {
-            throw new ArgumentNullException(nameof(ciphertext));
-        }
+        Guard.ArgumentNotNull(ciphertext, nameof(ciphertext));
 
         return ciphertext.StartsWith(CurrentPrefix, StringComparison.Ordinal)
             ? DecryptCurrent(ciphertext.Substring(CurrentPrefix.Length))

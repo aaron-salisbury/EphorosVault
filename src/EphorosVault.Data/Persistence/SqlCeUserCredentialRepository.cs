@@ -1,5 +1,6 @@
 using DotNetFrameworkToolkit.Modules.UserAccess;
 using EphorosVault.Business.Modules.Access;
+using Microsoft.Practices.Unity.Utility;
 using System;
 using System.Data.SqlServerCe;
 
@@ -11,7 +12,9 @@ public sealed class SqlCeUserCredentialRepository : IUserCredentialRepository
 
     public SqlCeUserCredentialRepository(VaultDatabase database)
     {
-        _database = database ?? throw new ArgumentNullException(nameof(database));
+        Guard.ArgumentNotNull(database, nameof(database));
+
+        _database = database;
     }
 
     public bool HasUser()
@@ -41,10 +44,7 @@ public sealed class SqlCeUserCredentialRepository : IUserCredentialRepository
 
     public void Save(CryptographyCredential credential)
     {
-        if (credential == null)
-        {
-            throw new ArgumentNullException(nameof(credential));
-        }
+        Guard.ArgumentNotNull(credential, nameof(credential));
 
         using SqlCeConnection connection = _database.OpenConnection();
         using SqlCeTransaction transaction = connection.BeginTransaction();

@@ -1,6 +1,7 @@
 using EphorosVault.Business.Modules.Access;
 using EphorosVault.Presentation.Desktop;
 using EphorosVault.Presentation.Desktop.Forms;
+using Microsoft.Practices.Unity.Utility;
 using System;
 using System.Windows.Forms;
 
@@ -14,8 +15,12 @@ internal sealed class VaultApplicationContext : ApplicationContext
 
     internal VaultApplicationContext(ShellForm shell, AccessService accessService)
     {
-        _shell = shell ?? throw new ArgumentNullException(nameof(shell));
-        _accessService = accessService ?? throw new ArgumentNullException(nameof(accessService));
+        Guard.ArgumentNotNull(shell, nameof(shell));
+        Guard.ArgumentNotNull(accessService, nameof(accessService));
+
+        _shell = shell;
+        _accessService = accessService;
+
         _shell.LockRequested += Shell_LockRequested;
         _shell.FormClosed += Shell_FormClosed;
     }

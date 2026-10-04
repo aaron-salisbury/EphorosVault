@@ -10,7 +10,9 @@ public sealed class VaultFolderService
 
     public VaultFolderService(IVaultFolderRepository repository)
     {
-        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        Guard.ArgumentNotNull(repository, nameof(repository));
+
+        _repository = repository;
     }
 
     public IList<VaultFolder> GetFolders()

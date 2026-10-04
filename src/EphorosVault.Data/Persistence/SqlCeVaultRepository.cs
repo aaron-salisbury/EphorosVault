@@ -1,4 +1,5 @@
 using EphorosVault.Business.Modules.Vault;
+using Microsoft.Practices.Unity.Utility;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlServerCe;
@@ -12,8 +13,11 @@ public sealed class SqlCeVaultRepository : IVaultRepository
 
     public SqlCeVaultRepository(VaultDatabase database, IVaultEncryption encryption)
     {
-        _database = database ?? throw new ArgumentNullException(nameof(database));
-        _encryption = encryption ?? throw new ArgumentNullException(nameof(encryption));
+        Guard.ArgumentNotNull(database, nameof(database));
+        Guard.ArgumentNotNull(encryption, nameof(encryption));
+
+        _database = database;
+        _encryption = encryption;
     }
 
     public IList<VaultEntry> GetAll()

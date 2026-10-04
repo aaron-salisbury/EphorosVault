@@ -1,7 +1,9 @@
 using EphorosVault.Business.Modules.Vault;
+using Microsoft.Practices.Unity.Utility;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlServerCe;
+using System.Net;
 
 namespace EphorosVault.Data.Persistence;
 
@@ -11,7 +13,9 @@ public sealed class SqlCeVaultFolderRepository : IVaultFolderRepository
 
     public SqlCeVaultFolderRepository(VaultDatabase database)
     {
-        _database = database ?? throw new ArgumentNullException(nameof(database));
+        Guard.ArgumentNotNull(database, nameof(database));
+
+        _database = database;
     }
 
     public IList<VaultFolder> GetAll()

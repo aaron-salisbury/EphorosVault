@@ -3,6 +3,7 @@ using EphorosVault.Integrations.Cryptography;
 using EphorosVault.Integrations.Export;
 using EphorosVault.Presentation.Desktop.Forms;
 using EphorosVault.Presentation.Desktop.Vault;
+using Microsoft.Practices.Unity.Utility;
 using System;
 using System.Windows.Forms;
 
@@ -21,12 +22,19 @@ public partial class ShellForm : Form
 
     public ShellForm(VaultService vaultService, VaultFolderService folderService, PasswordGenerator passwordGenerator, KeePass2XmlExporter keePassExporter, BitwardenJsonExporter bitwardenExporter, IVaultKeyStore keyStore)
     {
-        _vaultService = vaultService ?? throw new ArgumentNullException(nameof(vaultService));
-        _folderService = folderService ?? throw new ArgumentNullException(nameof(folderService));
-        _passwordGenerator = passwordGenerator ?? throw new ArgumentNullException(nameof(passwordGenerator));
-        _keePassExporter = keePassExporter ?? throw new ArgumentNullException(nameof(keePassExporter));
-        _bitwardenExporter = bitwardenExporter ?? throw new ArgumentNullException(nameof(bitwardenExporter));
-        _keyStore = keyStore ?? throw new ArgumentNullException(nameof(keyStore));
+        Guard.ArgumentNotNull(vaultService, nameof(vaultService));
+        Guard.ArgumentNotNull(folderService, nameof(folderService));
+        Guard.ArgumentNotNull(passwordGenerator, nameof(passwordGenerator));
+        Guard.ArgumentNotNull(keePassExporter, nameof(keePassExporter));
+        Guard.ArgumentNotNull(bitwardenExporter, nameof(bitwardenExporter));
+        Guard.ArgumentNotNull(keyStore, nameof(keyStore));
+
+        _vaultService = vaultService;
+        _folderService = folderService;
+        _passwordGenerator = passwordGenerator;
+        _keePassExporter = keePassExporter;
+        _bitwardenExporter = bitwardenExporter;
+        _keyStore = keyStore;
 
         InitializeComponent();
         Text = Properties.Settings.Default.ApplicationFriendlyName;
@@ -80,7 +88,10 @@ public partial class ShellForm : Form
 
     private void Export(IVaultExporter exporter)
     {
-        if (MessageBox.Show(this, exporter.FormatName + " exports contain passwords in plaintext. Continue?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
+        if (MessageBox.Show(this, exporter.FormatName + " exports contain passwords in plaintext. Continue?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+        {
+            return;
+        }
 
         using SaveFileDialog dialog = new()
         {
@@ -98,7 +109,10 @@ public partial class ShellForm : Form
 
     private void ExportRecoveryKeyMenuItem_Click(object sender, EventArgs e)
     {
-        if (MessageBox.Show(this, "The recovery key grants access to the encrypted vault database. Store it securely and separately from the database. Continue?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
+        if (MessageBox.Show(this, "The recovery key grants access to the encrypted vault database. Store it securely and separately from the database. Continue?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+        {
+            return;
+        }
 
         using SaveFileDialog dialog = new()
         {

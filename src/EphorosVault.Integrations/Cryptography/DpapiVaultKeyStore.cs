@@ -1,3 +1,4 @@
+using Microsoft.Practices.Unity.Utility;
 using System;
 using System.IO;
 using System.Security.Cryptography;
@@ -11,7 +12,9 @@ public sealed class DpapiVaultKeyStore : IVaultKeyStore
 
     public DpapiVaultKeyStore(string keyFilePath)
     {
-        _keyFilePath = keyFilePath ?? throw new ArgumentNullException(nameof(keyFilePath));
+        Guard.ArgumentNotNull(keyFilePath, nameof(keyFilePath));
+
+        _keyFilePath = keyFilePath;
     }
 
     public bool Exists => File.Exists(_keyFilePath);
@@ -28,10 +31,7 @@ public sealed class DpapiVaultKeyStore : IVaultKeyStore
 
     public void Save(byte[] key)
     {
-        if (key == null)
-        {
-            throw new ArgumentNullException(nameof(key));
-        }
+        Guard.ArgumentNotNull(key, nameof(key));
 
         if (key.Length != 32)
         {
@@ -43,10 +43,7 @@ public sealed class DpapiVaultKeyStore : IVaultKeyStore
 
     public void ExportRecoveryKey(string filePath)
     {
-        if (filePath == null)
-        {
-            throw new ArgumentNullException(nameof(filePath));
-        }
+        Guard.ArgumentNotNull(filePath, nameof(filePath));
 
         byte[] key = Load();
         try
@@ -58,10 +55,7 @@ public sealed class DpapiVaultKeyStore : IVaultKeyStore
 
     public void ImportRecoveryKey(string filePath)
     {
-        if (filePath == null)
-        {
-            throw new ArgumentNullException(nameof(filePath));
-        }
+        Guard.ArgumentNotNull(filePath, nameof(filePath));
 
         byte[] key = File.ReadAllBytes(filePath);
         try
