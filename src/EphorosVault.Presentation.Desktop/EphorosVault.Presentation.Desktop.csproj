@@ -124,6 +124,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Base\Assets\Attributions.txt" />
+    <Content Include="Base\Assets\Icons\Exports\bitwarden.png" />
+    <Content Include="Base\Assets\Icons\Exports\keepass.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\cross-circle-frame.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\document--arrow.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\folder--plus.png" />

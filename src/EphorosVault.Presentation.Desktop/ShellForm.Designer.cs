@@ -109,15 +109,19 @@ partial class ShellForm
             // 
             // ExportKeePassMenuItem
             // 
+            this.ExportKeePassMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ExportKeePassMenuItem.Image")));
+            this.ExportKeePassMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.ExportKeePassMenuItem.Name = "ExportKeePassMenuItem";
-            this.ExportKeePassMenuItem.Size = new System.Drawing.Size(252, 34);
+            this.ExportKeePassMenuItem.Size = new System.Drawing.Size(270, 34);
             this.ExportKeePassMenuItem.Text = "&KeePass 2 XML...";
             this.ExportKeePassMenuItem.Click += new System.EventHandler(this.ExportKeePassMenuItem_Click);
             // 
             // ExportBitwardenMenuItem
             // 
+            this.ExportBitwardenMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ExportBitwardenMenuItem.Image")));
+            this.ExportBitwardenMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.ExportBitwardenMenuItem.Name = "ExportBitwardenMenuItem";
-            this.ExportBitwardenMenuItem.Size = new System.Drawing.Size(252, 34);
+            this.ExportBitwardenMenuItem.Size = new System.Drawing.Size(270, 34);
             this.ExportBitwardenMenuItem.Text = "&Bitwarden JSON...";
             this.ExportBitwardenMenuItem.Click += new System.EventHandler(this.ExportBitwardenMenuItem_Click);
             // 
