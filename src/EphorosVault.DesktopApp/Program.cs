@@ -26,6 +26,8 @@ internal static class Program
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            Ioc.Default.GetRequiredService<IVaultRecoveryService>().EnsureInitialized();
+
             using ShellForm shell = new(
                 Ioc.Default.GetRequiredService<VaultService>(),
                 Ioc.Default.GetRequiredService<VaultFolderService>(),
