@@ -134,7 +134,7 @@ public sealed class VaultView : UserControl, IVaultView
         _folders.ContextMenuStrip = _folderMenu;
         filters.Controls.Add(_folders);
 
-        Button folderActions = new() { Text = "...", Left = 229, Top = 6, Width = 32, Height = 24 };
+        Button folderActions = new() { Text = "...", Left = 229, Top = 5, Width = 32, Height = 23 };
         folderActions.Click += (s, e) => _folderMenu.Show(folderActions, 0, folderActions.Height);
         filters.Controls.Add(folderActions);
 
