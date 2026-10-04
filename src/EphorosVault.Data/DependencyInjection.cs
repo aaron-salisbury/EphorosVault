@@ -17,6 +17,7 @@ public static class DependencyInjection
 
         services.AddScoped<IUserCredentialRepository, SqlCeUserCredentialRepository>();
         services.AddScoped<IVaultRepository, SqlCeVaultRepository>();
+        services.AddSingleton<IVaultRecoveryMetadataRepository, SqlCeVaultRecoveryMetadataRepository>();
         services.AddScoped<IVaultFolderRepository, SqlCeVaultFolderRepository>();
 
         return services;
