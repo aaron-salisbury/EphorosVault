@@ -59,6 +59,7 @@
     <Compile Include="VaultKeyEncryptionTests.cs" />
     <Compile Include="VaultServiceTests.cs" />
     <Compile Include="VaultPresenterTests.cs" />
+    <Compile Include="VaultRecoveryServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
