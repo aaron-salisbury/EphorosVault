@@ -1,6 +1,7 @@
 using EphorosVault.Business.Modules.Access;
 using EphorosVault.Business.Modules.Vault;
 using EphorosVault.Presentation.Desktop.Base.Helpers;
+using EphorosVault.Presentation.Desktop.Properties;
 using Microsoft.Practices.Unity.Utility;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ public sealed class VaultEntryForm : Form
         _initializing = true;
         _passwordGenerator = passwordGenerator;
         _errors.ContainerControl = this;
-        Text = entry.Id == Guid.Empty ? "New Entry - Ephoros Vault" : "Edit Entry - Ephoros Vault";
+        Text = entry.Id == Guid.Empty ? $"New Entry - {Resources.ProductName}" : $"Edit Entry - {Resources.ProductName}";
         FormBorderStyle = FormBorderStyle.FixedDialog;
         StartPosition = FormStartPosition.CenterParent;
         ClientSize = new System.Drawing.Size(470, 330);

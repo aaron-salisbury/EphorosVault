@@ -1,5 +1,6 @@
 using EphorosVault.Business.Modules.Access;
 using EphorosVault.Presentation.Desktop.Base.Helpers;
+using EphorosVault.Presentation.Desktop.Properties;
 using Microsoft.Practices.Unity.Utility;
 using System;
 using System.Windows.Forms;
@@ -46,7 +47,7 @@ public partial class LoginForm : Form
     {
         bool requiresSetup = _accessService.RequiresSetup;
 
-        Text = requiresSetup ? "Create Ephoros Vault Master Password" : "Unlock Ephoros Vault";
+        Text = requiresSetup ? $"Create {Resources.ProductName} Master Password" : $"Unlock {Resources.ProductName}";
         HeadingLabel.Text = requiresSetup ? "Create Master Password" : "Unlock Vault";
         InstructionLabel.Text = requiresSetup
             ? "Choose the master password that will protect access to this vault."

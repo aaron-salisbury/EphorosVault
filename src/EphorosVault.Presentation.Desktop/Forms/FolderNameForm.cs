@@ -1,3 +1,4 @@
+using EphorosVault.Presentation.Desktop.Properties;
 using System.Windows.Forms;
 
 namespace EphorosVault.Presentation.Desktop.Forms;
@@ -8,7 +9,7 @@ public sealed class FolderNameForm : Form
 
     public FolderNameForm()
     {
-        Text = "New Folder - Ephoros Vault";
+        Text = $"New Folder - {Resources.ProductName}";
         FormBorderStyle = FormBorderStyle.FixedDialog;
         StartPosition = FormStartPosition.CenterParent;
         ClientSize = new System.Drawing.Size(350, 105);

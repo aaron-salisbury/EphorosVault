@@ -25,63 +25,62 @@ namespace EphorosVault.Presentation.Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Ephoros Vault")]
-        public string ApplicationFriendlyName {
-            get {
-                return ((string)(this["ApplicationFriendlyName"]));
-            }
-            set {
-                this["ApplicationFriendlyName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("A classic desktop password vault for securely storing credentials.")]
-        public string AboutDescription {
-            get {
-                return ((string)(this["AboutDescription"]));
-            }
-            set {
-                this["AboutDescription"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/aaron-salisbury/EphorosVault")]
-        public string ApplicationLink {
-            get {
-                return ((string)(this["ApplicationLink"]));
-            }
-            set {
-                this["ApplicationLink"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("20")]
-        public int PasswordLength { get { return ((int)(this["PasswordLength"])); } set { this["PasswordLength"] = value; } }
-
+        public int PasswordLength {
+            get {
+                return ((int)(this["PasswordLength"]));
+            }
+            set {
+                this["PasswordLength"] = value;
+            }
+        }
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool PasswordRequireUppercase { get { return ((bool)(this["PasswordRequireUppercase"])); } set { this["PasswordRequireUppercase"] = value; } }
-
+        public bool PasswordRequireUppercase {
+            get {
+                return ((bool)(this["PasswordRequireUppercase"]));
+            }
+            set {
+                this["PasswordRequireUppercase"] = value;
+            }
+        }
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool PasswordRequireLowercase { get { return ((bool)(this["PasswordRequireLowercase"])); } set { this["PasswordRequireLowercase"] = value; } }
-
+        public bool PasswordRequireLowercase {
+            get {
+                return ((bool)(this["PasswordRequireLowercase"]));
+            }
+            set {
+                this["PasswordRequireLowercase"] = value;
+            }
+        }
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool PasswordRequireNumbers { get { return ((bool)(this["PasswordRequireNumbers"])); } set { this["PasswordRequireNumbers"] = value; } }
-
+        public bool PasswordRequireNumbers {
+            get {
+                return ((bool)(this["PasswordRequireNumbers"]));
+            }
+            set {
+                this["PasswordRequireNumbers"] = value;
+            }
+        }
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool PasswordRequireSpecialCharacters { get { return ((bool)(this["PasswordRequireSpecialCharacters"])); } set { this["PasswordRequireSpecialCharacters"] = value; } }
+        public bool PasswordRequireSpecialCharacters {
+            get {
+                return ((bool)(this["PasswordRequireSpecialCharacters"]));
+            }
+            set {
+                this["PasswordRequireSpecialCharacters"] = value;
+            }
+        }
     }
 }

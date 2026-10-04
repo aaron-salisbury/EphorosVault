@@ -2,19 +2,20 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EphorosVault.Presentation.Desktop.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ApplicationFriendlyName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Ephoros Vault</Value>
+    <Setting Name="PasswordLength" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">20</Value>
     </Setting>
-    <Setting Name="AboutDescription" Type="System.String" Scope="User">
-      <Value Profile="(Default)">A classic desktop password vault for securely storing credentials.</Value>
+    <Setting Name="PasswordRequireUppercase" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="ApplicationLink" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://github.com/aaron-salisbury/EphorosVault</Value>
+    <Setting Name="PasswordRequireLowercase" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="PasswordLength" Type="System.Int32" Scope="User"><Value Profile="(Default)">20</Value></Setting>
-    <Setting Name="PasswordRequireUppercase" Type="System.Boolean" Scope="User"><Value Profile="(Default)">True</Value></Setting>
-    <Setting Name="PasswordRequireLowercase" Type="System.Boolean" Scope="User"><Value Profile="(Default)">True</Value></Setting>
-    <Setting Name="PasswordRequireNumbers" Type="System.Boolean" Scope="User"><Value Profile="(Default)">True</Value></Setting>
-    <Setting Name="PasswordRequireSpecialCharacters" Type="System.Boolean" Scope="User"><Value Profile="(Default)">True</Value></Setting>
+    <Setting Name="PasswordRequireNumbers" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="PasswordRequireSpecialCharacters" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

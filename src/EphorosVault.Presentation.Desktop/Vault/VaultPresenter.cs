@@ -1,4 +1,5 @@
 using EphorosVault.Business.Modules.Vault;
+using EphorosVault.Presentation.Desktop.Properties;
 using Microsoft.Practices.Unity.Utility;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,11 @@ public sealed class VaultPresenter
     {
         _view.SetFolders(_folderService.GetFolders());
         _entries.Clear();
-        foreach (VaultEntry entry in _vaultService.GetEntries()) _entries.Add(entry);
+        foreach (VaultEntry entry in _vaultService.GetEntries())
+        {
+            _entries.Add(entry);
+        }
+
         ApplyFilter();
     }
 
@@ -55,11 +60,19 @@ public sealed class VaultPresenter
 
         foreach (VaultEntry entry in _entries)
         {
-            if (folderId.HasValue && entry.FolderId != folderId) continue;
+            if (folderId.HasValue && entry.FolderId != folderId)
+            {
+                continue;
+            }
+
             if (search.Length > 0 &&
                 entry.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) < 0 &&
                 entry.UserName.IndexOf(search, StringComparison.OrdinalIgnoreCase) < 0 &&
-                entry.Url.IndexOf(search, StringComparison.OrdinalIgnoreCase) < 0) continue;
+                entry.Url.IndexOf(search, StringComparison.OrdinalIgnoreCase) < 0)
+            {
+                continue;
+            }
+
             filtered.Add(entry);
         }
 
@@ -81,7 +94,11 @@ public sealed class VaultPresenter
     private void EditEntryRequested(object sender, EventArgs e)
     {
         VaultEntry entry = _view.SelectedEntry;
-        if (entry == null) return;
+        if (entry == null)
+        {
+            return;
+        }
+
         using Forms.VaultEntryForm form = new(entry, _folderService.GetFolders(), _passwordGenerator);
         if (form.ShowDialog((System.Windows.Forms.IWin32Window)_view) == System.Windows.Forms.DialogResult.OK)
         {
@@ -94,8 +111,12 @@ public sealed class VaultPresenter
     private void DeleteEntryRequested(object sender, EventArgs e)
     {
         VaultEntry entry = _view.SelectedEntry;
-        if (entry == null) return;
-        if (System.Windows.Forms.MessageBox.Show("Delete '" + entry.Name + "'?", "Ephoros Vault", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+        if (entry == null)
+        {
+            return;
+        }
+
+        if (System.Windows.Forms.MessageBox.Show("Delete '" + entry.Name + "'?", Resources.ProductName, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
         {
             _vaultService.Delete(entry.Id);
             Refresh();
@@ -105,13 +126,19 @@ public sealed class VaultPresenter
     private void CopyUserNameRequested(object sender, EventArgs e)
     {
         VaultEntry entry = _view.SelectedEntry;
-        if (entry != null && entry.UserName.Length > 0) System.Windows.Forms.Clipboard.SetText(entry.UserName);
+        if (entry != null && entry.UserName.Length > 0)
+        {
+            System.Windows.Forms.Clipboard.SetText(entry.UserName);
+        }
     }
 
     private void CopyPasswordRequested(object sender, EventArgs e)
     {
         VaultEntry entry = _view.SelectedEntry;
-        if (entry != null && entry.Password.Length > 0) System.Windows.Forms.Clipboard.SetText(entry.Password);
+        if (entry != null && entry.Password.Length > 0)
+        {
+            System.Windows.Forms.Clipboard.SetText(entry.Password);
+        }
     }
 
     private void FilterChanged(object sender, EventArgs e)

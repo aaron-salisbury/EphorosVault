@@ -84,7 +84,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="VaultApplicationContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

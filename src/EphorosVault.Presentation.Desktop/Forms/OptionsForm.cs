@@ -1,4 +1,5 @@
 using EphorosVault.Presentation.Desktop.Base.Helpers;
+using EphorosVault.Presentation.Desktop.Properties;
 using System;
 using System.Windows.Forms;
 
@@ -16,7 +17,7 @@ public sealed class OptionsForm : Form
     public OptionsForm()
     {
         _errors.ContainerControl = this;
-        Text = "Options - Ephoros Vault";
+        Text = $"Options - {Resources.ProductName}";
         FormBorderStyle = FormBorderStyle.FixedDialog;
         StartPosition = FormStartPosition.CenterParent;
         ClientSize = new System.Drawing.Size(360, 245);

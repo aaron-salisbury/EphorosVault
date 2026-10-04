@@ -1,5 +1,6 @@
 using EphorosVault.Business.Modules.Vault;
 using EphorosVault.Presentation.Desktop.Forms;
+using EphorosVault.Presentation.Desktop.Properties;
 using EphorosVault.Presentation.Desktop.Vault;
 using Microsoft.Practices.Unity.Utility;
 using System;
@@ -35,7 +36,7 @@ public partial class ShellForm : Form
         _recoveryService = recoveryService;
 
         InitializeComponent();
-        Text = Properties.Settings.Default.ApplicationFriendlyName;
+        Text = Resources.ProductName;
 
         _vaultView = new VaultView();
         MainContentPanel.Controls.Add(_vaultView);
@@ -74,7 +75,7 @@ public partial class ShellForm : Form
             Properties.Settings.Default.PasswordRequireNumbers,
             Properties.Settings.Default.PasswordRequireSpecialCharacters);
         Clipboard.SetText(password);
-        MessageBox.Show(this, "A generated password has been copied to the clipboard.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        MessageBox.Show(this, "A generated password has been copied to the clipboard.", Resources.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
 
     private void OptionsMenuItem_Click(object sender, EventArgs e)
@@ -95,7 +96,7 @@ public partial class ShellForm : Form
 
     private void Export(IVaultExporter exporter)
     {
-        if (MessageBox.Show(this, exporter.FormatName + " exports contain passwords in plaintext. Continue?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+        if (MessageBox.Show(this, exporter.FormatName + " exports contain passwords in plaintext. Continue?", Resources.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
         {
             return;
         }
@@ -110,20 +111,20 @@ public partial class ShellForm : Form
         if (dialog.ShowDialog(this) == DialogResult.OK)
         {
             exporter.Export(dialog.FileName, _vaultService.GetEntries(), _folderService.GetFolders());
-            MessageBox.Show(this, "Export completed. This file contains your passwords in plaintext. Keep it secure and permanently delete it when you no longer need it.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show(this, "Export completed. This file contains your passwords in plaintext. Keep it secure and permanently delete it when you no longer need it.", Resources.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
 
     private void ImportRecoveryKeyMenuItem_Click(object sender, EventArgs e)
     {
-        if (MessageBox.Show(this, "Importing a recovery key will replace the local vault key only after Ephoros Vault verifies that it belongs to this vault. Continue?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+        if (MessageBox.Show(this, $"Importing a recovery key will replace the local vault key only after {Resources.ProductName} verifies that it belongs to this vault. Continue?", Resources.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
         {
             return;
         }
 
         using OpenFileDialog dialog = new()
         {
-            Filter = "Ephoros Vault recovery key (*.evkey)|*.evkey|All files (*.*)|*.*",
+            Filter = $"{Resources.ProductName} recovery key (*.evkey)|*.evkey|All files (*.*)|*.*",
             CheckFileExists = true
         };
 
@@ -136,24 +137,24 @@ public partial class ShellForm : Form
         {
             _recoveryService.Import(dialog.FileName);
             _vaultPresenter.Refresh();
-            MessageBox.Show(this, "Recovery key imported and verified.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(this, "Recovery key imported and verified.", Resources.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         catch (System.IO.InvalidDataException exception)
         {
-            MessageBox.Show(this, exception.Message, "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(this, exception.Message, Resources.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
     private void ExportRecoveryKeyMenuItem_Click(object sender, EventArgs e)
     {
-        if (MessageBox.Show(this, "The recovery key grants access to the encrypted vault database. Store it securely and separately from the database. Continue?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+        if (MessageBox.Show(this, "The recovery key grants access to the encrypted vault database. Store it securely and separately from the database. Continue?", Resources.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
         {
             return;
         }
 
         using SaveFileDialog dialog = new()
         {
-            Filter = "Ephoros Vault recovery key (*.evkey)|*.evkey|All files (*.*)|*.*",
+            Filter = $"{Resources.ProductName} recovery key (*.evkey)|*.evkey|All files (*.*)|*.*",
             DefaultExt = "evkey",
             AddExtension = true
         };
@@ -161,7 +162,7 @@ public partial class ShellForm : Form
         if (dialog.ShowDialog(this) == DialogResult.OK)
         {
             _recoveryService.Export(dialog.FileName);
-            MessageBox.Show(this, "Recovery key exported.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(this, "Recovery key exported.", Resources.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 
