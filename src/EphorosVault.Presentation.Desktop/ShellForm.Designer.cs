@@ -45,7 +45,10 @@ partial class ShellForm
             this.HelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainContentPanel = new System.Windows.Forms.Panel();
+            this.StatusStrip = new System.Windows.Forms.StatusStrip();
+            this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.MenuStrip.SuspendLayout();
+            this.StatusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // MenuStrip
@@ -196,12 +199,28 @@ partial class ShellForm
             this.MainContentPanel.Size = new System.Drawing.Size(1138, 599);
             this.MainContentPanel.TabIndex = 1;
             // 
+            // StatusStrip
+            // 
+            this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StatusLabel});
+            this.StatusStrip.Location = new System.Drawing.Point(0, 610);
+            this.StatusStrip.Name = "StatusStrip";
+            this.StatusStrip.Size = new System.Drawing.Size(1138, 22);
+            this.StatusStrip.SizingGrip = false;
+            this.StatusStrip.TabIndex = 2;
+            // 
+            // StatusLabel
+            // 
+            this.StatusLabel.Name = "StatusLabel";
+            this.StatusLabel.Size = new System.Drawing.Size(0, 17);
+            // 
             // ShellForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1138, 632);
             this.Controls.Add(this.MainContentPanel);
+            this.Controls.Add(this.StatusStrip);
             this.Controls.Add(this.MenuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -210,6 +229,8 @@ partial class ShellForm
             this.Text = "Form1";
             this.MenuStrip.ResumeLayout(false);
             this.MenuStrip.PerformLayout();
+            this.StatusStrip.ResumeLayout(false);
+            this.StatusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -232,5 +253,7 @@ partial class ShellForm
     private System.Windows.Forms.ToolStripMenuItem HelpMenuItem;
     private System.Windows.Forms.ToolStripMenuItem AboutMenuItem;
     private System.Windows.Forms.Panel MainContentPanel;
+    private System.Windows.Forms.StatusStrip StatusStrip;
+    private System.Windows.Forms.ToolStripStatusLabel StatusLabel;
 }
 
