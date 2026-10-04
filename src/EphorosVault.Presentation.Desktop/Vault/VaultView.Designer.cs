@@ -11,6 +11,11 @@ partial class VaultView
     private System.Windows.Forms.TextBox _detailPassword;
     private System.Windows.Forms.TextBox _detailUrl;
     private System.Windows.Forms.TextBox _detailUser;
+    private System.Windows.Forms.Label _nameLabel;
+    private System.Windows.Forms.Label _userLabel;
+    private System.Windows.Forms.Label _passwordLabel;
+    private System.Windows.Forms.Label _urlLabel;
+    private System.Windows.Forms.Label _notesLabel;
     private System.Windows.Forms.ToolStripButton _edit;
     private System.Windows.Forms.ListView _entries;
     private System.Windows.Forms.ComboBox _folders;
@@ -36,6 +41,7 @@ partial class VaultView
         System.Windows.Forms.Panel details = new System.Windows.Forms.Panel();
         System.Windows.Forms.StatusStrip statusStrip = new System.Windows.Forms.StatusStrip();
         this._copyPassword = new System.Windows.Forms.ToolStripButton(); this._copyUser = new System.Windows.Forms.ToolStripButton(); this._delete = new System.Windows.Forms.ToolStripButton(); this._edit = new System.Windows.Forms.ToolStripButton();
+        this._nameLabel = new System.Windows.Forms.Label(); this._userLabel = new System.Windows.Forms.Label(); this._passwordLabel = new System.Windows.Forms.Label(); this._urlLabel = new System.Windows.Forms.Label(); this._notesLabel = new System.Windows.Forms.Label();
         this._detailName = new System.Windows.Forms.TextBox(); this._detailNotes = new System.Windows.Forms.TextBox(); this._detailPassword = new System.Windows.Forms.TextBox(); this._detailUrl = new System.Windows.Forms.TextBox(); this._detailUser = new System.Windows.Forms.TextBox();
         this._entries = new System.Windows.Forms.ListView(); this._folders = new System.Windows.Forms.ComboBox(); this._search = new System.Windows.Forms.TextBox(); this._status = new System.Windows.Forms.ToolStripStatusLabel();
         this._folderMenu = new System.Windows.Forms.ContextMenuStrip(this.components); this._renameFolder = new System.Windows.Forms.ToolStripMenuItem(); this._deleteFolder = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,18 +63,15 @@ partial class VaultView
         workspace.Dock=System.Windows.Forms.DockStyle.Fill; workspace.SplitterDistance=260; workspace.FixedPanel=System.Windows.Forms.FixedPanel.Panel1;
         this._entries.Dock=System.Windows.Forms.DockStyle.Fill; this._entries.View=System.Windows.Forms.View.List; this._entries.FullRowSelect=true; this._entries.HideSelection=false; this._entries.MultiSelect=false; this._entries.SelectedIndexChanged += this.EntrySelected; this._entries.DoubleClick += new System.EventHandler(this.Entries_DoubleClick); workspace.Panel1.Controls.Add(this._entries);
         details.Dock=System.Windows.Forms.DockStyle.Fill; details.Padding=new System.Windows.Forms.Padding(10);
-        ConfigureDetail(details, "Name:", this._detailName, 12);
-        ConfigureDetail(details, "User name:", this._detailUser, 42);
-        ConfigureDetail(details, "Password:", this._detailPassword, 72);
-        ConfigureDetail(details, "URL:", this._detailUrl, 102);
-        ConfigureDetail(details, "Notes:", this._detailNotes, 132);
+        this._nameLabel.Text="Name:"; this._nameLabel.SetBounds(10,15,75,20); this._detailName.ReadOnly=true; this._detailName.SetBounds(90,12,430,this._detailName.Height); this._detailName.Anchor=System.Windows.Forms.AnchorStyles.Top|System.Windows.Forms.AnchorStyles.Left|System.Windows.Forms.AnchorStyles.Right;
+        this._userLabel.Text="User name:"; this._userLabel.SetBounds(10,45,75,20); this._detailUser.ReadOnly=true; this._detailUser.SetBounds(90,42,430,this._detailUser.Height); this._detailUser.Anchor=System.Windows.Forms.AnchorStyles.Top|System.Windows.Forms.AnchorStyles.Left|System.Windows.Forms.AnchorStyles.Right;
+        this._passwordLabel.Text="Password:"; this._passwordLabel.SetBounds(10,75,75,20); this._detailPassword.ReadOnly=true; this._detailPassword.SetBounds(90,72,430,this._detailPassword.Height); this._detailPassword.Anchor=System.Windows.Forms.AnchorStyles.Top|System.Windows.Forms.AnchorStyles.Left|System.Windows.Forms.AnchorStyles.Right;
+        this._urlLabel.Text="URL:"; this._urlLabel.SetBounds(10,105,75,20); this._detailUrl.ReadOnly=true; this._detailUrl.SetBounds(90,102,430,this._detailUrl.Height); this._detailUrl.Anchor=System.Windows.Forms.AnchorStyles.Top|System.Windows.Forms.AnchorStyles.Left|System.Windows.Forms.AnchorStyles.Right;
+        this._notesLabel.Text="Notes:"; this._notesLabel.SetBounds(10,135,75,20); this._detailNotes.ReadOnly=true; this._detailNotes.SetBounds(90,132,430,this._detailNotes.Height); this._detailNotes.Anchor=System.Windows.Forms.AnchorStyles.Top|System.Windows.Forms.AnchorStyles.Left|System.Windows.Forms.AnchorStyles.Right;
+        details.Controls.AddRange(new System.Windows.Forms.Control[]{this._nameLabel,this._detailName,this._userLabel,this._detailUser,this._passwordLabel,this._detailPassword,this._urlLabel,this._detailUrl,this._notesLabel,this._detailNotes});
         this._detailPassword.PasswordChar='*'; this._detailNotes.Multiline=true; this._detailNotes.Height=140; this._detailNotes.ScrollBars=System.Windows.Forms.ScrollBars.Vertical; workspace.Panel2.Controls.Add(details);
         statusStrip.SizingGrip=false; statusStrip.Items.Add(this._status);
         this.Controls.Add(workspace); this.Controls.Add(filters); this.Controls.Add(tools); this.Controls.Add(statusStrip); this.Dock=System.Windows.Forms.DockStyle.Fill; this.Name="VaultView"; this.Padding=new System.Windows.Forms.Padding(8,4,8,8); this.ResumeLayout(false);
     }
 
-    private static void AddDetail(System.Windows.Forms.Panel panel,string text,System.Windows.Forms.TextBox field,int top)
-    {
-        System.Windows.Forms.Label label=new System.Windows.Forms.Label(); label.Text=text; label.SetBounds(10,top+3,75,20); field.ReadOnly=true; field.SetBounds(90,top,430,field.Height); field.Anchor=System.Windows.Forms.AnchorStyles.Top|System.Windows.Forms.AnchorStyles.Left|System.Windows.Forms.AnchorStyles.Right; panel.Controls.Add(label); panel.Controls.Add(field);
-    }
 }
