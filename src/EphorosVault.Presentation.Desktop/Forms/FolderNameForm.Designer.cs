@@ -43,12 +43,12 @@ partial class FolderNameForm
             // 
             // OkButton
             // 
-            this.OkButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.OkButton.Location = new System.Drawing.Point(174, 62);
             this.OkButton.Name = "OkButton";
             this.OkButton.Size = new System.Drawing.Size(75, 23);
             this.OkButton.TabIndex = 2;
             this.OkButton.Text = "OK";
+            this.OkButton.Click += new System.EventHandler(this.OkButton_Click);
             // 
             // CancelButtonControl
             // 
