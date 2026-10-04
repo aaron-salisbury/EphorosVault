@@ -19,6 +19,22 @@ public partial class LoginForm : Form
         ConfigureMode();
     }
 
+    protected override void OnShown(EventArgs e)
+    {
+        base.OnShown(e);
+        ResetForAuthentication();
+    }
+
+    private void ResetForAuthentication()
+    {
+        IsAuthenticated = false;
+        PasswordTextBox.Clear();
+        ConfirmPasswordTextBox.Clear();
+        _errors.Clear();
+        ConfigureMode();
+        PasswordTextBox.Focus();
+    }
+
     public bool IsAuthenticated
     {
         get; private set;
