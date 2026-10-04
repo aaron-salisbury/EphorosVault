@@ -4,13 +4,8 @@ namespace EphorosVault.Business.Modules.Vault;
 
 public interface IVaultExporter
 {
-    string FormatName
-    {
-        get;
-    }
-    string FileFilter
-    {
-        get;
-    }
-    void Export(string filePath, IEnumerable<VaultEntry> entries);
+    string FormatName { get; }
+    string FileFilter { get; }
+    string DefaultExtension { get; }
+    void Export(string filePath, IEnumerable<VaultEntry> entries, IEnumerable<VaultFolder> folders);
 }
