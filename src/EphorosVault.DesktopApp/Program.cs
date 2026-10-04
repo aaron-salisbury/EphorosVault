@@ -1,6 +1,4 @@
 using DotNetFrameworkToolkit.Modules.DependencyInjection;
-using EphorosVault.Presentation.Desktop;
-using EphorosVault.Presentation.Desktop.Forms;
 using System;
 using System.Windows.Forms;
 
@@ -23,15 +21,13 @@ internal static class Program
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            using (LoginForm loginForm = Ioc.Default.GetRequiredService<LoginForm>())
+            using VaultApplicationContext applicationContext = new();
+            if (!applicationContext.Start())
             {
-                if (loginForm.ShowDialog() != DialogResult.OK || !loginForm.IsAuthenticated)
-                {
-                    return;
-                }
+                return;
             }
 
-            Application.Run(Ioc.Default.GetRequiredService<ShellForm>());
+            Application.Run(applicationContext);
         }
         finally
         {
