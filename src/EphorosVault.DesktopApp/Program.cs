@@ -26,7 +26,7 @@ internal static class Program
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            ShellForm shell = new(
+            using ShellForm shell = new(
                 Ioc.Default.GetRequiredService<VaultService>(),
                 Ioc.Default.GetRequiredService<VaultFolderService>(),
                 Ioc.Default.GetRequiredService<PasswordGenerator>(),
