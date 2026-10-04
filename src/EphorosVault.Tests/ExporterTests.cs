@@ -52,7 +52,7 @@ public class ExporterTests
         try
         {
             new KeePass2XmlExporter().Export(path,
-                new[] { new VaultEntry { Id = Guid.NewGuid(), FolderId = folderId, Name = "A < B & C", UserName = "user", Password = "p&<>", Url = "https://example.com?a=1&b=2", Notes = "line 1\nline 2" } },
+                new[] { new VaultEntry { Id = Guid.NewGuid(), FolderId = folderId, Name = "A < B & C", UserName = "user", Password = "p&<>", Url = "https://example.com?a=1&b=2", Notes = "line 1\r\nline 2" } },
                 new[] { new VaultFolder { Id = folderId, Name = "Work & Personal" } });
 
             XmlDocument document = new();
@@ -61,7 +61,7 @@ public class ExporterTests
             Assert.IsNotNull(folder);
             Assert.AreEqual("A < B & C", folder.SelectSingleNode("Entry/String[Key='Title']/Value").InnerText);
             Assert.AreEqual("p&<>", folder.SelectSingleNode("Entry/String[Key='Password']/Value").InnerText);
-            Assert.AreEqual("line 1\nline 2", folder.SelectSingleNode("Entry/String[Key='Notes']/Value").InnerText);
+            Assert.AreEqual("line 1\r\nline 2", folder.SelectSingleNode("Entry/String[Key='Notes']/Value").InnerText);
         }
         finally { File.Delete(path); }
     }
