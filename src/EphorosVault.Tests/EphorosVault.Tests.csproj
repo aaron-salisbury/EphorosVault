@@ -49,9 +49,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CsvExporterTests.cs" />
+    <Compile Include="ExporterTests.cs" />
     <Compile Include="DpapiVaultKeyStoreTests.cs" />
     <Compile Include="PasswordGeneratorTests.cs" />
     <Compile Include="VaultFolderServiceTests.cs" />
