@@ -1,4 +1,9 @@
 using DotNetFrameworkToolkit.Modules.DependencyInjection;
+using EphorosVault.Business.Modules.Access;
+using EphorosVault.Business.Modules.Vault;
+using EphorosVault.Integrations.Cryptography;
+using EphorosVault.Integrations.Export;
+using EphorosVault.Presentation.Desktop;
 using System;
 using System.Windows.Forms;
 
@@ -21,7 +26,18 @@ internal static class Program
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            using VaultApplicationContext applicationContext = new();
+            ShellForm shell = new(
+                Ioc.Default.GetRequiredService<VaultService>(),
+                Ioc.Default.GetRequiredService<VaultFolderService>(),
+                Ioc.Default.GetRequiredService<PasswordGenerator>(),
+                Ioc.Default.GetRequiredService<KeePass2XmlExporter>(),
+                Ioc.Default.GetRequiredService<BitwardenJsonExporter>(),
+                Ioc.Default.GetRequiredService<IVaultKeyStore>());
+
+            using VaultApplicationContext applicationContext = new(
+                shell,
+                Ioc.Default.GetRequiredService<AccessService>());
+
             if (!applicationContext.Start())
             {
                 return;
