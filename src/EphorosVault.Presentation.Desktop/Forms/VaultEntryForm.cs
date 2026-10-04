@@ -29,6 +29,8 @@ public sealed partial class VaultEntryForm : Form
         InitializeComponent();
         _errors.ContainerControl = this;
         Text = entry.Id == Guid.Empty ? $"New Entry - {Resources.ProductName}" : $"Edit Entry - {Resources.ProductName}";
+        SaveButton.Text = _isNewEntry ? "Create" : "Save";
+        SaveButton.Enabled = _isNewEntry;
 
         FolderComboBox.Items.Add(new FolderItem(null, "(None)"));
         foreach (VaultFolder folder in folders)
