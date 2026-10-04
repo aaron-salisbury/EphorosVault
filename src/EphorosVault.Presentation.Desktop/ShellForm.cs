@@ -114,6 +114,36 @@ public partial class ShellForm : Form
         }
     }
 
+    private void ImportRecoveryKeyMenuItem_Click(object sender, EventArgs e)
+    {
+        if (MessageBox.Show(this, "Importing a recovery key will replace the local vault key only after Ephoros Vault verifies that it belongs to this vault. Continue?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+        {
+            return;
+        }
+
+        using OpenFileDialog dialog = new()
+        {
+            Filter = "Ephoros Vault recovery key (*.evkey)|*.evkey|All files (*.*)|*.*",
+            CheckFileExists = true
+        };
+
+        if (dialog.ShowDialog(this) != DialogResult.OK)
+        {
+            return;
+        }
+
+        try
+        {
+            _recoveryService.Import(dialog.FileName);
+            _vaultPresenter.Refresh();
+            MessageBox.Show(this, "Recovery key imported and verified.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        catch (System.IO.InvalidDataException exception)
+        {
+            MessageBox.Show(this, exception.Message, "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
     private void ExportRecoveryKeyMenuItem_Click(object sender, EventArgs e)
     {
         if (MessageBox.Show(this, "The recovery key grants access to the encrypted vault database. Store it securely and separately from the database. Continue?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
