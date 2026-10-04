@@ -7,15 +7,20 @@ public sealed class FolderNameForm : Form
 {
     private readonly TextBox _name = new();
 
-    public FolderNameForm()
+    public FolderNameForm() : this(string.Empty, "New Folder")
     {
-        Text = $"New Folder - {Resources.ProductName}";
+    }
+
+    public FolderNameForm(string folderName, string action)
+    {
+        Text = action + " - " + Resources.ProductName;
         FormBorderStyle = FormBorderStyle.FixedDialog;
         StartPosition = FormStartPosition.CenterParent;
         ClientSize = new System.Drawing.Size(350, 105);
         MaximizeBox = false;
         MinimizeBox = false;
         Controls.Add(new Label { Text = "Folder name:", Left = 15, Top = 20, Width = 80 });
+        _name.Text = folderName;
         _name.Left = 100;
         _name.Top = 17;
         _name.Width = 230;
