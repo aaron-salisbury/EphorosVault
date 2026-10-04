@@ -32,7 +32,6 @@ partial class ShellForm
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShellForm));
             this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.FileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.NewFolderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LockVaultMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExportKeePassMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,7 +66,6 @@ partial class ShellForm
             // FileMenuItem
             // 
             this.FileMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.NewFolderMenuItem,
             this.LockVaultMenuItem,
             this.ExportMenuItem,
             this.ExportRecoveryKeyMenuItem,
@@ -76,15 +74,6 @@ partial class ShellForm
             this.FileMenuItem.Name = "FileMenuItem";
             this.FileMenuItem.Size = new System.Drawing.Size(54, 29);
             this.FileMenuItem.Text = "&File";
-            // 
-            // NewFolderMenuItem
-            // 
-            this.NewFolderMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("NewFolderMenuItem.Image")));
-            this.NewFolderMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.NewFolderMenuItem.Name = "NewFolderMenuItem";
-            this.NewFolderMenuItem.Size = new System.Drawing.Size(290, 34);
-            this.NewFolderMenuItem.Text = "New &Folder...";
-            this.NewFolderMenuItem.Click += new System.EventHandler(this.NewFolderMenuItem_Click);
             // 
             // LockVaultMenuItem
             // 
@@ -230,7 +219,6 @@ partial class ShellForm
 
     private System.Windows.Forms.MenuStrip MenuStrip;
     private System.Windows.Forms.ToolStripMenuItem FileMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem NewFolderMenuItem;
     private System.Windows.Forms.ToolStripMenuItem LockVaultMenuItem;
     private System.Windows.Forms.ToolStripMenuItem ExportMenuItem;
     private System.Windows.Forms.ToolStripMenuItem ExportKeePassMenuItem;
