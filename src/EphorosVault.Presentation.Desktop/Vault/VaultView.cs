@@ -5,30 +5,12 @@ using System.Windows.Forms;
 
 namespace EphorosVault.Presentation.Desktop.Vault;
 
-public sealed class VaultView : UserControl, IVaultView
+public sealed partial class VaultView : UserControl, IVaultView
 {
-    private readonly ToolStripButton _copyPassword = new("Copy Password") { Enabled = false };
-    private readonly ToolStripButton _copyUser = new("Copy User") { Enabled = false };
-    private readonly ToolStripButton _delete = new("Delete") { Enabled = false };
-    private readonly TextBox _detailName = CreateDetail();
-    private readonly TextBox _detailNotes = CreateDetail();
-    private readonly TextBox _detailPassword = CreateDetail();
-    private readonly TextBox _detailUrl = CreateDetail();
-    private readonly TextBox _detailUser = CreateDetail();
-    private readonly ToolStripButton _edit = new("Edit") { Enabled = false };
-    private readonly ListView _entries = new();
-    private readonly ComboBox _folders = new();
-    private readonly ContextMenuStrip _folderMenu = new();
-    private readonly ToolStripMenuItem _renameFolder = new("Rename Folder...");
-    private readonly ToolStripMenuItem _deleteFolder = new("Delete Folder...");
-    private readonly TextBox _search = new();
-    private readonly ToolStripStatusLabel _status = new();
 
     public VaultView()
     {
-        Dock = DockStyle.Fill;
-        Padding = new Padding(8, 4, 8, 8);
-        Build();
+        InitializeComponent();
     }
 
     public event EventHandler CopyPasswordRequested;
@@ -106,95 +88,6 @@ public sealed class VaultView : UserControl, IVaultView
         Clipboard.Clear();
     }
 
-    private void Build()
-    {
-        ToolStrip tools = new() { Dock = DockStyle.Top };
-        ToolStripButton create = new("New");
-        create.Click += (s, e) => NewEntryRequested?.Invoke(this, EventArgs.Empty);
-        _edit.Click += (s, e) => EditEntryRequested?.Invoke(this, EventArgs.Empty);
-        _delete.Click += (s, e) => DeleteEntryRequested?.Invoke(this, EventArgs.Empty);
-        _copyUser.Click += (s, e) => CopyUserNameRequested?.Invoke(this, EventArgs.Empty);
-        _copyPassword.Click += (s, e) => CopyPasswordRequested?.Invoke(this, EventArgs.Empty);
-        tools.Items.Add(create);
-        tools.Items.Add(_edit);
-        tools.Items.Add(_delete);
-        tools.Items.Add(new ToolStripSeparator());
-        tools.Items.Add(_copyUser);
-        tools.Items.Add(_copyPassword);
-
-        Panel filters = new() { Dock = DockStyle.Top, Height = 38, Padding = new Padding(0, 2, 0, 4) };
-        filters.Controls.Add(new Label { Text = "Folder:", Left = 8, Top = 10, Width = 45 });
-        _folders.SetBounds(55, 6, 170, 26);
-        _folders.DropDownStyle = ComboBoxStyle.DropDownList;
-        _folders.SelectedIndexChanged += (s, e) =>
-        {
-            UpdateFolderCommands();
-            FilterChanged?.Invoke(this, EventArgs.Empty);
-        };
-        _folders.ContextMenuStrip = _folderMenu;
-        filters.Controls.Add(_folders);
-
-        Button folderActions = new() { Text = "...", Left = 229, Top = 5, Width = 32, Height = 23 };
-        folderActions.Click += (s, e) => _folderMenu.Show(folderActions, 0, folderActions.Height);
-        filters.Controls.Add(folderActions);
-
-        ToolStripMenuItem newFolder = new("New Folder...");
-        newFolder.Click += (s, e) => NewFolderRequested?.Invoke(this, EventArgs.Empty);
-        _renameFolder.Click += (s, e) => RenameFolderRequested?.Invoke(this, EventArgs.Empty);
-        _deleteFolder.Click += (s, e) => DeleteFolderRequested?.Invoke(this, EventArgs.Empty);
-        _folderMenu.Items.Add(newFolder);
-        _folderMenu.Items.Add(new ToolStripSeparator());
-        _folderMenu.Items.Add(_renameFolder);
-        _folderMenu.Items.Add(_deleteFolder);
-
-        filters.Controls.Add(new Label { Text = "Search:", Left = 276, Top = 10, Width = 50 });
-        _search.SetBounds(328, 6, 240, 26);
-        _search.TextChanged += (s, e) => FilterChanged?.Invoke(this, EventArgs.Empty);
-        filters.Controls.Add(_search);
-
-        SplitContainer workspace = new() { Dock = DockStyle.Fill, SplitterDistance = 260, FixedPanel = FixedPanel.Panel1 };
-        _entries.Dock = DockStyle.Fill;
-        _entries.View = View.List;
-        _entries.FullRowSelect = true;
-        _entries.HideSelection = false;
-        _entries.MultiSelect = false;
-        _entries.SelectedIndexChanged += EntrySelected;
-        _entries.DoubleClick += (s, e) => EditEntryRequested?.Invoke(this, EventArgs.Empty);
-        workspace.Panel1.Controls.Add(_entries);
-
-        Panel details = new() { Dock = DockStyle.Fill, Padding = new Padding(10) };
-        AddDetail(details, "Name:", _detailName, 12);
-        AddDetail(details, "User name:", _detailUser, 42);
-        AddDetail(details, "Password:", _detailPassword, 72);
-        _detailPassword.PasswordChar = '*';
-        AddDetail(details, "URL:", _detailUrl, 102);
-        AddDetail(details, "Notes:", _detailNotes, 132);
-        _detailNotes.Multiline = true;
-        _detailNotes.Height = 140;
-        _detailNotes.ScrollBars = ScrollBars.Vertical;
-        workspace.Panel2.Controls.Add(details);
-
-        StatusStrip status = new() { SizingGrip = false };
-        status.Items.Add(_status);
-
-        Controls.Add(workspace);
-        Controls.Add(filters);
-        Controls.Add(tools);
-        Controls.Add(status);
-    }
-
-    private static TextBox CreateDetail()
-    {
-        return new() { ReadOnly = true };
-    }
-
-    private static void AddDetail(Panel panel, string text, TextBox field, int top)
-    {
-        panel.Controls.Add(new Label { Text = text, Left = 10, Top = top + 3, Width = 75 });
-        field.SetBounds(90, top, 430, field.Height);
-        field.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        panel.Controls.Add(field);
-    }
 
     private void EntrySelected(object sender, EventArgs e)
     {
