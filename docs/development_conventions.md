@@ -21,6 +21,15 @@ EphorosVault serves as a straightforward password vault for Windows 98.
 - Packages and their transitive runtime dependencies must support net20. Keep
   Unity and Enterprise Library details inside their adapters where practical.
 
+## Presentation pattern
+
+The desktop UI follows a lightweight **Model-View-Presenter (MVP)** pattern. WinForms
+forms and controls are views: they expose user actions and display state, but avoid
+owning application behavior. Presenters respond to view events, coordinate business
+services, and update the view through interfaces such as `IVaultView`. Keep domain
+and persistence logic out of the presentation layer, and keep views free of direct
+dependencies on concrete data or integration implementations.
+
 ## Results, exceptions, and validation
 
 - Use `ProcessResult<T, TError>` for expected outcomes callers should branch on.
