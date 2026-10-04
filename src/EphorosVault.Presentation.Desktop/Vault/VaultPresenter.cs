@@ -114,5 +114,8 @@ public sealed class VaultPresenter
         if (entry != null && entry.Password.Length > 0) System.Windows.Forms.Clipboard.SetText(entry.Password);
     }
 
-    private void FilterChanged(object sender, EventArgs e) => ApplyFilter();
+    private void FilterChanged(object sender, EventArgs e)
+    {
+        ApplyFilter();
+    }
 }

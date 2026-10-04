@@ -39,5 +39,8 @@ public sealed class VaultFolderService
         _repository.Save(folder);
     }
 
-    public void Delete(Guid id) => _repository.Delete(id);
+    public void Delete(Guid id)
+    {
+        _repository.Delete(id);
+    }
 }

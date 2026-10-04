@@ -46,7 +46,10 @@ public partial class ShellForm : Form
 
     public event EventHandler LockRequested;
 
-    public void PrepareForUnlock() => _vaultPresenter.Refresh();
+    public void PrepareForUnlock()
+    {
+        _vaultPresenter.Refresh();
+    }
 
     private void LockVaultMenuItem_Click(object sender, EventArgs e)
     {
@@ -82,9 +85,15 @@ public partial class ShellForm : Form
         form.ShowDialog(this);
     }
 
-    private void ExportKeePassMenuItem_Click(object sender, EventArgs e) => Export(_keePassExporter);
+    private void ExportKeePassMenuItem_Click(object sender, EventArgs e)
+    {
+        Export(_keePassExporter);
+    }
 
-    private void ExportBitwardenMenuItem_Click(object sender, EventArgs e) => Export(_bitwardenExporter);
+    private void ExportBitwardenMenuItem_Click(object sender, EventArgs e)
+    {
+        Export(_bitwardenExporter);
+    }
 
     private void Export(IVaultExporter exporter)
     {
@@ -134,5 +143,8 @@ public partial class ShellForm : Form
         form.ShowDialog(this);
     }
 
-    private void ExitMenuItem_Click(object sender, EventArgs e) => Application.Exit();
+    private void ExitMenuItem_Click(object sender, EventArgs e)
+    {
+        Application.Exit();
+    }
 }

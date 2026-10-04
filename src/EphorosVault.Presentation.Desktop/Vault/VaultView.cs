@@ -68,7 +68,10 @@ public sealed class VaultView : UserControl, IVaultView
         SetCommands(true);
     }
 
-    public void ShowStatus(string message) => _status.Text = message;
+    public void ShowStatus(string message)
+    {
+        _status.Text = message;
+    }
 
     public void ClearSensitiveState()
     {
@@ -136,7 +139,10 @@ public sealed class VaultView : UserControl, IVaultView
         Controls.Add(status);
     }
 
-    private static TextBox CreateDetail() => new() { ReadOnly = true };
+    private static TextBox CreateDetail()
+    {
+        return new() { ReadOnly = true };
+    }
 
     private static void AddDetail(Panel panel, string text, TextBox field, int top)
     {
@@ -176,6 +182,10 @@ public sealed class VaultView : UserControl, IVaultView
         internal FolderItem(Guid? id, string name) { Id = id; Name = name; }
         internal Guid? Id { get; }
         internal string Name { get; }
-        public override string ToString() => Name;
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
