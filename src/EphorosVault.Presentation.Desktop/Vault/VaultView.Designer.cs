@@ -384,9 +384,9 @@ partial class VaultView
             // VaultView
             // 
             this.Controls.Add(this.workspace);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.filters);
             this.Controls.Add(this.tools);
-            this.Controls.Add(this.statusStrip);
             this.Name = "VaultView";
             this.Padding = new System.Windows.Forms.Padding(8, 4, 8, 8);
             this.Size = new System.Drawing.Size(1759, 831);
