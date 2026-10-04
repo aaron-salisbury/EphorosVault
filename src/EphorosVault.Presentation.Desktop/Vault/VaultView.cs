@@ -89,6 +89,28 @@ public sealed partial class VaultView : UserControl, IVaultView
     }
 
 
+    private void Create_Click(object sender, EventArgs e) => NewEntryRequested?.Invoke(this, EventArgs.Empty);
+    private void Edit_Click(object sender, EventArgs e) => EditEntryRequested?.Invoke(this, EventArgs.Empty);
+    private void Delete_Click(object sender, EventArgs e) => DeleteEntryRequested?.Invoke(this, EventArgs.Empty);
+    private void CopyUser_Click(object sender, EventArgs e) => CopyUserNameRequested?.Invoke(this, EventArgs.Empty);
+    private void CopyPassword_Click(object sender, EventArgs e) => CopyPasswordRequested?.Invoke(this, EventArgs.Empty);
+    private void Search_TextChanged(object sender, EventArgs e) => FilterChanged?.Invoke(this, EventArgs.Empty);
+    private void NewFolder_Click(object sender, EventArgs e) => NewFolderRequested?.Invoke(this, EventArgs.Empty);
+    private void RenameFolder_Click(object sender, EventArgs e) => RenameFolderRequested?.Invoke(this, EventArgs.Empty);
+    private void DeleteFolder_Click(object sender, EventArgs e) => DeleteFolderRequested?.Invoke(this, EventArgs.Empty);
+    private void Entries_DoubleClick(object sender, EventArgs e) => EditEntryRequested?.Invoke(this, EventArgs.Empty);
+
+    private void Folders_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        UpdateFolderCommands();
+        FilterChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void FolderActions_Click(object sender, EventArgs e)
+    {
+        _folderMenu.Show(_folderActions, 0, _folderActions.Height);
+    }
+
     private void EntrySelected(object sender, EventArgs e)
     {
         VaultEntry entry = SelectedEntry;
