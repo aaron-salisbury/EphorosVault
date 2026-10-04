@@ -53,6 +53,15 @@ public sealed class VaultDatabase
             addFolder.ExecuteNonQuery();
         }
 
+        using SqlCeCommand recoveryCheck = connection.CreateCommand();
+        recoveryCheck.CommandText = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'VaultRecoveryMetadata'";
+        if (Convert.ToInt32(recoveryCheck.ExecuteScalar()) == 0)
+        {
+            using SqlCeCommand createRecovery = connection.CreateCommand();
+            createRecovery.CommandText = "CREATE TABLE VaultRecoveryMetadata (VaultId uniqueidentifier NOT NULL, VerificationValue ntext NOT NULL)";
+            createRecovery.ExecuteNonQuery();
+        }
+
         using SqlCeCommand userCheck = connection.CreateCommand();
         userCheck.CommandText = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'UserCredential'";
         if (Convert.ToInt32(userCheck.ExecuteScalar()) == 0)
