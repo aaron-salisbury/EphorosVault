@@ -98,14 +98,14 @@ partial class ShellForm
             // 
             this.ExportKeePassMenuItem.Name = "ExportKeePassMenuItem";
             this.ExportKeePassMenuItem.Size = new System.Drawing.Size(241, 34);
-            this.ExportKeePassMenuItem.Text = "&KeePass CSV...";
+            this.ExportKeePassMenuItem.Text = "&KeePass 2 XML...";
             this.ExportKeePassMenuItem.Click += new System.EventHandler(this.ExportKeePassMenuItem_Click);
             // 
             // ExportBitwardenMenuItem
             // 
             this.ExportBitwardenMenuItem.Name = "ExportBitwardenMenuItem";
             this.ExportBitwardenMenuItem.Size = new System.Drawing.Size(241, 34);
-            this.ExportBitwardenMenuItem.Text = "&Bitwarden CSV...";
+            this.ExportBitwardenMenuItem.Text = "&Bitwarden JSON...";
             this.ExportBitwardenMenuItem.Click += new System.EventHandler(this.ExportBitwardenMenuItem_Click);
             // 
             // ExportRecoveryKeyMenuItem
