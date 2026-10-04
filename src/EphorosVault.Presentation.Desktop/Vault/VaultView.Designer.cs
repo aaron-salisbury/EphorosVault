@@ -31,6 +31,7 @@ partial class VaultView
     private void InitializeComponent()
     {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VaultView));
             this.tools = new System.Windows.Forms.ToolStrip();
             this.create = new System.Windows.Forms.ToolStripButton();
             this._edit = new System.Windows.Forms.ToolStripButton();
@@ -168,6 +169,8 @@ partial class VaultView
             // 
             // newFolder
             // 
+            this.newFolder.Image = ((System.Drawing.Image)(resources.GetObject("newFolder.Image")));
+            this.newFolder.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.newFolder.Name = "newFolder";
             this.newFolder.Size = new System.Drawing.Size(214, 32);
             this.newFolder.Text = "New Folder...";
@@ -180,6 +183,8 @@ partial class VaultView
             // 
             // _renameFolder
             // 
+            this._renameFolder.Image = ((System.Drawing.Image)(resources.GetObject("_renameFolder.Image")));
+            this._renameFolder.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this._renameFolder.Name = "_renameFolder";
             this._renameFolder.Size = new System.Drawing.Size(214, 32);
             this._renameFolder.Text = "Rename Folder...";
@@ -187,6 +192,8 @@ partial class VaultView
             // 
             // _deleteFolder
             // 
+            this._deleteFolder.Image = ((System.Drawing.Image)(resources.GetObject("_deleteFolder.Image")));
+            this._deleteFolder.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this._deleteFolder.Name = "_deleteFolder";
             this._deleteFolder.Size = new System.Drawing.Size(214, 32);
             this._deleteFolder.Text = "Delete Folder...";
