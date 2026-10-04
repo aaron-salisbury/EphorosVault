@@ -11,6 +11,7 @@
     <RootNamespace>EphorosVault.Tests</RootNamespace>
     <AssemblyName>EphorosVault.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <LangVersion>latest</LangVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
@@ -48,15 +49,27 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="ExporterTests.cs" />
+    <Compile Include="DpapiVaultKeyStoreTests.cs" />
+    <Compile Include="PasswordGeneratorTests.cs" />
+    <Compile Include="VaultFolderServiceTests.cs" />
+    <Compile Include="VaultKeyEncryptionTests.cs" />
+    <Compile Include="VaultServiceTests.cs" />
+    <Compile Include="VaultPresenterTests.cs" />
+    <Compile Include="VaultRecoveryServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EphorosVault.Presentation.Desktop\EphorosVault.Presentation.Desktop.csproj">
+      <Project>{021F22C8-0539-4559-BA51-4378D4402746}</Project>
+      <Name>EphorosVault.Presentation.Desktop</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EphorosVault.Business\EphorosVault.Business.csproj">
       <Project>{e86dca0a-c8ce-4e5a-8de8-006ea16bcb31}</Project>
       <Name>EphorosVault.Business</Name>

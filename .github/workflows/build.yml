@@ -1,0 +1,38 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, feature/vault-mvp ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v3
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v3
+
+      - name: Restore packages
+        run: nuget restore src/EphorosVault.slnx -PackagesDirectory src/packages
+
+      - name: Build
+        run: msbuild src/EphorosVault.slnx /p:Configuration=Release /m
+
+      - name: Test
+        shell: pwsh
+        run: |
+          $vstest = (Get-ChildItem "$env:ProgramFiles\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -ErrorAction SilentlyContinue).FullName
+          if (-not $vstest) {
+            $vstest = (Get-ChildItem "$env:ProgramFiles\Microsoft Visual Studio\18\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -ErrorAction SilentlyContinue).FullName
+          }
+          if (-not $vstest) {
+            throw "vstest.console.exe could not be found on the runner."
+          }
+          & $vstest src/EphorosVault.Tests/bin/Release/EphorosVault.Tests.dll

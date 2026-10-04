@@ -1,0 +1,79 @@
+using DotNetFrameworkToolkit.Modules.DataAccess;
+using Microsoft.Practices.Unity.Utility;
+using System;
+using System.Data.SqlServerCe;
+using System.IO;
+
+namespace EphorosVault.Data.Persistence;
+
+public sealed class VaultDatabase
+{
+    private readonly string _connectionString;
+
+    public VaultDatabase(string databasePath)
+    {
+        Guard.ArgumentNotNull(databasePath, nameof(databasePath));
+
+        _connectionString = SqlServerCeDatabase.BuildConnectionString(databasePath);
+    }
+
+    public void Initialize()
+    {
+        SqlCeConnectionStringBuilder builder = new(_connectionString);
+        if (!File.Exists(builder.DataSource))
+        {
+            SqlServerCeDatabase.CreateDatabase(_connectionString);
+        }
+
+        using SqlCeConnection connection = SqlServerCeDatabase.OpenConnection(_connectionString);
+        using SqlCeCommand check = connection.CreateCommand();
+        check.CommandText = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'VaultEntries'";
+        if (Convert.ToInt32(check.ExecuteScalar()) == 0)
+        {
+            using SqlCeCommand create = connection.CreateCommand();
+            create.CommandText = "CREATE TABLE VaultEntries (Id uniqueidentifier NOT NULL PRIMARY KEY, Name nvarchar(256) NOT NULL, UserName ntext NOT NULL, Password ntext NOT NULL, Url ntext NOT NULL, Notes ntext NOT NULL)";
+            create.ExecuteNonQuery();
+        }
+
+        using SqlCeCommand folderCheck = connection.CreateCommand();
+        folderCheck.CommandText = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'VaultFolders'";
+        if (Convert.ToInt32(folderCheck.ExecuteScalar()) == 0)
+        {
+            using SqlCeCommand createFolders = connection.CreateCommand();
+            createFolders.CommandText = "CREATE TABLE VaultFolders (Id uniqueidentifier NOT NULL PRIMARY KEY, Name nvarchar(256) NOT NULL)";
+            createFolders.ExecuteNonQuery();
+        }
+
+        using SqlCeCommand folderColumnCheck = connection.CreateCommand();
+        folderColumnCheck.CommandText = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'VaultEntries' AND COLUMN_NAME = 'FolderId'";
+        if (Convert.ToInt32(folderColumnCheck.ExecuteScalar()) == 0)
+        {
+            using SqlCeCommand addFolder = connection.CreateCommand();
+            addFolder.CommandText = "ALTER TABLE VaultEntries ADD FolderId uniqueidentifier NULL";
+            addFolder.ExecuteNonQuery();
+        }
+
+        using SqlCeCommand recoveryCheck = connection.CreateCommand();
+        recoveryCheck.CommandText = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'VaultRecoveryMetadata'";
+        if (Convert.ToInt32(recoveryCheck.ExecuteScalar()) == 0)
+        {
+            using SqlCeCommand createRecovery = connection.CreateCommand();
+            createRecovery.CommandText = "CREATE TABLE VaultRecoveryMetadata (VaultId uniqueidentifier NOT NULL, VerificationValue ntext NOT NULL)";
+            createRecovery.ExecuteNonQuery();
+        }
+
+        using SqlCeCommand userCheck = connection.CreateCommand();
+        userCheck.CommandText = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'UserCredential'";
+        if (Convert.ToInt32(userCheck.ExecuteScalar()) == 0)
+        {
+            using SqlCeCommand createUser = connection.CreateCommand();
+            createUser.CommandText = "CREATE TABLE UserCredential (LoginSalt image NOT NULL, LoginHash image NOT NULL, LoginWorkFactor int NOT NULL)";
+            createUser.ExecuteNonQuery();
+        }
+    }
+
+    public SqlCeConnection OpenConnection()
+    {
+        return SqlServerCeDatabase.OpenConnection(_connectionString);
+    }
+}

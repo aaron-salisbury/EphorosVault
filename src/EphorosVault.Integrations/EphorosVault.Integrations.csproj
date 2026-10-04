@@ -42,9 +42,6 @@
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\PatternsAndPractices.Logging.2.0.0\lib\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Security.Cryptography, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PatternsAndPractices.Cryptography.2.0.1\lib\net20\Microsoft.Practices.EnterpriseLibrary.Security.Cryptography.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.ObjectBuilder2, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\PatternsAndPractices.Unity.1.2.0\lib\Microsoft.Practices.ObjectBuilder2.dll</HintPath>
     </Reference>
@@ -65,10 +62,17 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cryptography\DpapiVaultKeyStore.cs" />
+    <Compile Include="Cryptography\IVaultKeyStore.cs" />
+    <Compile Include="Cryptography\VaultKeyEncryption.cs" />
+    <Compile Include="Cryptography\VaultRecoveryService.cs" />
     <Compile Include="DependencyInjection.cs" />
+    <Compile Include="Export\BitwardenJsonExporter.cs" />
+    <Compile Include="Export\KeePass2XmlExporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

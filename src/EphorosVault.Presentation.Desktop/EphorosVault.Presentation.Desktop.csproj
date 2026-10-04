@@ -77,8 +77,6 @@
     <Compile Include="Base\Helpers\StandardErrorProvider.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Base\MVP\Navigator.cs" />
-    <Compile Include="Base\MVP\Presenter.cs" />
     <Compile Include="DependencyInjection.cs" />
     <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
@@ -86,13 +84,30 @@
     <Compile Include="Forms\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\HomeModel.cs" />
-    <Compile Include="Models\LineSorterModel.cs" />
-    <Compile Include="Presenters\HomePresenter.cs" />
-    <Compile Include="Presenters\LogsPresenter.cs" />
-    <Compile Include="Presenters\SampleTools\FlatUIColorPickerPresenter.cs" />
-    <Compile Include="Presenters\SampleTools\LineSorterPresenter.cs" />
-    <Compile Include="Presenters\SampleTools\UUIDGeneratorPresenter.cs" />
+    <Compile Include="Forms\FolderNameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FolderNameForm.Designer.cs">
+      <DependentUpon>FolderNameForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\VaultEntryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\VaultEntryForm.Designer.cs">
+      <DependentUpon>VaultEntryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\OptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OptionsForm.Designer.cs">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>
@@ -104,63 +119,60 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Vault\IVaultView.cs" />
+    <Compile Include="Vault\VaultPresenter.cs" />
+    <Compile Include="Vault\VaultView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Vault\VaultView.Designer.cs">
+      <DependentUpon>VaultView.cs</DependentUpon>
+    </Compile>
     <Compile Include="ShellForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ShellForm.Designer.cs">
       <DependentUpon>ShellForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\HomeView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\HomeView.Designer.cs">
-      <DependentUpon>HomeView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LogsView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\LogsView.Designer.cs">
-      <DependentUpon>LogsView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SampleTools\FlatUIColorPickerView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\SampleTools\FlatUIColorPickerView.Designer.cs">
-      <DependentUpon>FlatUIColorPickerView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SampleTools\LineSorterView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\SampleTools\LineSorterView.Designer.cs">
-      <DependentUpon>LineSorterView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SampleTools\UUIDGeneratorView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\SampleTools\UUIDGeneratorView.Designer.cs">
-      <DependentUpon>UUIDGeneratorView.cs</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EphorosVault.Business\EphorosVault.Business.csproj">
-      <Project>{e86dca0a-c8ce-4e5a-8de8-006ea16bcb31}</Project>
-      <Name>EphorosVault.Business</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Base\Assets\Attributions.txt" />
-    <Content Include="Base\Assets\Icons\YusukeKamiyamane\color-swatch.png" />
+    <Content Include="Base\Assets\Icons\Exports\bitwarden.png" />
+    <Content Include="Base\Assets\Icons\Exports\keepass.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\cross-circle-frame.png" />
-    <Content Include="Base\Assets\Icons\YusukeKamiyamane\home.png" />
-    <Content Include="Base\Assets\Icons\YusukeKamiyamane\monitor-window.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\document--arrow.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\folder--minus.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\folder--plus.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\folder-rename.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\key--export.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\key--import.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\license-key.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\lock.png" />
     <Content Include="Base\Assets\Icons\YusukeKamiyamane\question-frame.png" />
-    <Content Include="Base\Assets\Icons\YusukeKamiyamane\report.png" />
-    <Content Include="Base\Assets\Icons\YusukeKamiyamane\sort-alphabet.png" />
+    <Content Include="Base\Assets\Icons\YusukeKamiyamane\ui-scroll-pane-form.png" />
     <Resource Include="Base\Assets\Icons\SampleAppIcon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\FolderNameForm.resx">
+      <DependentUpon>FolderNameForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OptionsForm.resx">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\VaultEntryForm.resx">
+      <DependentUpon>VaultEntryForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vault\VaultView.resx">
+      <DependentUpon>VaultView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -169,17 +181,22 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ShellForm.resx">
       <DependentUpon>ShellForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\HomeView.resx">
-      <DependentUpon>HomeView.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EphorosVault.Business\EphorosVault.Business.csproj">
+      <Project>{e86dca0a-c8ce-4e5a-8de8-006ea16bcb31}</Project>
+      <Name>EphorosVault.Business</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

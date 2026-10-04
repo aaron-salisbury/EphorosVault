@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>EphorosVault.Presentation</RootNamespace>
     <AssemblyName>EphorosVault</AssemblyName>
-    <Description>Desktop executable and composition-root for application.</Description>
+    <Description>A classic desktop password vault for securely storing credentials.</Description>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <LangVersion>latest</LangVersion>
     <FileAlignment>512</FileAlignment>
@@ -82,8 +82,8 @@
     <Compile Include="DependencyInjection.cs" />
     <Compile Include="FileSinkPNP.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="VaultApplicationContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

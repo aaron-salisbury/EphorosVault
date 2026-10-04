@@ -1,7 +1,9 @@
-﻿using DotNetFrameworkToolkit.Core;
+using DotNetFrameworkToolkit.Core;
 using DotNetFrameworkToolkit.Modules.DependencyInjection;
 using DotNetFrameworkToolkit.Modules.FileSystem;
 using DotNetFrameworkToolkit.Modules.Logging;
+using EphorosVault.Data.Persistence;
+using EphorosVault.Integrations.Cryptography;
 using EphorosVault.Presentation;
 using System;
 using System.IO;
@@ -20,11 +22,16 @@ internal static class DependencyInjection
 
         IServiceCollection services = new ServiceCollectionPNP();
 
-        InMemorySinkPNP inMemorySink = new();
-        services.AddSingleton<ILogger>(new LoggerPNP(LogLevel.Debug, inMemorySink, new FileSinkPNP(Path.Combine(appDirectoryPath, "logs.txt"))));
-        services.AddSingleton(inMemorySink);
-
+        services.AddSingleton<ILogger>(new LoggerPNP(LogLevel.Debug, new FileSinkPNP(Path.Combine(appDirectoryPath, "logs.txt"))));
         services.AddScoped<IFileSystemAccess, FileSystemAccess>();
+
+        DpapiVaultKeyStore vaultKeyStore = new(Path.Combine(appDirectoryPath, "EphorosVault.key"));
+        vaultKeyStore.EnsureCreated();
+        services.AddSingleton<IVaultKeyStore>(vaultKeyStore);
+
+        VaultDatabase vaultDatabase = new(Path.Combine(appDirectoryPath, "EphorosVault.sdf"));
+        vaultDatabase.Initialize();
+        services.AddSingleton(vaultDatabase);
 
         services = BusinessDI.RegisterInternalBusinessServices(services);
         services = DataDI.RegisterInternalDataServices(services);

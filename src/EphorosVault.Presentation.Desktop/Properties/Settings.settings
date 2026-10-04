@@ -1,15 +1,21 @@
 <?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EphorosVault.DesktopApp.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EphorosVault.Presentation.Desktop.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ApplicationFriendlyName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Sample App</Value>
+    <Setting Name="PasswordLength" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">20</Value>
     </Setting>
-    <Setting Name="AboutDescription" Type="System.String" Scope="User">
-      <Value Profile="(Default)">This is a sample application generated from Aaron Salisbury's Windows 98 App Solution Template.</Value>
+    <Setting Name="PasswordRequireUppercase" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="ApplicationLink" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://github.com/aaron-salisbury/ProjectTemplates</Value>
+    <Setting Name="PasswordRequireLowercase" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="PasswordRequireNumbers" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="PasswordRequireSpecialCharacters" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

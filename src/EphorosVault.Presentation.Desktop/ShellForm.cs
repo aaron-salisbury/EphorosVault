@@ -1,75 +1,198 @@
-using EphorosVault.Presentation.Desktop.Base.MVP;
+using EphorosVault.Business.Modules.Vault;
 using EphorosVault.Presentation.Desktop.Forms;
-using EphorosVault.Presentation.Desktop.Presenters.SampleTools;
-using EphorosVault.Presentation.Desktop.Presenters;
-using System.Windows.Forms;
+using EphorosVault.Presentation.Desktop.Properties;
+using EphorosVault.Presentation.Desktop.Vault;
+using Microsoft.Practices.Unity.Utility;
 using System;
+using System.Windows.Forms;
 
-namespace EphorosVault.Presentation.Desktop
+namespace EphorosVault.Presentation.Desktop;
+
+public partial class ShellForm : Form
 {
-    public partial class ShellForm : Form
+    private readonly IVaultExporter _bitwardenExporter;
+    private readonly VaultFolderService _folderService;
+    private readonly IVaultRecoveryService _recoveryService;
+    private readonly IVaultExporter _keePassExporter;
+    private readonly PasswordGenerator _passwordGenerator;
+    private readonly VaultPresenter _vaultPresenter;
+    private readonly VaultService _vaultService;
+    private readonly VaultView _vaultView;
+    private readonly Timer _statusTimer;
+
+    public ShellForm(VaultService vaultService, VaultFolderService folderService, PasswordGenerator passwordGenerator, IVaultExporter keePassExporter, IVaultExporter bitwardenExporter, IVaultRecoveryService recoveryService)
     {
-        private readonly Padding _defaultContentAreaPadding = new(15);
-        private readonly Navigator _navigator;
+        Guard.ArgumentNotNull(vaultService, nameof(vaultService));
+        Guard.ArgumentNotNull(folderService, nameof(folderService));
+        Guard.ArgumentNotNull(passwordGenerator, nameof(passwordGenerator));
+        Guard.ArgumentNotNull(keePassExporter, nameof(keePassExporter));
+        Guard.ArgumentNotNull(bitwardenExporter, nameof(bitwardenExporter));
+        Guard.ArgumentNotNull(recoveryService, nameof(recoveryService));
 
-        public ShellForm(Navigator navigator)
+        _vaultService = vaultService;
+        _folderService = folderService;
+        _passwordGenerator = passwordGenerator;
+        _keePassExporter = keePassExporter;
+        _bitwardenExporter = bitwardenExporter;
+        _recoveryService = recoveryService;
+
+        InitializeComponent();
+        Text = Resources.ProductName;
+
+        _statusTimer = new Timer
         {
-            InitializeComponent();
+            Interval = 3000
+        };
+        _statusTimer.Tick += StatusTimer_Tick;
 
-            Text = Properties.Settings.Default.ApplicationFriendlyName;
+        _vaultView = new VaultView();
+        MainContentPanel.Controls.Add(_vaultView);
+        _vaultView.StatusChanged += VaultView_StatusChanged;
+        _vaultPresenter = new VaultPresenter(_vaultView, _vaultService, _folderService, _passwordGenerator);
+    }
 
-            MainContentPanel.ControlAdded += MainContentPanel_ControlAdded;
-            _navigator = navigator;
-            _navigator.Window = MainContentPanel.Controls;
-            _navigator.NavigateTo(typeof(HomePresenter));
+    public event EventHandler LockRequested;
+
+    public void PrepareForUnlock()
+    {
+        _vaultPresenter.Refresh();
+    }
+
+    private void LockVaultMenuItem_Click(object sender, EventArgs e)
+    {
+        _vaultPresenter.ClearSensitiveState();
+        LockRequested?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void PasswordGeneratorMenuItem_Click(object sender, EventArgs e)
+    {
+        string password = _passwordGenerator.Generate(
+            Properties.Settings.Default.PasswordLength,
+            Properties.Settings.Default.PasswordRequireUppercase,
+            Properties.Settings.Default.PasswordRequireLowercase,
+            Properties.Settings.Default.PasswordRequireNumbers,
+            Properties.Settings.Default.PasswordRequireSpecialCharacters);
+        Clipboard.SetText(password);
+        MessageBox.Show(this, "A generated password has been copied to the clipboard.", Resources.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+
+    private void OptionsMenuItem_Click(object sender, EventArgs e)
+    {
+        using OptionsForm form = new();
+        if (form.ShowDialog(this) == DialogResult.OK && form.SettingsChanged)
+        {
+            ShowStatus("Settings saved.");
+        }
+    }
+
+    private void VaultView_StatusChanged(object sender, VaultStatusEventArgs e)
+    {
+        ShowStatus(e.Message);
+    }
+
+    private void ShowStatus(string message)
+    {
+        StatusLabel.Text = message;
+        _statusTimer.Stop();
+        _statusTimer.Start();
+    }
+
+    private void StatusTimer_Tick(object sender, EventArgs e)
+    {
+        _statusTimer.Stop();
+        StatusLabel.Text = string.Empty;
+    }
+
+    private void ExportKeePassMenuItem_Click(object sender, EventArgs e)
+    {
+        Export(_keePassExporter);
+    }
+
+    private void ExportBitwardenMenuItem_Click(object sender, EventArgs e)
+    {
+        Export(_bitwardenExporter);
+    }
+
+    private void Export(IVaultExporter exporter)
+    {
+        if (MessageBox.Show(this, exporter.FormatName + " exports contain passwords in plaintext. Continue?", Resources.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+        {
+            return;
         }
 
-        private void MainContentPanel_ControlAdded(object sender, ControlEventArgs e)
+        using SaveFileDialog dialog = new()
         {
-            if (e != null && e.Control != null)
-            {
-                e.Control.Padding = _defaultContentAreaPadding;
-                e.Control.Dock = DockStyle.Fill;
-            }
+            Filter = exporter.FileFilter,
+            DefaultExt = exporter.DefaultExtension,
+            AddExtension = true
+        };
+
+        if (dialog.ShowDialog(this) == DialogResult.OK)
+        {
+            exporter.Export(dialog.FileName, _vaultService.GetEntries(), _folderService.GetFolders());
+            MessageBox.Show(this, "Export completed. This file contains your passwords in plaintext. Keep it secure and permanently delete it when you no longer need it.", Resources.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+    }
+
+    private void ImportRecoveryKeyMenuItem_Click(object sender, EventArgs e)
+    {
+        if (MessageBox.Show(this, $"Importing a recovery key will replace the local vault key only after {Resources.ProductName} verifies that it belongs to this vault. Continue?", Resources.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+        {
+            return;
         }
 
-        private void HomeMenuItem_Click(object sender, EventArgs e)
+        using OpenFileDialog dialog = new()
         {
-            _navigator.NavigateTo(typeof(HomePresenter));
+            Filter = $"{Resources.ProductName} recovery key (*.evkey)|*.evkey|All files (*.*)|*.*",
+            CheckFileExists = true
+        };
+
+        if (dialog.ShowDialog(this) != DialogResult.OK)
+        {
+            return;
         }
 
-        private void LogMenuItem_Click(object sender, EventArgs e)
+        try
         {
-            _navigator.NavigateTo(typeof(LogsPresenter));
+            _recoveryService.Import(dialog.FileName);
+            _vaultPresenter.Refresh();
+            MessageBox.Show(this, "Recovery key imported and verified.", Resources.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        catch (System.IO.InvalidDataException exception)
+        {
+            MessageBox.Show(this, exception.Message, Resources.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    private void ExportRecoveryKeyMenuItem_Click(object sender, EventArgs e)
+    {
+        if (MessageBox.Show(this, "The recovery key grants access to the encrypted vault database. Store it securely and separately from the database. Continue?", Resources.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+        {
+            return;
         }
 
-        private void AboutMenuItem_Click(object sender, EventArgs e)
+        using SaveFileDialog dialog = new()
         {
-            //TODO: About form still doesn't use mode/view/presenter.
-            using (AboutForm aboutForm = new())
-            {
-                aboutForm.ShowDialog(this);
-            }
-        }
+            Filter = $"{Resources.ProductName} recovery key (*.evkey)|*.evkey|All files (*.*)|*.*",
+            DefaultExt = "evkey",
+            AddExtension = true
+        };
 
-        private void ExitMenuItem_Click(object sender, EventArgs e)
+        if (dialog.ShowDialog(this) == DialogResult.OK)
         {
-            Application.Exit();
+            _recoveryService.Export(dialog.FileName);
+            MessageBox.Show(this, "Recovery key exported.", Resources.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+    }
 
-        private void UUIDGeneratorMenuItem_Click(object sender, EventArgs e)
-        {
-            _navigator.NavigateTo(typeof(UUIDGeneratorPresenter));
-        }
+    private void AboutMenuItem_Click(object sender, EventArgs e)
+    {
+        using AboutForm form = new();
+        form.ShowDialog(this);
+    }
 
-        private void FlatUIColorPickerMenuItem_Click(object sender, EventArgs e)
-        {
-            _navigator.NavigateTo(typeof(FlatUIColorPickerPresenter));
-        }
-
-        private void LineSorterMenuItem_Click(object sender, EventArgs e)
-        {
-            _navigator.NavigateTo(typeof(LineSorterPresenter));
-        }
+    private void ExitMenuItem_Click(object sender, EventArgs e)
+    {
+        Application.Exit();
     }
 }

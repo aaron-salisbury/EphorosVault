@@ -45,9 +45,6 @@
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\PatternsAndPractices.Logging.2.0.0\lib\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Security.Cryptography, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PatternsAndPractices.Cryptography.2.0.1\lib\net20\Microsoft.Practices.EnterpriseLibrary.Security.Cryptography.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.ObjectBuilder2, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\PatternsAndPractices.Unity.1.2.0\lib\Microsoft.Practices.ObjectBuilder2.dll</HintPath>
     </Reference>
@@ -70,23 +67,26 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
+  <ItemGroup></ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyInjection.cs" />
-    <Compile Include="Modules\Sample\ApplicationServices\ISampleToolsService.cs" />
-    <Compile Include="Modules\Sample\ApplicationServices\SampleToolsService.cs" />
-    <Compile Include="Modules\Sample\DomainServices\FlatUIColorProvider.cs" />
-    <Compile Include="Modules\Sample\DomainServices\LineSorter.cs" />
-    <Compile Include="Modules\Sample\DomainServices\UUIDGenerator.cs" />
-    <Compile Include="Modules\Sample\DTOs\FlatColorDto.cs" />
+    <Compile Include="Modules\Access\AccessService.cs" />
+    <Compile Include="Modules\Access\IUserCredentialRepository.cs" />
+    <Compile Include="Modules\Vault\IVaultEncryption.cs" />
+    <Compile Include="Modules\Vault\IVaultExporter.cs" />
+    <Compile Include="Modules\Vault\IVaultRepository.cs" />
+    <Compile Include="Modules\Vault\IVaultRecoveryMetadataRepository.cs" />
+    <Compile Include="Modules\Vault\IVaultRecoveryService.cs" />
+    <Compile Include="Modules\Vault\VaultRecoveryMetadata.cs" />
+    <Compile Include="Modules\Vault\IVaultFolderRepository.cs" />
+    <Compile Include="Modules\Vault\PasswordGenerator.cs" />
+    <Compile Include="Modules\Vault\VaultEntry.cs" />
+    <Compile Include="Modules\Vault\VaultFolder.cs" />
+    <Compile Include="Modules\Vault\VaultFolderService.cs" />
+    <Compile Include="Modules\Vault\VaultService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EphorosVault.Data\EphorosVault.Data.csproj">
-      <Project>{1c04e92d-bea9-4dc4-b877-429a81d9b9a6}</Project>
-      <Name>EphorosVault.Data</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+<ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
