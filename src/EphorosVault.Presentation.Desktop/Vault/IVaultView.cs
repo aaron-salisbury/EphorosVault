@@ -10,10 +10,14 @@ public interface IVaultView
     event EventHandler CopyUserNameRequested;
     event EventHandler DeleteEntryRequested;
     event EventHandler EditEntryRequested;
+    event EventHandler DeleteFolderRequested;
     event EventHandler FilterChanged;
     event EventHandler NewEntryRequested;
+    event EventHandler NewFolderRequested;
+    event EventHandler RenameFolderRequested;
 
     Guid? SelectedFolderId { get; }
+    string SelectedFolderName { get; }
     VaultEntry SelectedEntry { get; }
     string SearchText { get; }
 
