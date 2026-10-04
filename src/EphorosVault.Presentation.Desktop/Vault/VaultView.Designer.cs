@@ -254,6 +254,7 @@ partial class VaultView
             this._entries.TabIndex = 0;
             this._entries.UseCompatibleStateImageBehavior = false;
             this._entries.View = System.Windows.Forms.View.List;
+            this._entries.SelectedIndexChanged += new System.EventHandler(this.EntrySelected);
             this._entries.DoubleClick += new System.EventHandler(this.Entries_DoubleClick);
             // 
             // details
