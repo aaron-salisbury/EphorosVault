@@ -1,6 +1,4 @@
 using EphorosVault.Business.Modules.Vault;
-using EphorosVault.Integrations.Cryptography;
-using EphorosVault.Integrations.Export;
 using EphorosVault.Presentation.Desktop.Forms;
 using EphorosVault.Presentation.Desktop.Vault;
 using Microsoft.Practices.Unity.Utility;
@@ -11,30 +9,30 @@ namespace EphorosVault.Presentation.Desktop;
 
 public partial class ShellForm : Form
 {
-    private readonly BitwardenJsonExporter _bitwardenExporter;
+    private readonly IVaultExporter _bitwardenExporter;
     private readonly VaultFolderService _folderService;
-    private readonly IVaultKeyStore _keyStore;
-    private readonly KeePass2XmlExporter _keePassExporter;
+    private readonly IVaultRecoveryService _recoveryService;
+    private readonly IVaultExporter _keePassExporter;
     private readonly PasswordGenerator _passwordGenerator;
     private readonly VaultPresenter _vaultPresenter;
     private readonly VaultService _vaultService;
     private readonly VaultView _vaultView;
 
-    public ShellForm(VaultService vaultService, VaultFolderService folderService, PasswordGenerator passwordGenerator, KeePass2XmlExporter keePassExporter, BitwardenJsonExporter bitwardenExporter, IVaultKeyStore keyStore)
+    public ShellForm(VaultService vaultService, VaultFolderService folderService, PasswordGenerator passwordGenerator, IVaultExporter keePassExporter, IVaultExporter bitwardenExporter, IVaultRecoveryService recoveryService)
     {
         Guard.ArgumentNotNull(vaultService, nameof(vaultService));
         Guard.ArgumentNotNull(folderService, nameof(folderService));
         Guard.ArgumentNotNull(passwordGenerator, nameof(passwordGenerator));
         Guard.ArgumentNotNull(keePassExporter, nameof(keePassExporter));
         Guard.ArgumentNotNull(bitwardenExporter, nameof(bitwardenExporter));
-        Guard.ArgumentNotNull(keyStore, nameof(keyStore));
+        Guard.ArgumentNotNull(recoveryService, nameof(recoveryService));
 
         _vaultService = vaultService;
         _folderService = folderService;
         _passwordGenerator = passwordGenerator;
         _keePassExporter = keePassExporter;
         _bitwardenExporter = bitwardenExporter;
-        _keyStore = keyStore;
+        _recoveryService = recoveryService;
 
         InitializeComponent();
         Text = Properties.Settings.Default.ApplicationFriendlyName;
@@ -132,7 +130,7 @@ public partial class ShellForm : Form
 
         if (dialog.ShowDialog(this) == DialogResult.OK)
         {
-            _keyStore.ExportRecoveryKey(dialog.FileName);
+            _recoveryService.Export(dialog.FileName);
             MessageBox.Show(this, "Recovery key exported.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
