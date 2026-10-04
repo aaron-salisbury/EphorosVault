@@ -33,6 +33,7 @@ partial class ShellForm
             this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.FileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NewFolderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LockVaultMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExportKeePassMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExportBitwardenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,6 +68,7 @@ partial class ShellForm
             // 
             this.FileMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.NewFolderMenuItem,
+            this.LockVaultMenuItem,
             this.ExportMenuItem,
             this.ExportRecoveryKeyMenuItem,
             this.ExitMenuItem});
@@ -82,6 +84,14 @@ partial class ShellForm
             this.NewFolderMenuItem.Size = new System.Drawing.Size(286, 34);
             this.NewFolderMenuItem.Text = "New &Folder...";
             this.NewFolderMenuItem.Click += new System.EventHandler(this.NewFolderMenuItem_Click);
+            // 
+            // LockVaultMenuItem
+            // 
+            this.LockVaultMenuItem.Name = "LockVaultMenuItem";
+            this.LockVaultMenuItem.Size = new System.Drawing.Size(286, 34);
+            this.LockVaultMenuItem.Text = "&Lock Vault";
+            this.LockVaultMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            this.LockVaultMenuItem.Click += new System.EventHandler(this.LockVaultMenuItem_Click);
             // 
             // ExportMenuItem
             // 
@@ -215,6 +225,7 @@ partial class ShellForm
     private System.Windows.Forms.MenuStrip MenuStrip;
     private System.Windows.Forms.ToolStripMenuItem FileMenuItem;
     private System.Windows.Forms.ToolStripMenuItem NewFolderMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem LockVaultMenuItem;
     private System.Windows.Forms.ToolStripMenuItem ExportMenuItem;
     private System.Windows.Forms.ToolStripMenuItem ExportKeePassMenuItem;
     private System.Windows.Forms.ToolStripMenuItem ExportBitwardenMenuItem;
