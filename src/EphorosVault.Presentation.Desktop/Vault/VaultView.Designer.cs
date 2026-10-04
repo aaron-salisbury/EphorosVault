@@ -231,7 +231,7 @@ partial class VaultView
             // workspace.Panel2
             // 
             this.workspace.Panel2.Controls.Add(this.details);
-            this.workspace.Size = new System.Drawing.Size(1743, 725);
+            this.workspace.Size = new System.Drawing.Size(1743, 747);
             this.workspace.SplitterDistance = 121;
             this.workspace.TabIndex = 0;
             // 
@@ -243,7 +243,7 @@ partial class VaultView
             this._entries.Location = new System.Drawing.Point(0, 0);
             this._entries.MultiSelect = false;
             this._entries.Name = "_entries";
-            this._entries.Size = new System.Drawing.Size(121, 725);
+            this._entries.Size = new System.Drawing.Size(121, 747);
             this._entries.TabIndex = 0;
             this._entries.UseCompatibleStateImageBehavior = false;
             this._entries.View = System.Windows.Forms.View.List;
@@ -265,7 +265,7 @@ partial class VaultView
             this.details.Location = new System.Drawing.Point(0, 0);
             this.details.Name = "details";
             this.details.Padding = new System.Windows.Forms.Padding(10);
-            this.details.Size = new System.Drawing.Size(1618, 725);
+            this.details.Size = new System.Drawing.Size(1618, 747);
             this.details.TabIndex = 0;
             // 
             // _nameLabel
@@ -360,7 +360,7 @@ partial class VaultView
             this._detailNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this._detailNotes.Size = new System.Drawing.Size(1848, 140);
             this._detailNotes.TabIndex = 9;
-            //
+            // 
             // VaultView
             // 
             this.Controls.Add(this.workspace);
