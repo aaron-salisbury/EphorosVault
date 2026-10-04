@@ -13,8 +13,8 @@ namespace EphorosVault.Presentation.Desktop
         private readonly VaultService _vaultService;
         private readonly VaultFolderService _folderService;
         private readonly PasswordGenerator _passwordGenerator;
-        private readonly KeePassCsvExporter _keePassExporter;
-        private readonly BitwardenCsvExporter _bitwardenExporter;
+        private readonly KeePass2XmlExporter _keePassExporter;
+        private readonly BitwardenJsonExporter _bitwardenExporter;
         private readonly IVaultKeyStore _keyStore;
         private readonly ComboBox _folders = new();
         private readonly ListView _entries = new();
@@ -31,7 +31,7 @@ namespace EphorosVault.Presentation.Desktop
         private readonly List<VaultEntry> _loadedEntries = new();
         private readonly ToolStripStatusLabel _statusLabel = new();
 
-        public ShellForm(VaultService vaultService, VaultFolderService folderService, PasswordGenerator passwordGenerator, KeePassCsvExporter keePassExporter, BitwardenCsvExporter bitwardenExporter, IVaultKeyStore keyStore)
+        public ShellForm(VaultService vaultService, VaultFolderService folderService, PasswordGenerator passwordGenerator, KeePass2XmlExporter keePassExporter, BitwardenJsonExporter bitwardenExporter, IVaultKeyStore keyStore)
         {
             _vaultService = vaultService;
             _folderService = folderService;
@@ -299,7 +299,7 @@ namespace EphorosVault.Presentation.Desktop
 
         private void Export(IVaultExporter exporter)
         {
-            if (MessageBox.Show(this, "CSV exports contain passwords in plaintext. Continue?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+            if (MessageBox.Show(this, exporter.FormatName + " exports contain passwords in plaintext. Continue?", "Ephoros Vault", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
             {
                 return;
             }
@@ -307,10 +307,10 @@ namespace EphorosVault.Presentation.Desktop
             using (SaveFileDialog dialog = new())
             {
                 dialog.Filter = exporter.FileFilter;
-                dialog.DefaultExt = "csv";
+                dialog.DefaultExt = exporter.DefaultExtension;
                 dialog.AddExtension = true;
                 if (dialog.ShowDialog(this) == DialogResult.OK)
-                { exporter.Export(dialog.FileName, _vaultService.GetEntries()); MessageBox.Show(this, "Export completed.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+                { exporter.Export(dialog.FileName, _vaultService.GetEntries(), _folderService.GetFolders()); MessageBox.Show(this, "Export completed. This file contains your passwords in plaintext. Keep it secure and permanently delete it when you no longer need it.", "Ephoros Vault", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             }
         }
 
