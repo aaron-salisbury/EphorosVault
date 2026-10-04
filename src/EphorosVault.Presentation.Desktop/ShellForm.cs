@@ -31,6 +31,8 @@ namespace EphorosVault.Presentation.Desktop
         private readonly List<VaultEntry> _loadedEntries = new();
         private readonly ToolStripStatusLabel _statusLabel = new();
 
+        public event EventHandler LockRequested;
+
         public ShellForm(VaultService vaultService, VaultFolderService folderService, PasswordGenerator passwordGenerator, KeePass2XmlExporter keePassExporter, BitwardenJsonExporter bitwardenExporter, IVaultKeyStore keyStore)
         {
             _vaultService = vaultService;
@@ -338,6 +340,27 @@ namespace EphorosVault.Presentation.Desktop
                 if (form.ShowDialog(this) == DialogResult.OK && form.FolderName.Length > 0)
                 { _folderService.Save(new VaultFolder { Name = form.FolderName }); RefreshVault(); }
             }
+        }
+
+        private void LockVaultMenuItem_Click(object sender, EventArgs e)
+        {
+            ClearSensitiveState();
+            LockRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void PrepareForUnlock()
+        {
+            RefreshVault();
+            ShowStatus(string.Empty);
+        }
+
+        private void ClearSensitiveState()
+        {
+            _loadedEntries.Clear();
+            _entries.Items.Clear();
+            _search.Clear();
+            ClearDetails();
+            Clipboard.Clear();
         }
 
         private void LogMenuItem_Click(object sender, System.EventArgs e)
