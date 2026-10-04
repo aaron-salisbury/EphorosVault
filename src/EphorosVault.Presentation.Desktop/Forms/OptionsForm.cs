@@ -69,7 +69,7 @@ public sealed class OptionsForm : Form
             return;
         }
 
-        Properties.Settings.Default.PasswordLength = Decimal.ToInt32(_length.Value);
+        Properties.Settings.Default.PasswordLength = decimal.ToInt32(_length.Value);
         Properties.Settings.Default.PasswordRequireUppercase = _uppercase.Checked;
         Properties.Settings.Default.PasswordRequireLowercase = _lowercase.Checked;
         Properties.Settings.Default.PasswordRequireNumbers = _numbers.Checked;
